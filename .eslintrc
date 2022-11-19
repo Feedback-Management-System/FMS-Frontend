@@ -1,7 +1,7 @@
 {
     "env": {
         "browser": true,
-        "es2022": true,
+        "es2022": true, 
         "node": true
     },
     "extends": [
@@ -41,6 +41,10 @@
         "no-plusplus": "off",
         "react/function-component-definition": "off",
         "no-unused-vars": "warn",
-        "jsx-a11y/label-has-associated-control": 0
+        "jsx-a11y/label-has-associated-control": 0,
+        "jsx-a11y/anchor-is-valid": 0,
+        "jsx-a11y/click-events-have-key-events": 0,
+        "jsx-a11y/no-noninteractive-element-interactions": 0,
+        "react/jsx-no-constructed-context-values": 0
     }
 }
