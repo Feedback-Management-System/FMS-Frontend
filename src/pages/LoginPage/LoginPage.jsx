@@ -1,9 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+// eslint-disable-next-line import/extensions
+import LoaderButton from '../../components/loaderButton/LoaderButton.jsx';
 import loginIllustration from '../../assets/images/loginIllustration.webp';
 import msiLogo from '../../assets/images/msi_logo.png';
 import './LoginPage.css';
 
 const LoginPage = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+
+    const onLogin = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        setTimeout(() => {
+            localStorage.setItem('token', 'supersecrettoken');
+            navigate('/admin', { replace: true });
+            toast.success('Logged In Successfully');
+            setIsLoading(false);
+        }, 3000);
+
+        // axios({
+        //     method: 'post',
+        //     url: `${restUrl}/api/v1/auth/login`,
+        //     data: {
+        //         email: email,
+        //         password: password,
+        //     },
+        // })
+        //     .then((response) => {
+        //         if (response.data.status.code == 200) {
+        //             localStorage.setItem('token', response.data.data.token);
+        //             navigate('/admin');
+        //             toast.success('Logged In Successfully', {
+        //                 position: toast.POSITION.BOTTOM_RIGHT,
+        //             });
+        //         } else {
+        //             console.log(response);
+        //             toast.error('Invalid Credentials', {
+        //                 position: toast.POSITION.BOTTOM_RIGHT,
+        //             });
+        //             setIsLoading(false);
+        //         }
+        //     })
+        //     .catch(() => {
+        //         toast.error('Something went wrong', {
+        //             position: toast.POSITION.BOTTOM_RIGHT,
+        //         });
+        //         setIsLoading(false);
+        //     });
+    };
+
     return (
         <div className="loginBody">
             <main className="Main_login">
@@ -14,10 +66,10 @@ const LoginPage = () => {
                     <div className="nav-links" id="navLinks">
                         <ul>
                             <li>
-                                <a href="#">Home</a>
+                                <Link to="/">Home</Link>
                             </li>
                             <li>
-                                <a href="#">Features</a>
+                                <Link to="/">Features</Link>
                             </li>
                         </ul>
                     </div>
@@ -29,13 +81,18 @@ const LoginPage = () => {
                     </div>
                     <div className="form-container">
                         <h1>Welcome Back!</h1>
-                        <form>
+                        <form onSubmit={onLogin}>
                             <div className="input-container">
                                 <i className="fa-solid fa-user" />
                                 <input
-                                    type="text"
-                                    name="username"
-                                    placeholder="Username"
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                    }}
+                                    required
                                 />
                             </div>
 
@@ -45,6 +102,12 @@ const LoginPage = () => {
                                     type="password"
                                     name="password"
                                     placeholder="Password"
+                                    minLength={5}
+                                    value={password}
+                                    onChange={(e) => {
+                                        setPassword(e.target.value);
+                                    }}
+                                    required
                                 />
                             </div>
 
@@ -62,7 +125,20 @@ const LoginPage = () => {
                                 </div>
                             </div>
 
-                            <button type="button">Log In</button>
+                            <LoaderButton
+                                display="Log In"
+                                style={
+                                    isLoading
+                                        ? {
+                                              backgroundColor:
+                                                  'rgb(0, 145, 0, 0.5)',
+                                              cursor: 'not-allowed',
+                                          }
+                                        : {}
+                                }
+                                isLoading={isLoading}
+                                type="submit"
+                            />
                         </form>
                     </div>
                 </section>
