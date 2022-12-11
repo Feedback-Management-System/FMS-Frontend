@@ -2,54 +2,48 @@ import React, { Children } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
-import { 
-  AdminHomePage, 
-} from 'pages/admin';
+import { AdminHomePage } from 'pages/admin';
+
+import { Sidebar } from 'components';
 
 import {
-  Sidebar,
-} from 'components';
+    createBrowserRouter,
+    RouterProvider,
+    Route,
+    Routes,
+    Link,
+    BrowserRouter,
+    Outlet,
+} from 'react-router-dom';
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Routes,
-  Link,
-  BrowserRouter,
-  Outlet,
-} from "react-router-dom";
-
-import { LandingPage } from 'pages';
+import { LandingPage, LoginPage } from 'pages';
 
 const AppLayout = () => (
-  <>
-    <Sidebar />
-    <Outlet />
-  </>
-)
+    <>
+        <Sidebar />
+        <Outlet />
+    </>
+);
 
 const router = createBrowserRouter([
-  {
-    element: <AppLayout />,
-    children: [
-      {
-        path: "/",
-        element: (
-          <AdminHomePage />
-        ),
-      },
-      {
-        path: "land",
-        element: <LandingPage />,
-      }
-    ]
-  }
+    {
+        element: <AppLayout />,
+        children: [
+            {
+                path: '/',
+                element: <LandingPage />,
+            },
+            {
+                path: '/login',
+                element: <LoginPage />,
+            },
+            {
+                path: '/admin',
+                element: <AdminHomePage />,
+            },
+        ],
+    },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <RouterProvider router={router} />
-);
-
-
+root.render(<RouterProvider router={router} />);

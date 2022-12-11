@@ -28,7 +28,13 @@
         }
     },
     "rules": {
-        "prettier/prettier": "warn",
+        // "prettier/prettier": "warn",
+        "prettier/prettier": [
+            "warn",
+            {
+                "endOfLine": "auto"
+            }
+          ],
         "arrow-body-style": "off",
         "prefer-arrow-callback": "off",
         "react/jsx-filename-extension": "off",
@@ -47,4 +53,5 @@
         "jsx-a11y/no-noninteractive-element-interactions": 0,
         "react/jsx-no-constructed-context-values": 0
     }
+
 }
