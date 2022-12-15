@@ -25,7 +25,7 @@ const AdminHomePage = () => {
 
         const newForm = {
             info: {
-                title: 'Yess we did it',
+                title: 'New Form',
             },
         };
 
