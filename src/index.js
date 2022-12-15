@@ -8,23 +8,13 @@ import { AdminHomePage } from 'pages/admin';
 
 import { Sidebar } from 'components';
 
-import {
-    createBrowserRouter,
-    RouterProvider,
-    Route,
-    Routes,
-    Link,
-    BrowserRouter,
-    Outlet,
-} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 import { LandingPage, LoginPage } from 'pages';
+import NotFound from './pages/NotFound/NotFound.jsx';
 
-// eslint-disable-next-line import/order, import/extensions
 import LoginProtected from './components/LoginProtected.jsx';
-// eslint-disable-next-line import/extensions
 import Protected from './components/Protected.jsx';
-
 
 const AppLayout = () => (
     <>
@@ -47,6 +37,7 @@ const AppLayout = () => (
 const router = createBrowserRouter([
     {
         element: <AppLayout />,
+        errorElement: <NotFound />,
         children: [
             {
                 path: '/',
