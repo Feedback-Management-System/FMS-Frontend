@@ -10,7 +10,7 @@ import { Sidebar } from 'components';
 
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
-import { LandingPage, LoginPage } from 'pages';
+import { LandingPage, LoginPage, ForgotPassword } from 'pages';
 import NotFound from './pages/NotFound/NotFound.jsx';
 
 import LoginProtected from './components/LoginProtected.jsx';
@@ -20,8 +20,8 @@ const AppLayout = () => (
     <>
         <Sidebar />
         <ToastContainer
-            position="top-center"
-            autoClose={3000}
+            position="bottom-center"
+            autoClose={4000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -46,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <LoginProtected component={LoginPage} />,
+            },
+            {
+                path: '/forgot-password',
+                element: <LoginProtected component={ForgotPassword} />,
             },
             {
                 path: '/admin',
