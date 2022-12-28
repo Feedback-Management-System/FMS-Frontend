@@ -17,7 +17,7 @@ const Sidebar = ({ router }) => {
     return (
         <>
             {location.pathname.includes('admin') ? (
-                <h1>Sidebar</h1>
+                <h1 style={{display: 'none'}}>Sidebar</h1>
             ) : // <IconContext.Provider value={{ color: 'undefined' }}>
             //     <div className="sidebar">
             //         <Link to="#" className="menu-bars" />
