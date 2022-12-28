@@ -20,7 +20,7 @@ const AdminHomePage = () => {
                 scope: SCOPES,
             });
         });
-    });
+    },[]);
     function createForm() {
         const accessToken = gapi.auth.getToken().access_token;
 
@@ -62,26 +62,28 @@ const AdminHomePage = () => {
 
 
     // MenuToggle
-    let toggle = document.querySelector('.toggle');
-    let navigation = document.querySelector('.navigation');
-    let main = document.querySelector('.main');
 
-    toggle.onclick = function() {
-        navigation.classList.toggle('active');
-        main.classList.toggle('active');
-    }
+    // let toggle = document.querySelector('.toggle');
+    // let navigation = document.querySelector('.navigation');
+    // let main = document.querySelector('.main');
+
+    // toggle.onclick = function() {
+    //     navigation.classList.toggle('active');
+    //     main.classList.toggle('active');
+    // }
 
 
     // add hovered class in selected list item
-    const list = document.querySelectorAll('navigation li');
-    function activeLink() {
-        list.forEach((item)=>
-            item.classList.remove('hovered')
-        )
-        this.classList.add('hovered');
-    }
 
-    list.forEach((item) => item.addEventListener('mouseover', activeLink));
+    // const list = document.querySelectorAll('navigation li');
+    // function activeLink() {
+    //     list.forEach((item)=>
+    //         item.classList.remove('hovered')
+    //     )
+    //     this.classList.add('hovered');
+    // }
+
+    // list.forEach((item) => item.addEventListener('mouseover', activeLink));
 
     return (
         <div className='adminContainer'>
@@ -116,36 +118,36 @@ const AdminHomePage = () => {
                 {/* ignore */}
             </section>
             
-            <div className='container'>
-                <div className='navigation'>
+            <div className='__container'>
+                <div className='__navigation'>
                     <ul>
                         <li>
                             <a href="#">
-                                {/* <span className='icon'></span> */}
+                                <span className='icon'><i className="fa-solid fa-eye"/></span>
                                 <span className='title'>FCAM</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                {/* <span className='icon'></span> */}
+                                <span className='icon'><i className="fa-solid fa-user"/></span>
                                 <span className='title'>Dashboard</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                {/* <span className='icon'></span> */}
+                                <span className='icon'><i className="fa-solid fa-lock"/></span>
                                 <span className='title'>Password</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                {/* <span className='icon'></span> */}
+                                <span className='icon'><i className="fa-solid fa-right-from-bracket"/></span>
                                 <span className='title'>Sign Out</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                {/* <span className='icon'></span> */}
+                                <span className='icon'><i className="fa-solid fa-message"/></span>
                                 <span className='title'>Message</span>
                             </a>
                         </li>
@@ -153,13 +155,105 @@ const AdminHomePage = () => {
                 </div>
 
                 {/* main */}
-                <div className="main">
-                    <div className="topbar">
-                        <div className="toggle">
-                            {/*ham icon */}
+                <div className="__main">
+                    <div className="__topbar">
+                        <div className="__toggle">
+                            <i className="fa-solid fa-bars"/>
                         </div>
                         <div className="user">
-                            {/* <img src="" alt="" /> */}
+                            {/* <img src="../../assets/images/user.jpg" alt="" /> */}
+                        </div>
+                    </div>
+
+                    {/* card */}
+                    <div className="__cardBox">
+                        <div className="__card">
+                            <div>
+                                <div className="__numbers">1,504</div>
+                                <div className="__cardName">Total forms</div>
+                            </div>
+                            {/* <div className="__iconBx">
+                                <i className="fa-solid fa-eye"/>
+                            </div> */}
+                        </div>
+                        <div className="__card">
+                            <div>
+                                <div className="__numbers">80</div>
+                                <div className="__cardName">Recent Responses</div>
+                            </div>
+                            {/* <div className="__iconBx">
+                                icon
+                            </div> */}
+                        </div>
+                        <div className="__card">
+                            <div>
+                                <div className="__numbers">254</div>
+                                <div className="__cardName">Earning</div>
+                            </div>
+                            {/* <div className="__iconBx">
+                                icon
+                            </div> */}
+                        </div>
+                        <div className="__card">
+                            <div>
+                                <div className="__numbers">12313</div>
+                                <div className="__cardName">Sales</div>
+                            </div>
+                            {/* <div className="__iconBx">
+                                icon
+                            </div> */}
+                        </div>
+                    </div>
+
+                    {/* order details list */}
+                    <div className="__details">
+                        <div className="Totalforms">
+                            <div className="__cardHeader">
+                                <h2>Total Forms</h2>
+                                <a href="#" className='__btn'>View All</a>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>Form Name</td>
+                                        <td>Edit Link</td>
+                                        <td>Sharable Link</td>
+                                        <td>Responses</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Temp Name</td>
+                                        <td>www.editkrchupchaap.com</td>
+                                        <td>www.sharekrchupchaap.com</td>
+                                        <td> <span className='status responses'>42</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temp Name</td>
+                                        <td>www.editkrchupchaap.com</td>
+                                        <td>www.sharekrchupchaap.com</td>
+                                        <td> <span className='status responses'>42</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temp Name</td>
+                                        <td>www.editkrchupchaap.com</td>
+                                        <td>www.sharekrchupchaap.com</td>
+                                        <td> <span className='status responses'>42</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temp Name</td>
+                                        <td>www.editkrchupchaap.com</td>
+                                        <td>www.sharekrchupchaap.com</td>
+                                        <td> <span className='status responses'>42</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temp Name</td>
+                                        <td>www.editkrchupchaap.com</td>
+                                        <td>www.sharekrchupchaap.com</td>
+                                        <td> <span className='status responses'>42</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
