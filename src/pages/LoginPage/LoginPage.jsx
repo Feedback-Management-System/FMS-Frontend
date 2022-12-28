@@ -89,6 +89,7 @@ const LoginPage = () => {
                                     name="email"
                                     placeholder="Email"
                                     value={email}
+                                    pattern="\S*@msijanakpuri\.com"
                                     onChange={(e) => {
                                         setEmail(e.target.value);
                                     }}
@@ -121,7 +122,9 @@ const LoginPage = () => {
                                     <label htmlFor="remember">Remember</label>
                                 </div>
                                 <div className="forgot">
-                                    <a href="#">Forgot password?</a>
+                                    <Link to="/forgot-password">
+                                        Forgot password?
+                                    </Link>
                                 </div>
                             </div>
 
