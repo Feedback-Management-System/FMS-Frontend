@@ -89,4 +89,66 @@
 .__cardBox .__card:hover .__iconBx,
 .__cardBox .__card:hover .__cardName {
     color: var(--white);
+
+/* media queries */
+@media (max-width: 991px) {
+    .__navigation {
+        left: -300px;
+    }
+    .__navigation.active {
+        width: 300px;
+        left: 0;
+    }
+    .__main {
+        width: 100%;
+        left: 0;
+    }
+    .__main.active {
+        left: 300px;
+    }
+    .__cardBox {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .__details {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .Totalforms {
+        overflow-x: auto;
+    }
+    .status.responses {
+        white-space: nowarp;
+    }
+}
+
+@media (max-width: 480px) {
+    .__cardBox {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .__cardHeader h2 {
+        font-size: 20px;
+    }
+    .__user {
+        min-width: 40px;
+    }
+    .__navigation {
+        width: 100%;
+        left: -100%;
+        z-index: 1000;
+    }
+    .__navigation.active {
+        width: 100%;
+        left: 0;
+    }
+    .__toggle {
+        z-index: 10001;
+    }
+    .__main.active .__toggle {
+        position: fixed;
+        right: 0;
+        left: initial;
+        color: var(--white);
+    }
 }
