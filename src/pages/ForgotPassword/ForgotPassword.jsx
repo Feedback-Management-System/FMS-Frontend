@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 // eslint-disable-next-line import/extensions
 import LoaderButton from '../../components/loaderButton/LoaderButton.jsx';
-import loginIllustration from '../../assets/images/loginIllustration.webp';
 import msiLogo from '../../assets/images/msi_logo.png';
 import forgotImg from '../../assets/images/undraw_Authentication_re_svpt.png';
 import '../LoginPage/LoginPage.css';

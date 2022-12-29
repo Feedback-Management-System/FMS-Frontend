@@ -4,9 +4,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 
-import { AdminHomePage } from 'pages/admin';
+import { AdminHomePage, Analytics,ChangePassword,ReportBug } from 'pages/admin';
 
-import { Sidebar } from 'components';
+// import { Sidebar } from 'components';
 
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
@@ -18,9 +18,9 @@ import Protected from './components/Protected.jsx';
 
 const AppLayout = () => (
     <>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <ToastContainer
-            position="bottom-center"
+            position="top-center"
             autoClose={4000}
             hideProgressBar={false}
             newestOnTop={false}
@@ -52,8 +52,20 @@ const router = createBrowserRouter([
                 element: <LoginProtected component={ForgotPassword} />,
             },
             {
-                path: '/admin',
+                path: '/admin/Dashboard',
                 element: <Protected component={AdminHomePage} />,
+            },
+            {
+                path: '/admin/analytics',
+                element: <Protected component={Analytics} />,
+            },
+            {
+                path: '/admin/change-password',
+                element: <Protected component={ChangePassword} />,
+            },
+            {
+                path: '/admin/report-bug',
+                element: <Protected component={ReportBug} />,
             },
         ],
     },

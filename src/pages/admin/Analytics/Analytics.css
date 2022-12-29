@@ -1,0 +1,103 @@
+/* main */
+.AnalyticsMain {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    background-color: var(--white);
+    transition: 0.5s;
+    font-size: 1.5rem;
+}
+
+.AnalyticsMain .active {
+    width: calc(100% - 80px);
+    left: 80px;
+}
+
+.__details {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 30px;
+    margin-top: 10px;
+}
+
+.__details .Totalforms {
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.__cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.__cardHeader h2 {
+    font-weight: 600;
+    color: var(--blue);
+}
+
+.__btn {
+    position: relative;
+    padding: 5px 10px;
+    background: var(--blue);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 6px;
+}
+
+.__details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.__details table thead td {
+    font-weight: 600;
+}
+
+.__details .Totalforms table tr {
+    color: var(--black1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.__details .Totalforms table tr:last-child {
+    border-bottom: none;
+}
+
+.__details .Totalforms table tr:hover {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.__details .Totalforms table tr td {
+    padding: 10px;
+}
+
+.__details .Totalforms table tr td:last-child {
+    text-align: end;
+}
+
+.__details .Totalforms table tr td:nth-child(2) {
+    text-align: end;
+}
+
+.__details .Totalforms table tr td:nth-child(3) {
+    text-align: center;
+}
+
+.status.responses {
+    padding: 2px 4px;
+    background: #8de02c;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}

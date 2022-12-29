@@ -8,7 +8,7 @@ function LoginProtected({ component }) {
 
     useEffect(() => {
         if (token) {
-            navigate('/admin');
+            navigate('/admin/Dashboard', { replace: true });
         }
     }, []);
     return (
