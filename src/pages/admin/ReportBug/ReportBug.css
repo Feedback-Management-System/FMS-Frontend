@@ -1,0 +1,15 @@
+/* main */
+.ReportBugMain {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    background-color: var(--white);
+    transition: 0.5s;
+    font-size: 1.5rem;
+}
+
+.ReportBugMain .active {
+    width: calc(100% - 80px);
+    left: 80px;
+}

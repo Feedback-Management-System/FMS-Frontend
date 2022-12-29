@@ -20,7 +20,7 @@ const LoginPage = () => {
 
         setTimeout(() => {
             localStorage.setItem('token', 'supersecrettoken');
-            navigate('/admin', { replace: true });
+            navigate('/admin/Dashboard', { replace: true });
             toast.success('Logged In Successfully');
             setIsLoading(false);
         }, 3000);
