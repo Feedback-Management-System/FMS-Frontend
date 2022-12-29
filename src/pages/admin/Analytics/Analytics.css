@@ -9,7 +9,7 @@
     font-size: 1.5rem;
 }
 
-.AnalyticsMain .active {
+.AnalyticsMain.active {
     width: calc(100% - 80px);
     left: 80px;
 }
@@ -100,4 +100,27 @@
     border-radius: 4px;
     font-size: 14px;
     font-weight: 500;
+}
+
+/* media queries */
+@media (max-width: 991px) {
+    .AnalyticsMain {
+        width: 100%;
+        left: 0;
+    }
+    .AnalyticsMain.active {
+        left: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .__details {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .Totalforms {
+        overflow-x: auto;
+    }
+    .status.responses {
+        white-space: nowrap;
+    }
 }

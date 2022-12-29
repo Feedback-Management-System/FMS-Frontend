@@ -22,6 +22,26 @@ function ChangePassword() {
                     setMainToggle={setMainToggle}
                 />
                 <div>ChangePassword</div>
+                <main>
+                    {/* <div className="page"></div>
+                <div className="main-box"></div> */}
+                    <div>{/* <span></span> */}</div>
+                    <div>
+                        <h4>Trouble Signing In</h4>
+                    </div>
+                    <div>
+                        <form method="post">
+                            <label htmlFor="">
+                                <input type="text" />
+                                {/* <span></span> */}
+                            </label>
+                        </form>
+                    </div>
+                    <div>
+                        {/* <button></button> */}
+                        {/* <a href=""></a> */}
+                    </div>
+                </main>
             </div>
         </>
     );
