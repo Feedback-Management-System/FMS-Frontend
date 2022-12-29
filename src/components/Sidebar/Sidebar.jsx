@@ -41,27 +41,27 @@ const Sidebar = ({ navToggle }) => {
                                     fontSize: '2rem',
                                 }}
                             >
-                                FCAM
+                                Feedback Portal
                             </span>
                         </a>
                     </li>
-                    <li>
+                    <li className={selectedOption==0?'activePage': null}>
                         <Link to="/admin/dashboard">
                             <span className="icon">
-                                <i className="fa-solid fa-user" />
+                            <i className="fa-solid fa-house"/>
                             </span>
                             <span className="title">Dashboard</span>
                         </Link>
                     </li>
-                    <li>
+                    <li className={selectedOption==1?'activePage': null}>
                         <Link to="/admin/analytics">
                             <span className="icon">
-                                <i className="fa-solid fa-lock" />
+                            <i className="fa-solid fa-chart-line"/>
                             </span>
                             <span className="title">Analytics</span>
                         </Link>
                     </li>
-                    <li>
+                    <li className={selectedOption==2?'activePage': null}>
                         <Link to="/admin/change-password">
                             <span className="icon">
                                 <i className="fa-solid fa-lock" />
@@ -69,7 +69,7 @@ const Sidebar = ({ navToggle }) => {
                             <span className="title">Change Password</span>
                         </Link>
                     </li>
-                    <li>
+                    <li className={selectedOption==3?'activePage': null}>
                         <Link to="/admin/report-bug">
                             <span className="icon">
                                 <i className="fa-solid fa-message" />

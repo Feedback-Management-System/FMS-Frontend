@@ -9,7 +9,18 @@
     font-size: 1.5rem;
 }
 
-.ReportBugMain .active {
+.ReportBugMain.active {
     width: calc(100% - 80px);
     left: 80px;
+}
+
+/* media queries */
+@media (max-width: 991px) {
+    .ReportBugMain {
+        width: 100%;
+        left: 0;
+    }
+    .ReportBugMain.active {
+        left: 300px;
+    }
 }

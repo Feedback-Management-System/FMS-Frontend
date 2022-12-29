@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Sidebar, Navbar } from 'components';
+import {
+    Sidebar,
+    Navbar,
+    GoogleLoginModal,
+    LoginGoogleButton,
+    LogoutGoogleButton,
+} from 'components';
 
 import './AdminHomePage.css';
 import { gapi } from 'gapi-script';
-import LoginGoogleButton from '../../../components/googleLogin/LoginGoogleButton';
-import LogoutGoogleButton from '../../../components/googleLogin/LogoutGoogleButton';
 
 const CLIENT_ID =
     '282391974322-87evpe1qamta10q0uuskfqesibdvrtb0.apps.googleusercontent.com';
@@ -139,45 +143,32 @@ const AdminHomePage = () => {
                     />
 
                     {/* card */}
-                    <div className="__cardBox">
-                        <div className="__card">
-                            <div>
-                                <div className="__numbers">1,504</div>
-                                <div className="__cardName">Total forms</div>
-                            </div>
-                            <div className="__iconBx">
-                                <i className="fa-regular fa-calendar-plus" />
-                            </div>
-                        </div>
-                        <div className="__card">
-                            <div>
-                                <div className="__numbers">80</div>
-                                <div className="__cardName">
-                                    Recent Responses
+                    <div className="hero__section">
+                        <div className="__cardBox">
+                            <div className="__card">
+                                <div>
+                                    <div className="__numbers">1,504</div>
+                                    <div className="__cardName">
+                                        Total forms
+                                    </div>
+                                </div>
+                                <div className="__iconBx">
+                                    <i className="fa-solid fa-plus" />
                                 </div>
                             </div>
-                            <div className="__iconBx">
-                                <i className="fa fa-search" />
+                            <div className="__card">
+                                <div>
+                                    <div className="__numbers">80</div>
+                                    <div className="__cardName">
+                                        Recent Responses
+                                    </div>
+                                </div>
+                                <div className="__iconBx">
+                                    <i className="fa fa-search" />
+                                </div>
                             </div>
                         </div>
-                        <div className="__card">
-                            <div>
-                                <div className="__numbers">254</div>
-                                <div className="__cardName">Earning</div>
-                            </div>
-                            <div className="__iconBx">
-                                <i className="fa-solid fa-eye" />
-                            </div>
-                        </div>
-                        <div className="__card">
-                            <div>
-                                <div className="__numbers">12313</div>
-                                <div className="__cardName">Sales</div>
-                            </div>
-                            <div className="__iconBx">
-                                <i className="fa-solid fa-eye" />
-                            </div>
-                        </div>
+                        <GoogleLoginModal />
                     </div>
                 </div>
             </div>
