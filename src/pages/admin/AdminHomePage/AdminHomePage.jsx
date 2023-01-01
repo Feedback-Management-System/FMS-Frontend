@@ -266,7 +266,7 @@ const AdminHomePage = () => {
                         <div className="__cardBox">
                             <div className="__card">
                                 <div>
-                                    <div className="__numbers">1,504</div>
+                                    <div className="__numbers">3</div>
                                     <div className="__cardName">
                                         Total forms
                                     </div>
@@ -277,7 +277,7 @@ const AdminHomePage = () => {
                             </div>
                             <div className="__card">
                                 <div>
-                                    <div className="__numbers">80</div>
+                                    <div className="__numbers">26</div>
                                     <div className="__cardName">
                                         Recent Responses
                                     </div>

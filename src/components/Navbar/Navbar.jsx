@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import msiLogo from '../../assets/images/user.jpg';
+import User from '../../assets/images/Sample_User_Icon.png';
 import './Navbar.css';
 
 const Navbar = ({setMainToggle,setNavToggle}) => {
@@ -28,7 +28,7 @@ const Navbar = ({setMainToggle,setNavToggle}) => {
                         <div className="__user">
                             <h3 style={{margin: '1rem'}}>Welcome, User</h3>
                             <div className="__imgBx">
-                                <img src={msiLogo} alt="User logo" />
+                                <img src={User} alt="User logo" />
                             </div>
                         </div>
                     </div>
