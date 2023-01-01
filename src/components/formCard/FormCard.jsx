@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 // import { useState } from 'react';
 // import axios from 'axios';
 // import { toast } from 'react-toastify';
+import './FormCard.css';
 
 function FormCard({ SNO, email, editId, createdAt }) {
     // const [isLoading, setIsLoading] = useState(false);
@@ -75,9 +77,52 @@ function FormCard({ SNO, email, editId, createdAt }) {
                 </button>
             </td>
             <td data-label="Report">
-                <button type="button" className="reportBtn">
+                <input
+                    className="Rmodal-btn"
+                    type="checkbox"
+                    id="Rmodal-btn"
+                    name="Rmodal-btn"
+                />
+
+                <label htmlFor="Rmodal-btn" className="reportBtn">
                     Generate Report
-                </button>
+                </label>
+
+                <div className="Rmodal">
+                    <div 
+                        onClick={() => { 
+                            document.getElementById(
+                                'Rmodal-btn',
+                            ).checked = false;
+                        }}
+                        className="cross"
+                        style={{
+                            position: 'absolute',
+                            top: '20px',
+                            right: '40px',
+                            cursor: 'pointer',
+                            backgroundColor: 'white',
+                            padding: '5px 15px',
+                            borderRadius: '10px',
+                            zIndex: '9999'
+                        }}
+                    >
+                        <p
+                            style={{
+                                fontSize: '15px',
+                            }}
+                        >
+                            ✖
+                        </p>
+                    </div>
+                    <div className="Rmodal-wrap">
+                        <br />
+                        <br />
+                        <p>Data Reponse Table</p>
+                        <br />
+                        <br />
+                    </div>
+                </div>
             </td>
         </tr>
     );

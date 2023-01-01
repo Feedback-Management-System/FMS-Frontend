@@ -26,7 +26,7 @@ const Navbar = ({setMainToggle,setNavToggle}) => {
                             Institute (GGSIPU)
                         </div> */}
                         <div className="__user">
-                            <h3>Welcome, Ayush Pun</h3>
+                            <h3 style={{margin: '1rem'}}>Welcome, User</h3>
                             <div className="__imgBx">
                                 <img src={msiLogo} alt="User logo" />
                             </div>

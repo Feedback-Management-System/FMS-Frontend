@@ -93,7 +93,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    max-width: 400px;
+    /* max-width: 400px; */
+    max-width: fit-content;
     border-radius: 12px;
     overflow: hidden;
     padding-bottom: 20px;
@@ -115,4 +116,38 @@
 
 .googleLoginButton {
     text-align: center;
+}
+
+#formName {
+    box-shadow: 0 7px 25px rgb(0 0 0 / 8%);
+    border-radius: 5px;
+    border: 1px solid rgb(0 0 0 / 8%);
+    outline: none;
+    padding: 0.2rem 1rem;
+}
+
+.formNameInputModal > label {
+    font-size: 1.2em;
+    color: var(--black1);
+    letter-spacing: 1px;
+}
+
+.formNameInputModal > button {
+    display: block;
+    margin: 2rem auto 0rem;
+    font-size: 1.2em;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    background-color: var(--blue);
+    color: #fff;
+    border: none;
+    box-shadow: 0 12px 35px 0 rgb(16 39 112 / 25%);
+    transition: all 200ms linear;
+    margin-bottom: -4rem;
+    letter-spacing: 1px;
+}
+
+.formNameInputModal > button:hover {
+    background-color: #fff;
+    color: var(--blue);
 }

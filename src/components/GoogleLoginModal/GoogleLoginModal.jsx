@@ -8,6 +8,47 @@ const GoogleLoginModal = ({ createForm, getAccessToken }) => {
     const [modalContent, setmodalContent] = useState('');
     // const [checkboxoption, setcheckboxOption] = useState(false);
 
+    function setFormNameAndCreateForm() {
+        const formName = document.getElementById('formName').value !== '' ? document.getElementById('formName').value : 'New Form';
+        setmodalContent(
+            <div className="modal">
+                <div
+                    onClick={() => {
+                        document.getElementById(
+                            'modal-btn',
+                        ).checked = false;
+                    }}
+                    className="cross"
+                    style={{
+                        position: 'absolute',
+                        top: '20px',
+                        right: '40px',
+                        cursor: 'pointer',
+                        backgroundColor: 'white',
+                        padding: '5px 15px',
+                        borderRadius: '10px',
+                    }}
+                >
+                    <p
+                        style={{
+                            fontSize: '15px',
+                        }}
+                    >
+                        ✖
+                    </p>
+                </div>
+                <div className="modal-wrap">
+                    <br />
+                    <br />
+                    <p>Please wait,The form is being created...</p>
+                    <br />
+                    <br />
+                </div>
+            </div>,
+        );
+        createForm(formName);
+    }
+
     async function checkLoginAndCreateForm() {
         if (await getAccessToken()) {
             setmodalContent(
@@ -40,13 +81,17 @@ const GoogleLoginModal = ({ createForm, getAccessToken }) => {
                     <div className="modal-wrap">
                         <br />
                         <br />
-                        <p>Please wait,The form is being created...</p>
+                        <div className="formNameInputModal">
+                            <label htmlFor="formName">Enter Form Name : </label>
+                            <input type="text" id="formName" />
+                            <button type='button' onClick={setFormNameAndCreateForm}>Done</button>
+                        </div>
+                        {/* <p>Please wait,The form is being created...</p> */}
                         <br />
                         <br />
                     </div>
                 </div>,
             );
-            createForm();
         } else {
             // eslint-disable-next-line no-alert
             setmodalContent(
@@ -82,7 +127,9 @@ const GoogleLoginModal = ({ createForm, getAccessToken }) => {
                         <br />
                         <span className="googleLoginButton">
                             <LoginGoogleButton
-                                checkLoginAndCreateForm={checkLoginAndCreateForm}
+                                checkLoginAndCreateForm={
+                                    checkLoginAndCreateForm
+                                }
                             />
                         </span>
                     </div>
