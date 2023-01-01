@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sidebar, Navbar, FormCard } from 'components';
+
 import './Analytics.css';
 
 function Analytics() {
@@ -8,42 +9,42 @@ function Analytics() {
 
     const formdata = [
         {
-            SNO: 1,
+            sNO: 1,
             email: 'BCA-5B-2021-22',
             viewId: '12348346',
             editId: 'dkmc21mvf231vfvsc',
             createdAt: '01-07-2021',
         },
         {
-            SNO: 2,
+            sNO: 2,
             email: 'BCA-3A-2021-22',
             viewId: '12344353',
             editId: 'jkm1mvf231vfvsc',
             createdAt: '23-07-2021',
         },
         {
-            SNO: 3,
+            sNO: 3,
             email: 'BCA-5B-2021-22',
             viewId: '12345356',
             editId: 'aaac21mvf231vfvsc',
             createdAt: '01-07-2021',
         },
         {
-            SNO: 4,
+            sNO: 4,
             email: 'BCA-5B-2021-22',
             viewId: '123406556',
             editId: 'qwmd21mvf231vfvsc',
             createdAt: '01-07-2021',
         },
         {
-            SNO: 5,
+            sNO: 5,
             email: 'BCA-5B-2021-22',
             viewId: '123543556',
             editId: 'plmc21mvf231vfvsm',
             createdAt: '01-07-2021',
         },
         {
-            SNO: 6,
+            sNO: 6,
             email: 'BCA-5B-2021-22',
             viewId: '123345356',
             editId: 'kmhu21mvf931vfvsc',
@@ -178,7 +179,11 @@ function Analytics() {
                         <tbody>
                             {formdata.length > 0 &&
                                 formdata.map((item) => (
-                                    <FormCard key={item.viewId} {...item} />
+                                    <FormCard
+                                        key={item.viewId}
+                                        // generateReport={generateReport}
+                                        {...item}
+                                    />
                                 ))}
                         </tbody>
                     </table>

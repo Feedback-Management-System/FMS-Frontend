@@ -1,11 +1,18 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-// import { useState } from 'react';
+import { useState } from 'react';
 // import axios from 'axios';
 // import { toast } from 'react-toastify';
+import SlidingPanel from 'react-sliding-side-panel';
+
 import './FormCard.css';
 
-function FormCard({ SNO, email, editId, createdAt }) {
+function FormCard({ sNO, email, editId, createdAt }) {
     // const [isLoading, setIsLoading] = useState(false);
+    const [openPanel, setOpenPanel] = useState(false);
+
+    const generateReport = () => {
+        setOpenPanel(true);
+    };
 
     // const token = localStorage.getItem('token');
 
@@ -65,66 +72,57 @@ function FormCard({ SNO, email, editId, createdAt }) {
     // }
 
     return (
-        <tr>
-            <td data-label="SNO">{SNO}</td>
-            <td data-label="Email" className="tab-email">
-                {email}
-            </td>
-            <td data-label="Created at">{createdAt}</td>
-            <td data-label="editId">
-                <button type="button" className="editBtn">
-                    Edit Form
-                </button>
-            </td>
-            <td data-label="Report">
-                <input
-                    className="Rmodal-btn"
-                    type="checkbox"
-                    id="Rmodal-btn"
-                    name="Rmodal-btn"
-                />
-
-                <label htmlFor="Rmodal-btn" className="reportBtn">
-                    Generate Report
-                </label>
-
-                <div className="Rmodal">
-                    <div 
-                        onClick={() => { 
-                            document.getElementById(
-                                'Rmodal-btn',
-                            ).checked = false;
+        <>
+            <tr>
+                <td data-label="sNO">{sNO}</td>
+                <td data-label="Email" className="tab-email">
+                    {email}
+                </td>
+                <td data-label="Created at">{createdAt}</td>
+                <td data-label="editId">
+                    <button type="button" className="editBtn">
+                        Edit Form
+                    </button>
+                </td>
+                <td data-label="Report">
+                    <button
+                        type="button"
+                        className="reportBtn"
+                        onClick={generateReport}
+                    >
+                        Generate Report
+                    </button>
+                </td>
+            </tr>
+            <SlidingPanel type="right" isOpen={openPanel} size={70}>
+                <div>
+                    <div
+                        style={{
+                            padding: '70px 20px 20px 20px',
                         }}
-                        className="cross"
+                    >
+                        My Panel Content
+                    </div>
+                    <button
+                        type="button"
                         style={{
                             position: 'absolute',
                             top: '20px',
-                            right: '40px',
-                            cursor: 'pointer',
-                            backgroundColor: 'white',
+                            left: '25px',
+                            fontSize: '1.6rem',
+                            background: 'transparent',
+                            boxShadow: 'rgb(136 136 136) 0px 0px 2px 0px',
                             padding: '5px 15px',
+                            cursor: 'pointer',
                             borderRadius: '10px',
-                            zIndex: '9999'
                         }}
+                        onClick={() => setOpenPanel(false)}
                     >
-                        <p
-                            style={{
-                                fontSize: '15px',
-                            }}
-                        >
-                            ✖
-                        </p>
-                    </div>
-                    <div className="Rmodal-wrap">
-                        <br />
-                        <br />
-                        <p>Data Reponse Table</p>
-                        <br />
-                        <br />
-                    </div>
+                        ✖
+                    </button>
                 </div>
-            </td>
-        </tr>
+            </SlidingPanel>
+        </>
     );
 }
 

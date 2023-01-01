@@ -42,7 +42,7 @@
 
 .__cardBox {
     position: relative;
-    width: 100%;
+    width: 80%;
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -81,15 +81,15 @@
     font-size: 3.5rem;
 }
 
-.__cardBox .__card:hover {
+/* .__cardBox .__card:hover {
     background: var(--blue);
-}
+} */
 
-.__cardBox .__card:hover .__numbers,
+/* .__cardBox .__card:hover .__numbers,
 .__cardBox .__card:hover .__iconBx,
 .__cardBox .__card:hover .__cardName {
     color: var(--white);
-}
+} */
 
 .hero__section {
     display: flex;
