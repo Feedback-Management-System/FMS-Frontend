@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 // import * as FaIcons from 'react-icons/fa';
 // import * as AiIcons from 'react-icons/ai';
 
@@ -20,11 +21,12 @@ const Sidebar = ({ navToggle }) => {
         SideBarPathIndex[window.location.pathname],
     );
 
+    const navigate = useNavigate();
+
     const logout = () => {
-        // toast.success('Logged out Successfully', {
-        //     position: toast.POSITION.BOTTOM_RIGHT,
-        // });
+        toast.success('Logged out Successfully');
         localStorage.removeItem('token');
+        navigate('/login');
     };
     return (
         <>
@@ -33,7 +35,7 @@ const Sidebar = ({ navToggle }) => {
                     <li>
                         <a>
                             <span className="icon">
-                                <i className="fa-solid fa-eye" />
+                            <i className="fa-solid fa-book-open-reader"/>
                             </span>
                             <span
                                 className="title"
@@ -78,12 +80,12 @@ const Sidebar = ({ navToggle }) => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/login" onClick={logout}>
+                        <a style={{"cursor":"pointer"}} onClick={logout}>
                             <span className="icon">
                                 <i className="fa-solid fa-right-from-bracket" />
                             </span>
                             <span className="title">Sign Out</span>
-                        </Link>
+                        </a>
                     </li>
                 </ul>
             </div>

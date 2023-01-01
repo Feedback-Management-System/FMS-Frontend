@@ -1,8 +1,96 @@
-import React from 'react';
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React, { useState } from 'react';
+import LoginGoogleButton from '../googleLogin/LoginGoogleButton';
 import './GoogleLoginModal.css';
-import { LoginGoogleButton } from 'components';
 
-const GoogleLoginModal = () => {
+const GoogleLoginModal = ({ createForm, getAccessToken }) => {
+    const [modalContent, setmodalContent] = useState('');
+    // const [checkboxoption, setcheckboxOption] = useState(false);
+
+    async function checkLoginAndCreateForm() {
+        if (await getAccessToken()) {
+            setmodalContent(
+                <div className="modal">
+                    <div
+                        onClick={() => {
+                            document.getElementById(
+                                'modal-btn',
+                            ).checked = false;
+                        }}
+                        className="cross"
+                        style={{
+                            position: 'absolute',
+                            top: '20px',
+                            right: '40px',
+                            cursor: 'pointer',
+                            backgroundColor: 'white',
+                            padding: '5px 15px',
+                            borderRadius: '10px',
+                        }}
+                    >
+                        <p
+                            style={{
+                                fontSize: '15px',
+                            }}
+                        >
+                            ✖
+                        </p>
+                    </div>
+                    <div className="modal-wrap">
+                        <br />
+                        <br />
+                        <p>Please wait,The form is being created...</p>
+                        <br />
+                        <br />
+                    </div>
+                </div>,
+            );
+            createForm();
+        } else {
+            // eslint-disable-next-line no-alert
+            setmodalContent(
+                <div className="modal">
+                    <div
+                        onClick={() => {
+                            document.getElementById(
+                                'modal-btn',
+                            ).checked = false;
+                        }}
+                        className="cross"
+                        style={{
+                            position: 'absolute',
+                            top: '20px',
+                            right: '40px',
+                            cursor: 'pointer',
+                            backgroundColor: 'white',
+                            padding: '5px 15px',
+                            borderRadius: '10px',
+                        }}
+                    >
+                        <p
+                            style={{
+                                fontSize: '15px',
+                            }}
+                        >
+                            ✖
+                        </p>
+                    </div>
+                    <div className="modal-wrap">
+                        <p>Click below to login from your google account.</p>
+                        <br />
+                        <br />
+                        <span className="googleLoginButton">
+                            <LoginGoogleButton
+                                checkLoginAndCreateForm={checkLoginAndCreateForm}
+                            />
+                        </span>
+                    </div>
+                </div>,
+            );
+        }
+    }
+
     return (
         <>
             <input
@@ -10,20 +98,14 @@ const GoogleLoginModal = () => {
                 type="checkbox"
                 id="modal-btn"
                 name="modal-btn"
+                // eslint-disable-next-line no-unneeded-ternary
+                // checked={checkboxoption ? 'checked' : false}
+                // onChange={() => {}} // eslint-disable-line no-empty-function
             />
-            <label htmlFor="modal-btn">Create Form</label>
-            <div className="modal">
-                <div className="modal-wrap">
-                    <p>
-                        Click below to login from your google account.
-                        <br />
-                        <br />
-                        <span className="googleLoginButton">
-                            <LoginGoogleButton />
-                        </span>
-                    </p>
-                </div>
-            </div>
+            <label htmlFor="modal-btn" onClick={checkLoginAndCreateForm}>
+                Create Form
+            </label>
+            {modalContent}
         </>
     );
 };

@@ -1,10 +1,55 @@
 import React, { useState } from 'react';
-import { Sidebar, Navbar } from 'components';
+import { Sidebar, Navbar, FormCard } from 'components';
 import './Analytics.css';
 
 function Analytics() {
     const [navToggle, setNavToggle] = useState(false);
     const [mainToggle, setMainToggle] = useState(false);
+
+    const formdata = [
+        {
+            SNO: 1,
+            email: 'BCA-5B-2021-22',
+            viewId: '12348346',
+            editId: 'dkmc21mvf231vfvsc',
+            createdAt: '01-07-2021',
+        },
+        {
+            SNO: 2,
+            email: 'BCA-3A-2021-22',
+            viewId: '12344353',
+            editId: 'jkm1mvf231vfvsc',
+            createdAt: '23-07-2021',
+        },
+        {
+            SNO: 3,
+            email: 'BCA-5B-2021-22',
+            viewId: '12345356',
+            editId: 'aaac21mvf231vfvsc',
+            createdAt: '01-07-2021',
+        },
+        {
+            SNO: 4,
+            email: 'BCA-5B-2021-22',
+            viewId: '123406556',
+            editId: 'qwmd21mvf231vfvsc',
+            createdAt: '01-07-2021',
+        },
+        {
+            SNO: 5,
+            email: 'BCA-5B-2021-22',
+            viewId: '123543556',
+            editId: 'plmc21mvf231vfvsm',
+            createdAt: '01-07-2021',
+        },
+        {
+            SNO: 6,
+            email: 'BCA-5B-2021-22',
+            viewId: '123345356',
+            editId: 'kmhu21mvf931vfvsc',
+            createdAt: '01-07-2021',
+        },
+    ];
 
     return (
         <>
@@ -20,9 +65,8 @@ function Analytics() {
                     setNavToggle={setNavToggle}
                     setMainToggle={setMainToggle}
                 />
-
                 {/* order details list */}
-                <div className="__details">
+                {/* <div className="__details">
                     <div className="Totalforms">
                         <div className="__cardHeader">
                             <h2>Total Forms</h2>
@@ -98,6 +142,41 @@ function Analytics() {
                             </tbody>
                         </table>
                     </div>
+                </div> */}
+
+                {/* analytics */}
+                <div className="AnalyticsFormContainer">
+                    <div className="AnalyticscardHeader">
+                        <h2
+                            style={{
+                                fontSize: '3rem',
+                                fontWeight: '600',
+                                color: '#000',
+                                marginBottom: '3rem',
+                                textAlign: 'center',
+                                width: '100%',
+                            }}
+                        >
+                            Analytics
+                        </h2>
+                    </div>
+                    <table className="tab">
+                        <thead>
+                            <tr>
+                                <th>S No.</th>
+                                <th>Form Name</th>
+                                <th>Created at</th>
+                                <th>Edit Form</th>
+                                <th>Responses/Report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {formdata.length > 0 &&
+                                formdata.map((item) => (
+                                    <FormCard key={item.viewId} {...item} />
+                                ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </>

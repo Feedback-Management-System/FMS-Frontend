@@ -14,6 +14,141 @@
     left: 80px;
 }
 
+/*  */
+.AnalyticsFormContainer {
+    margin: 0px 20px 0 20px;
+    padding: 20px;
+}
+.tab {
+    border-collapse: collapse;
+    box-shadow: 0 5px 10px #e1e5ee;
+    background-color: white;
+    text-align: left;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 5px;
+}
+.tab thead {
+    box-shadow: 0 5px 10px #e1e5ee;
+}
+.tab th {
+    padding: 2rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+.tab td {
+    padding: 1rem 2rem;
+    color: rgb(54, 54, 54);
+}
+
+.statusOfBug {
+    text-align: left;
+}
+/* .tab .status {
+    border-radius: 0.2rem;
+    background-color: rgb(228, 228, 228);
+    padding: 0.2rem 1rem;
+    text-align: center;
+  }
+  .tab .status-wont-fix {
+    background-color: #fff0c2;
+    color: #a68b00;
+  }
+  .tab .status-resolved {
+    background-color: #c8e6c9;
+    color: #388e3c;
+  }
+  .tab .status-open {
+    background-color: #ffcdd2;
+    color: #c62828;
+  }
+  .tab .status-other {
+    background-color: #9de0ff;
+    color: #28a6c6;
+  } */
+.tab tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.tab-email {
+    word-wrap: break-word;
+}
+.tab .reportBtn {
+    border: none;
+    color: rgb(0, 111, 0, 0.907);
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(0, 145, 0, 0.907);
+}
+
+.tab .reportBtn:hover {
+    background-color: rgba(0, 145, 0, 0.907);
+    color: rgb(255, 255, 255);
+}
+.tab .editBtn {
+    background-color: rgba(255, 255, 255, 0.907);
+    border: none;
+    color: #032830c0;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #032830c0;
+    background-color: rgb(255, 255, 255);
+}
+
+.tab .editBtn:hover {
+    background-color: #032830c0;
+    color: #ffffff;
+}
+
+@media (max-width: 1171px) {
+    .tab thead {
+        display: none;
+    }
+    .tab,
+    .tab tbody,
+    .tab tr,
+    .tab td {
+        display: block;
+        width: 100%;
+    }
+    .tab tr {
+        margin-bottom: 15px;
+    }
+    .tab tbody tr td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    .tab td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0%;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: left;
+    }
+}
+
+/*  */
 .__details {
     position: relative;
     width: 100%;
