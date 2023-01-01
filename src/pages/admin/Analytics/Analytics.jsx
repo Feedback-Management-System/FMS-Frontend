@@ -149,12 +149,17 @@ function Analytics() {
                     <div className="AnalyticscardHeader">
                         <h2
                             style={{
-                                fontSize: '3rem',
+                                fontSize: '2em',
                                 fontWeight: '600',
-                                color: '#000',
-                                marginBottom: '3rem',
+                                color: 'var(--white)',
                                 textAlign: 'center',
-                                width: '100%',
+                                background: 'var(--blue)',
+                                borderRadius: '20px',
+                                padding: '1rem 2rem',
+                                width: 'fit-content',
+                                margin: 'auto',
+                                marginBottom: '4rem',
+                                boxShadow: '0 7px 25px rgb(0 0 0 / 8%)',
                             }}
                         >
                             Analytics

@@ -4,6 +4,8 @@ import { GoogleLogin } from 'react-google-login';
 const LoginGoogleButton = ({ checkLoginAndCreateForm }) => {
     const onSuccess = (res) => {
         console.log('Login Success currentUser:', res.profileObj);
+        document.querySelector('.__imgBx > img').src = res.profileObj.imageUrl;
+        document.querySelector('.__user > h3').innerText = `Welcome, ${res.profileObj.givenName}`;
         console.log(checkLoginAndCreateForm);
         // eslint-disable-next-line react/destructuring-assignment
         checkLoginAndCreateForm();

@@ -61,12 +61,12 @@ const AdminHomePage = () => {
         return accessToken;
     }
 
-    function createForm() {
+    function createForm(formName) {
         const accessToken = gapi.auth.getToken().access_token;
 
         const newForm = {
             info: {
-                title: 'New Form',
+                title: formName,
             },
         };
 
