@@ -1,9 +1,12 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 
-const LoginGoogleButton = () => {
+const LoginGoogleButton = ({ checkLoginAndCreateForm }) => {
     const onSuccess = (res) => {
         console.log('Login Success currentUser:', res.profileObj);
+        console.log(checkLoginAndCreateForm);
+        // eslint-disable-next-line react/destructuring-assignment
+        checkLoginAndCreateForm();
     };
 
     const onFailure = (res) => {

@@ -1,4 +1,18 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { useEffect, useState } from 'react';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement,
+    RadialLinearScale,
+} from 'chart.js';
+import { Bar, PolarArea } from 'react-chartjs-2';
+
 import {
     Sidebar,
     Navbar,
@@ -30,6 +44,23 @@ const AdminHomePage = () => {
             });
         });
     }, []);
+
+    // const myPromise = new Promise(function (myResolve, myReject) {
+    //     const token = gapi.auth?.getToken()?.access_token;
+
+    //     myResolve(token); // when successful
+    //     myReject(); // when error
+    // });
+
+    // myPromise.then(function (token) {
+    //     console.log(token);
+    // });
+
+    async function getAccessToken() {
+        const accessToken = gapi.auth?.getToken()?.access_token;
+        return accessToken;
+    }
+
     function createForm() {
         const accessToken = gapi.auth.getToken().access_token;
 
@@ -48,7 +79,9 @@ const AdminHomePage = () => {
                 return response.json();
             })
             .then((data) => {
+                console.log(data);
                 setFormId(data.formId);
+                document.getElementById('modal-btn').checked = false;
                 window.open(
                     `https://docs.google.com/forms/d/${data.formId}/edit`,
                 );
@@ -93,6 +126,92 @@ const AdminHomePage = () => {
 
     // list.forEach((item) => item.addEventListener('mouseover', activeLink));
 
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        BarElement,
+        Title,
+        Tooltip,
+        Legend,
+        ArcElement,
+        RadialLinearScale,
+    );
+
+    const [chartData, setChartData] = useState({
+        datasets: [],
+    });
+
+    const [chartOptions, setChartOptions] = useState({});
+
+    useEffect(() => {
+        setChartData({
+            labels: [
+                'Five Star',
+                'Four Star',
+                'Three Star',
+                'Two Star',
+                'One Star',
+            ],
+            datasets: [
+                {
+                    label: ['Rating'],
+                    data: [12, 30, 29, 39, 10],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                },
+            ],
+        });
+
+        setChartOptions({
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Recent Form Responses',
+                },
+            },
+        });
+    }, []);
+
+    const pieData = {
+        labels: [
+            'Five Star',
+            'Four Star',
+            'Three Star',
+            'Two Star',
+            'One Star',
+        ],
+        datasets: [
+            {
+                label: '# of Votes',
+                data: [12, 6, 23, 21, 10],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1,
+            },
+        ],
+    };
+
     return (
         <div className="adminContainer">
             <section
@@ -111,8 +230,8 @@ const AdminHomePage = () => {
                         display: 'none',
                     }}
                 >
-                    <LoginGoogleButton />
-                    <LogoutGoogleButton />
+                    {/* <LoginGoogleButton />
+                    <LogoutGoogleButton /> */}
                     <button
                         type="button"
                         style={{ border: '2px solid red' }}
@@ -153,7 +272,7 @@ const AdminHomePage = () => {
                                     </div>
                                 </div>
                                 <div className="__iconBx">
-                                    <i className="fa-solid fa-plus" />
+                                    <i className="fa-solid fa-layer-group" />
                                 </div>
                             </div>
                             <div className="__card">
@@ -164,11 +283,34 @@ const AdminHomePage = () => {
                                     </div>
                                 </div>
                                 <div className="__iconBx">
-                                    <i className="fa fa-search" />
+                                    <i className="fa-solid fa-user-clock" />
                                 </div>
                             </div>
                         </div>
-                        <GoogleLoginModal />
+                        <GoogleLoginModal
+                            getAccessToken={getAccessToken}
+                            createForm={createForm}
+                        />
+                    </div>
+                    {/* <button
+                        style={{
+                            border: '2px solid red',
+                        }}
+                        type="button"
+                        onClick={getFormResponses}
+                    >
+                        get responses
+                    </button> */}
+
+                    {/* charts */}
+                    <div className="graphBox">
+                        <div className="__box">
+                            {/* <Pie data={pieData} /> */}
+                            <PolarArea data={pieData} />
+                        </div>
+                        <div className="__box">
+                            <Bar options={chartOptions} data={chartData} />
+                        </div>
                     </div>
                 </div>
             </div>
