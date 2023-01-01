@@ -9,14 +9,15 @@ const GoogleLoginModal = ({ createForm, getAccessToken }) => {
     // const [checkboxoption, setcheckboxOption] = useState(false);
 
     function setFormNameAndCreateForm() {
-        const formName = document.getElementById('formName').value !== '' ? document.getElementById('formName').value : 'New Form';
+        const formName =
+            document.getElementById('formName').value !== ''
+                ? document.getElementById('formName').value
+                : 'New Form';
         setmodalContent(
             <div className="modal">
                 <div
                     onClick={() => {
-                        document.getElementById(
-                            'modal-btn',
-                        ).checked = false;
+                        document.getElementById('modal-btn').checked = false;
                     }}
                     className="cross"
                     style={{
@@ -84,7 +85,12 @@ const GoogleLoginModal = ({ createForm, getAccessToken }) => {
                         <div className="formNameInputModal">
                             <label htmlFor="formName">Enter Form Name : </label>
                             <input type="text" id="formName" />
-                            <button type='button' onClick={setFormNameAndCreateForm}>Done</button>
+                            <button
+                                type="button"
+                                onClick={setFormNameAndCreateForm}
+                            >
+                                Done
+                            </button>
                         </div>
                         {/* <p>Please wait,The form is being created...</p> */}
                         <br />

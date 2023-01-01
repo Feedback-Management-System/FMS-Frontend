@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
 import { Sidebar, Navbar } from 'components';
 import './ChangePassword.css';
@@ -5,6 +6,22 @@ import './ChangePassword.css';
 function ChangePassword() {
     const [navToggle, setNavToggle] = useState(false);
     const [mainToggle, setMainToggle] = useState(false);
+    const [oldpasswordType, setOldPasswordType] = useState(true);
+    const [newpasswordType, setNewPasswordType] = useState(true);
+    const [confirmpasswordType, setConfirmPasswordType] = useState(true);
+
+    const togglePassword = (type) => {
+        if (type === 'oldpasswordType') {
+            setOldPasswordType((prevType) => !prevType);
+        }
+        if (type === 'newpasswordType') {
+            setNewPasswordType((prevType) => !prevType);
+        }
+        if (type === 'confirmpasswordType') {
+            setConfirmPasswordType((prevType) => !prevType);
+        }
+    };
+
     return (
         <>
             {/* sidebar */}
@@ -25,8 +42,6 @@ function ChangePassword() {
                     <div className="changePasswordContainer">
                         <div className="box">
                             <form
-                                action=""
-                                method=""
                                 name="changePasswordForm"
                                 id="changePasswordForm"
                             >
@@ -40,12 +55,35 @@ function ChangePassword() {
                                         Old Password
                                     </label>
                                     <input
-                                        type="password"
+                                        type={
+                                            oldpasswordType
+                                                ? 'password'
+                                                : 'text'
+                                        }
                                         id="oldPassword"
                                         name="oldPassword"
                                         required
                                     />
-                                    <i className="fa-solid fa-eye" />
+                                    {oldpasswordType ? (
+                                        <i
+                                            className="fa-solid fa-eye-slash"
+                                            onClick={() => {
+                                                togglePassword(
+                                                    'oldpasswordType',
+                                                );
+                                            }}
+                                        />
+                                    ) : (
+                                        <i
+                                            className="fa-solid fa-eye"
+                                            onClick={() => {
+                                                togglePassword(
+                                                    'oldpasswordType',
+                                                );
+                                            }}
+                                        />
+                                    )}
+                                    {/* <i className="fa-solid fa-eye" /> */}
                                 </div>
 
                                 <div className="passwords">
@@ -56,11 +94,33 @@ function ChangePassword() {
                                         New Password
                                     </label>
                                     <input
-                                        type="password"
+                                        type={
+                                            newpasswordType
+                                                ? 'password'
+                                                : 'text'
+                                        }
                                         id="newPassword"
                                         name="newPassword"
                                     />
-                                    <i className="fa-solid fa-eye" />
+                                    {newpasswordType ? (
+                                        <i
+                                            className="fa-solid fa-eye-slash"
+                                            onClick={() => {
+                                                togglePassword(
+                                                    'newpasswordType',
+                                                );
+                                            }}
+                                        />
+                                    ) : (
+                                        <i
+                                            className="fa-solid fa-eye"
+                                            onClick={() => {
+                                                togglePassword(
+                                                    'newpasswordType',
+                                                );
+                                            }}
+                                        />
+                                    )}
                                 </div>
 
                                 <div className="passwords">
@@ -71,11 +131,33 @@ function ChangePassword() {
                                         Confirm Password
                                     </label>
                                     <input
-                                        type="password"
+                                        type={
+                                            confirmpasswordType
+                                                ? 'password'
+                                                : 'text'
+                                        }
                                         id="confirmPassword"
                                         name="confirmPassword"
                                     />
-                                    <i className="fa-solid fa-eye" />
+                                    {confirmpasswordType ? (
+                                        <i
+                                            className="fa-solid fa-eye-slash"
+                                            onClick={() => {
+                                                togglePassword(
+                                                    'confirmpasswordType',
+                                                );
+                                            }}
+                                        />
+                                    ) : (
+                                        <i
+                                            className="fa-solid fa-eye"
+                                            onClick={() => {
+                                                togglePassword(
+                                                    'confirmpasswordType',
+                                                );
+                                            }}
+                                        />
+                                    )}
                                 </div>
 
                                 <div className="buttonContinue">
