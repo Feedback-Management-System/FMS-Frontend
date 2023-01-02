@@ -102,6 +102,70 @@ function FormCard({ sNO, email, editId, createdAt }) {
                         }}
                     >
                         My Panel Content
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th rowSpan="2">S. No. </th>
+                                    <th rowSpan="2" colSpan="2">
+                                        {' '}
+                                        Faculty{' '}
+                                    </th>
+                                    <th>Subject </th>
+                                    <th> Attributes </th>
+                                    <th colSpan="1"> Total Marks </th>
+                                    <th colSpan="2"> Maximum Marks </th>
+                                    <th colSpan="2"> Marks Scored in % </th>
+                                    <th rowSpan="2" colSpan="2">
+                                        {' '}
+                                        Average Percentage %{' '}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowSpan="6"> 1 </td>
+                                    <td rowSpan="6" colSpan="2">
+                                        Name1
+                                    </td>
+                                    <td rowSpan="6">Subject1</td>
+                                    <td>Subject Knowledge(A)</td>
+                                    <td>60</td>
+                                    <td colSpan="2">60</td>
+                                    <td colSpan="2">100%</td>
+                                    <td rowSpan="6">100%</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject Knowledge(A)</td>
+                                    <td>60</td>
+                                    <td colSpan="2">60</td>
+                                    <td colSpan="2">100%</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject Knowledge(A)</td>
+                                    <td>60</td>
+                                    <td colSpan="2">60</td>
+                                    <td colSpan="2">100%</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject Knowledge(A)</td>
+                                    <td>60</td>
+                                    <td colSpan="2">60</td>
+                                    <td colSpan="2">100%</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject Knowledge(A)</td>
+                                    <td>60</td>
+                                    <td colSpan="2">60</td>
+                                    <td colSpan="2">100%</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject Knowledge(A)</td>
+                                    <td>60</td>
+                                    <td colSpan="2">60</td>
+                                    <td colSpan="2">100%</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <button
                         type="button"
