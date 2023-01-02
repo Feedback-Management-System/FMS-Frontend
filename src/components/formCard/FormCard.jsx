@@ -2,36 +2,84 @@
 import { useState } from 'react';
 // import axios from 'axios';
 // import { toast } from 'react-toastify';
+import { gapi } from 'gapi-script';
 import SlidingPanel from 'react-sliding-side-panel';
 
 import './FormCard.css';
 
-function FormCard({ sNO, email, editId, createdAt }) {
+function FormCard({ sNO, title, formId, createdAt }) {
     // const [isLoading, setIsLoading] = useState(false);
     const [openPanel, setOpenPanel] = useState(false);
 
-    const generateReport = () => {
+    function getFormResponses(reportFormId) {
+        const accessToken = gapi.auth.getToken().access_token;
+
+        fetch(
+            `https://forms.googleapis.com/v1/forms/${reportFormId}/responses`,
+            {
+                method: 'GET',
+                headers: new Headers({
+                    Authorization: `Bearer ${accessToken}`,
+                }),
+            },
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    const generateReport = (reportFormId) => {
         setOpenPanel(true);
+        getFormResponses(reportFormId);
+
+        // axios({
+        //     method: 'PATCH',
+        //     url: `${restUrl}/api/v1/errReport/change/status`,
+        //     headers: {
+        //         Authorization: `Bearer ${token}`,
+        //     },
+        //     data: {
+        //         id: id,
+        //         status: newStatus,
+        //     },
+        // })
+        //     .then(async (response) => {
+        //         if (response.data.status.code == 200) {
+        //             await callBug();
+        //             toast.info(`Report Bug Status Updated`, {
+        //                 position: toast.POSITION.BOTTOM_RIGHT,
+        //             });
+        //             setIsLoading(false);
+        //         } else {
+        //             toast.error(`Something went wrong`, {
+        //                 position: toast.POSITION.BOTTOM_RIGHT,
+        //             });
+        //             setIsLoading(false);
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         toast.error(`Something went wrong`, {
+        //             position: toast.POSITION.BOTTOM_RIGHT,
+        //         });
+        //         setIsLoading(false);
+        //         console.error(error);
+        //     });
+    };
+
+    const editForm = (editFormId) => {
+        window.open(
+            `https://docs.google.com/forms/d/${editFormId}/edit`,
+            '_blank',
+        );
     };
 
     // const token = localStorage.getItem('token');
-
-    // let bugColorClass;
-    // let openSelect, resolveSelect, wontSelect, other;
-
-    // if (status === 'Open') {
-    //     bugColorClass = 'btn btn-danger';
-    //     openSelect = 'selected';
-    // } else if (status === 'Resolved') {
-    //     bugColorClass = 'btn btn-info';
-    //     resolveSelect = 'selected';
-    // } else if (status === "Won't Fix") {
-    //     bugColorClass = 'btn btn-warning';
-    //     wontSelect = 'selected';
-    // } else {
-    //     bugColorClass = 'btn btn-primary';
-    //     other = 'selected';
-    // }
 
     // function changestatus(e) {
     //     const newStatus = e.target.value;
@@ -74,21 +122,29 @@ function FormCard({ sNO, email, editId, createdAt }) {
     return (
         <>
             <tr>
-                <td data-label="sNO">{sNO}</td>
-                <td data-label="Email" className="tab-email">
-                    {email}
+                <td data-label="S No.">{sNO}</td>
+                <td data-label="Form Name" className="tab-title">
+                    {title}
                 </td>
-                <td data-label="Created at">{createdAt}</td>
-                <td data-label="editId">
-                    <button type="button" className="editBtn">
+                <td data-label="Created On">{createdAt?.split('T')[0]}</td>
+                <td data-label="Edit Form">
+                    <button
+                        type="button"
+                        className="editBtn"
+                        onClick={() => {
+                            editForm(formId);
+                        }}
+                    >
                         Edit Form
                     </button>
                 </td>
-                <td data-label="Report">
+                <td data-label="Responses">
                     <button
                         type="button"
                         className="reportBtn"
-                        onClick={generateReport}
+                        onClick={() => {
+                            generateReport(formId);
+                        }}
                     >
                         Generate Report
                     </button>
@@ -102,20 +158,39 @@ function FormCard({ sNO, email, editId, createdAt }) {
                         }}
                     >
                         My Panel Content
-                        <table>
+                        <table className="reportTable">
                             <thead>
                                 <tr>
-                                    <th rowSpan="2">S. No. </th>
-                                    <th rowSpan="2" colSpan="2">
+                                    <th className="head" rowSpan="2">
+                                        S. No.{' '}
+                                    </th>
+                                    <th
+                                        className="head"
+                                        rowSpan="2"
+                                        colSpan="2"
+                                    >
                                         {' '}
                                         Faculty{' '}
                                     </th>
-                                    <th>Subject </th>
-                                    <th> Attributes </th>
-                                    <th colSpan="1"> Total Marks </th>
-                                    <th colSpan="2"> Maximum Marks </th>
-                                    <th colSpan="2"> Marks Scored in % </th>
-                                    <th rowSpan="2" colSpan="2">
+                                    <th className="head">Subject </th>
+                                    <th className="head"> Attributes </th>
+                                    <th className="head" colSpan="1">
+                                        {' '}
+                                        Total Marks{' '}
+                                    </th>
+                                    <th className="head" colSpan="2">
+                                        {' '}
+                                        Maximum Marks{' '}
+                                    </th>
+                                    <th className="head" colSpan="2">
+                                        {' '}
+                                        Marks Scored in %{' '}
+                                    </th>
+                                    <th
+                                        className="head"
+                                        rowSpan="2"
+                                        colSpan="2"
+                                    >
                                         {' '}
                                         Average Percentage %{' '}
                                     </th>
@@ -123,46 +198,93 @@ function FormCard({ sNO, email, editId, createdAt }) {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td rowSpan="6"> 1 </td>
-                                    <td rowSpan="6" colSpan="2">
+                                    <td className="data" rowSpan="6">
+                                        {' '}
+                                        1{' '}
+                                    </td>
+                                    <td
+                                        className="data"
+                                        rowSpan="6"
+                                        colSpan="2"
+                                    >
                                         Name1
                                     </td>
-                                    <td rowSpan="6">Subject1</td>
-                                    <td>Subject Knowledge(A)</td>
-                                    <td>60</td>
-                                    <td colSpan="2">60</td>
-                                    <td colSpan="2">100%</td>
-                                    <td rowSpan="6">100%</td>
+                                    <td className="data" rowSpan="6">
+                                        Subject1
+                                    </td>
+                                    <td className="data">
+                                        Subject Knowledge(A)
+                                    </td>
+                                    <td className="data">60</td>
+                                    <td className="data" colSpan="2">
+                                        60
+                                    </td>
+                                    <td className="data" colSpan="2">
+                                        100%
+                                    </td>
+                                    <td className="data" rowSpan="6">
+                                        100%
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Subject Knowledge(A)</td>
-                                    <td>60</td>
-                                    <td colSpan="2">60</td>
-                                    <td colSpan="2">100%</td>
+                                    <td className="data">
+                                        Subject Knowledge(A)
+                                    </td>
+                                    <td className="data">60</td>
+                                    <td className="data" colSpan="2">
+                                        60
+                                    </td>
+                                    <td className="data" colSpan="2">
+                                        100%
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Subject Knowledge(A)</td>
-                                    <td>60</td>
-                                    <td colSpan="2">60</td>
-                                    <td colSpan="2">100%</td>
+                                    <td className="data">
+                                        Subject Knowledge(A)
+                                    </td>
+                                    <td className="data">60</td>
+                                    <td className="data" colSpan="2">
+                                        60
+                                    </td>
+                                    <td className="data" colSpan="2">
+                                        100%
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Subject Knowledge(A)</td>
-                                    <td>60</td>
-                                    <td colSpan="2">60</td>
-                                    <td colSpan="2">100%</td>
+                                    <td className="data">
+                                        Subject Knowledge(A)
+                                    </td>
+                                    <td className="data">60</td>
+                                    <td className="data" colSpan="2">
+                                        60
+                                    </td>
+                                    <td className="data" colSpan="2">
+                                        100%
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Subject Knowledge(A)</td>
-                                    <td>60</td>
-                                    <td colSpan="2">60</td>
-                                    <td colSpan="2">100%</td>
+                                    <td className="data">
+                                        Subject Knowledge(A)
+                                    </td>
+                                    <td className="data">60</td>
+                                    <td className="data" colSpan="2">
+                                        60
+                                    </td>
+                                    <td className="data" colSpan="2">
+                                        100%
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Subject Knowledge(A)</td>
-                                    <td>60</td>
-                                    <td colSpan="2">60</td>
-                                    <td colSpan="2">100%</td>
+                                    <td className="data">
+                                        Subject Knowledge(A)
+                                    </td>
+                                    <td className="data">60</td>
+                                    <td className="data" colSpan="2">
+                                        60
+                                    </td>
+                                    <td className="data" colSpan="2">
+                                        100%
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

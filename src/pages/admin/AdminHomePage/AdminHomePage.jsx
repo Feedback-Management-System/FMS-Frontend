@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -30,10 +31,16 @@ const API_KEY = 'AIzaSyAcut5XGS5iWvrcAljUIQ2D72KEIb67xVQ';
 const SCOPES = 'https://www.googleapis.com/auth/drive';
 
 const AdminHomePage = () => {
-    const [formId, setFormId] = useState('');
+    const [formData, setFormData] = useState({
+        responderUri: '',
+        title: '',
+        formId: '',
+    });
 
     const [navToggle, setNavToggle] = useState(false);
     const [mainToggle, setMainToggle] = useState(false);
+
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         gapi.load('client:auth2', () => {
@@ -61,7 +68,29 @@ const AdminHomePage = () => {
         return accessToken;
     }
 
-    function createForm(formName) {
+    function saveFormDataToBackend(responderUri, title, formId) {
+        axios({
+            method: 'POST',
+            // url: `http://fms-backend-production-ce11.up.railway.app/forms`,
+            url: `http://localhost:5000/forms`,
+            data: {
+                responderUri,
+                title,
+                formId,
+            },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            });
+    }
+
+    async function createForm(formName) {
         const accessToken = gapi.auth.getToken().access_token;
 
         const newForm = {
@@ -70,7 +99,7 @@ const AdminHomePage = () => {
             },
         };
 
-        fetch('https://forms.googleapis.com/v1/forms', {
+        await fetch('https://forms.googleapis.com/v1/forms', {
             method: 'POST',
             headers: new Headers({ Authorization: `Bearer ${accessToken}` }),
             body: JSON.stringify(newForm),
@@ -80,25 +109,20 @@ const AdminHomePage = () => {
             })
             .then((data) => {
                 console.log(data);
-                setFormId(data.formId);
+                setFormData({
+                    responderUri: data.responderUri,
+                    formId: data.formId,
+                    title: data.info.title,
+                });
+                saveFormDataToBackend(
+                    data.responderUri,
+                    data.info.title,
+                    data.formId,
+                );
                 document.getElementById('modal-btn').checked = false;
                 window.open(
                     `https://docs.google.com/forms/d/${data.formId}/edit`,
                 );
-            });
-    }
-    function getFormResponses() {
-        const accessToken = gapi.auth.getToken().access_token;
-
-        fetch(`https://forms.googleapis.com/v1/forms/${formId}/responses`, {
-            method: 'GET',
-            headers: new Headers({ Authorization: `Bearer ${accessToken}` }),
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
             });
     }
 
@@ -242,7 +266,7 @@ const AdminHomePage = () => {
                     <button
                         type="button"
                         style={{ border: '2px solid red' }}
-                        onClick={() => getFormResponses()}
+                        // onClick={() => getFormResponses()}
                     >
                         Get Form Responses
                     </button>

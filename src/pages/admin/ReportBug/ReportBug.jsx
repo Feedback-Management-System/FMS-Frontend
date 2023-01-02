@@ -1,10 +1,34 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Sidebar, Navbar } from 'components';
 import './ReportBug.css';
 
 function ReportBug() {
+    const [bugReport, setBugReport] = useState('');
     const [navToggle, setNavToggle] = useState(false);
     const [mainToggle, setMainToggle] = useState(false);
+
+    const token = localStorage.getItem('token');
+    const userData = JSON.parse(localStorage.getItem('user'));
+
+    function sendBugReport(e) {
+        e.preventDefault();
+        axios({
+            method: 'POST',
+            url: `http://localhost:5000/users/reportBugs`,
+            data: { description: bugReport },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            });
+    }
+
     return (
         <>
             {/* sidebar */}
@@ -23,10 +47,9 @@ function ReportBug() {
                     <div className="reportABugContainer">
                         <div className="box">
                             <form
-                                action=""
-                                method=""
                                 name="reportABugForm"
                                 id="reportABugForm"
+                                onSubmit={sendBugReport}
                             >
                                 <h2 className="title">Give your Feedback</h2>
 
@@ -41,7 +64,7 @@ function ReportBug() {
                                         type="email"
                                         id="yourEmail"
                                         name="yourEmail"
-                                        value="sachdevaabu30@gmail.com"
+                                        value={userData?.email}
                                         disabled
                                     />
                                 </div>
@@ -58,6 +81,10 @@ function ReportBug() {
                                         id="feedback"
                                         cols="150"
                                         rows="8"
+                                        value={bugReport}
+                                        onChange={(e) => {
+                                            setBugReport(e.target.value);
+                                        }}
                                     />
                                 </div>
 
