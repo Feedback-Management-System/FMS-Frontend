@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sidebar, Navbar, FormCard } from 'components';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 import './Analytics.css';
 
@@ -7,50 +9,89 @@ function Analytics() {
     const [navToggle, setNavToggle] = useState(false);
     const [mainToggle, setMainToggle] = useState(false);
 
-    const formdata = [
-        {
-            sNO: 1,
-            email: 'BCA-5B-2021-22',
-            viewId: '12348346',
-            editId: 'dkmc21mvf231vfvsc',
-            createdAt: '01-07-2021',
-        },
-        {
-            sNO: 2,
-            email: 'BCA-3A-2021-22',
-            viewId: '12344353',
-            editId: 'jkm1mvf231vfvsc',
-            createdAt: '23-07-2021',
-        },
-        {
-            sNO: 3,
-            email: 'BCA-5B-2021-22',
-            viewId: '12345356',
-            editId: 'aaac21mvf231vfvsc',
-            createdAt: '01-07-2021',
-        },
-        {
-            sNO: 4,
-            email: 'BCA-5B-2021-22',
-            viewId: '123406556',
-            editId: 'qwmd21mvf231vfvsc',
-            createdAt: '01-07-2021',
-        },
-        {
-            sNO: 5,
-            email: 'BCA-5B-2021-22',
-            viewId: '123543556',
-            editId: 'plmc21mvf231vfvsm',
-            createdAt: '01-07-2021',
-        },
-        {
-            sNO: 6,
-            email: 'BCA-5B-2021-22',
-            viewId: '123345356',
-            editId: 'kmhu21mvf931vfvsc',
-            createdAt: '01-07-2021',
-        },
-    ];
+    const [AllFormsData, setAllFormsData] = useState([]);
+
+    function getAllFormData() {
+        // setIsLoading(true);
+        const token = localStorage.getItem('token');
+
+        axios({
+            method: 'GET',
+            // url: `http://fms-backend-production-ce11.up.railway.app/forms/`,
+            url: `http://localhost:5000/forms/`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(async (response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    // setIsLoading(false);
+                    setAllFormsData(response.data);
+                } else {
+                    toast.error('Something went wrong', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    // setIsLoading(false);
+                }
+            })
+            .catch((error) => {
+                // setIsLoading(false);
+                toast.error('Something went wrong', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+                console.error(error);
+            });
+    }
+
+    useEffect(() => {
+        getAllFormData();
+    }, []);
+
+    // const formdata = [
+    //     {
+    //         sNO: 1,
+    //         email: 'BCA-5B-2021-22',
+    //         viewId: '12348346',
+    //         editId: 'dkmc21mvf231vfvsc',
+    //         createdAt: '01-07-2021',
+    //     },
+    //     {
+    //         sNO: 2,
+    //         email: 'BCA-3A-2021-22',
+    //         viewId: '12344353',
+    //         editId: 'jkm1mvf231vfvsc',
+    //         createdAt: '23-07-2021',
+    //     },
+    //     {
+    //         sNO: 3,
+    //         email: 'BCA-5B-2021-22',
+    //         viewId: '12345356',
+    //         editId: 'aaac21mvf231vfvsc',
+    //         createdAt: '01-07-2021',
+    //     },
+    //     {
+    //         sNO: 4,
+    //         email: 'BCA-5B-2021-22',
+    //         viewId: '123406556',
+    //         editId: 'qwmd21mvf231vfvsc',
+    //         createdAt: '01-07-2021',
+    //     },
+    //     {
+    //         sNO: 5,
+    //         email: 'BCA-5B-2021-22',
+    //         viewId: '123543556',
+    //         editId: 'plmc21mvf231vfvsm',
+    //         createdAt: '01-07-2021',
+    //     },
+    //     {
+    //         sNO: 6,
+    //         email: 'BCA-5B-2021-22',
+    //         viewId: '123345356',
+    //         editId: 'kmhu21mvf931vfvsc',
+    //         createdAt: '01-07-2021',
+    //     },
+    // ];
 
     return (
         <>
@@ -66,84 +107,6 @@ function Analytics() {
                     setNavToggle={setNavToggle}
                     setMainToggle={setMainToggle}
                 />
-                {/* order details list */}
-                {/* <div className="__details">
-                    <div className="Totalforms">
-                        <div className="__cardHeader">
-                            <h2>Total Forms</h2>
-                            <a href="#" className="__btn">
-                                View All
-                            </a>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>Form Name</td>
-                                    <td>Edit Link</td>
-                                    <td>Sharable Link</td>
-                                    <td>Responses</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Temp Name</td>
-                                    <td>www.editkrchupchaap.com</td>
-                                    <td>www.sharekrchupchaap.com</td>
-                                    <td>
-                                        {' '}
-                                        <span className="status responses">
-                                            42
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Temp Name</td>
-                                    <td>www.editkrchupchaap.com</td>
-                                    <td>www.sharekrchupchaap.com</td>
-                                    <td>
-                                        {' '}
-                                        <span className="status responses">
-                                            42
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Temp Name</td>
-                                    <td>www.editkrchupchaap.com</td>
-                                    <td>www.sharekrchupchaap.com</td>
-                                    <td>
-                                        {' '}
-                                        <span className="status responses">
-                                            42
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Temp Name</td>
-                                    <td>www.editkrchupchaap.com</td>
-                                    <td>www.sharekrchupchaap.com</td>
-                                    <td>
-                                        {' '}
-                                        <span className="status responses">
-                                            42
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Temp Name</td>
-                                    <td>www.editkrchupchaap.com</td>
-                                    <td>www.sharekrchupchaap.com</td>
-                                    <td>
-                                        {' '}
-                                        <span className="status responses">
-                                            42
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div> */}
 
                 {/* analytics */}
                 <div className="AnalyticsFormContainer">
@@ -171,16 +134,17 @@ function Analytics() {
                             <tr>
                                 <th>S No.</th>
                                 <th>Form Name</th>
-                                <th>Created at</th>
+                                <th>Created On</th>
                                 <th>Edit Form</th>
                                 <th>Responses/Report</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {formdata.length > 0 &&
-                                formdata.map((item) => (
+                            {AllFormsData.length > 0 &&
+                                AllFormsData.map((item, index) => (
                                     <FormCard
-                                        key={item.viewId}
+                                        key={item.formId}
+                                        sNO={index + 1}
                                         // generateReport={generateReport}
                                         {...item}
                                     />

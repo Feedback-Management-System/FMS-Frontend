@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 // eslint-disable-next-line import/extensions
 import LoaderButton from '../../components/loaderButton/LoaderButton.jsx';
 import loginIllustration from '../../assets/images/loginIllustration.webp';
@@ -18,42 +19,49 @@ const LoginPage = () => {
         e.preventDefault();
         setIsLoading(true);
 
-        setTimeout(() => {
-            localStorage.setItem('token', 'supersecrettoken');
-            navigate('/admin/dashboard', { replace: true });
-            toast.success('Logged In Successfully');
-            setIsLoading(false);
-        }, 3000);
+        // setTimeout(() => {
+        //     localStorage.setItem('token', 'supersecrettoken');
+        //     navigate('/admin/dashboard', { replace: true });
+        //     toast.success('Logged In Successfully');
+        //     setIsLoading(false);
+        // }, 3000);
 
-        // axios({
-        //     method: 'post',
-        //     url: `${restUrl}/api/v1/auth/login`,
-        //     data: {
-        //         email: email,
-        //         password: password,
-        //     },
-        // })
-        //     .then((response) => {
-        //         if (response.data.status.code == 200) {
-        //             localStorage.setItem('token', response.data.data.token);
-        //             navigate('/admin');
-        //             toast.success('Logged In Successfully', {
-        //                 position: toast.POSITION.BOTTOM_RIGHT,
-        //             });
-        //         } else {
-        //             console.log(response);
-        //             toast.error('Invalid Credentials', {
-        //                 position: toast.POSITION.BOTTOM_RIGHT,
-        //             });
-        //             setIsLoading(false);
-        //         }
-        //     })
-        //     .catch(() => {
-        //         toast.error('Something went wrong', {
-        //             position: toast.POSITION.BOTTOM_RIGHT,
-        //         });
-        //         setIsLoading(false);
-        //     });
+        axios({
+            method: 'post',
+            url: `http://localhost:5000/users/signin`,
+            data: {
+                email,
+                password,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    localStorage.setItem('token', response.data.token);
+                    localStorage.setItem(
+                        'user',
+                        JSON.stringify({
+                            userName: response.data.user.username,
+                            email: response.data.user.email,
+                        }),
+                    );
+                    navigate('/admin/dashboard');
+                    toast.success('Logged In Successfully', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                } else {
+                    toast.error('Invalid Credentials', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    setIsLoading(false);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                toast.error('Something went wrong', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+                setIsLoading(false);
+            });
     };
 
     return (

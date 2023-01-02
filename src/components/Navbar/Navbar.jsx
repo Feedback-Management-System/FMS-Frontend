@@ -6,6 +6,9 @@ import './Navbar.css';
 
 const Navbar = ({setMainToggle,setNavToggle}) => {
 
+    const userName = (JSON.parse(localStorage.getItem('user')))?.userName;
+    const userImage = (JSON.parse(localStorage.getItem('userImage')));
+
     function adminSidebarToggle() {
         setNavToggle((prev) => !prev);
         setMainToggle((prev) => !prev);
@@ -26,9 +29,9 @@ const Navbar = ({setMainToggle,setNavToggle}) => {
                             Institute (GGSIPU)
                         </div> */}
                         <div className="__user">
-                            <h3 style={{margin: '1rem'}}>Welcome, User</h3>
+                            <h3 style={{margin: '1rem'}}>Welcome, {userName}</h3>
                             <div className="__imgBx">
-                                <img src={User} alt="User logo" />
+                                <img src={userImage? userImage : User} alt="User logo" />
                             </div>
                         </div>
                     </div>

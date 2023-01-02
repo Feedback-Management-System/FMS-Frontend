@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Sidebar, Navbar } from 'components';
 import './ChangePassword.css';
+import { toast } from 'react-toastify';
 
 function ChangePassword() {
     const [navToggle, setNavToggle] = useState(false);
@@ -9,7 +11,12 @@ function ChangePassword() {
     const [oldpasswordType, setOldPasswordType] = useState(true);
     const [newpasswordType, setNewPasswordType] = useState(true);
     const [confirmpasswordType, setConfirmPasswordType] = useState(true);
-
+    const [password, setPassword] = useState({
+        oldPass: '',
+        newPass: '',
+        confirmPass: '',
+    });
+    const token = localStorage.getItem('token');
     const togglePassword = (type) => {
         if (type === 'oldpasswordType') {
             setOldPasswordType((prevType) => !prevType);
@@ -21,6 +28,38 @@ function ChangePassword() {
             setConfirmPasswordType((prevType) => !prevType);
         }
     };
+
+    function resetPassword(e) {
+        e.preventDefault();
+
+        if (password.newPass !== password.confirmPass) {
+            toast.error('Password does not match', {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+            return;
+        }
+
+        axios({
+            method: 'PATCH',
+            url: `http://localhost:5000/users/resetPassword`,
+            data: {
+                password: password.oldPass,
+                newPassword: password.newPass,
+            },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                console.log(response);
+                toast.success('Change Password Successfull', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            });
+    }
 
     return (
         <>
@@ -44,6 +83,7 @@ function ChangePassword() {
                             <form
                                 name="changePasswordForm"
                                 id="changePasswordForm"
+                                onSubmit={resetPassword}
                             >
                                 <h2 className="formTitle">Change Password</h2>
 
@@ -61,8 +101,16 @@ function ChangePassword() {
                                                 : 'text'
                                         }
                                         id="oldPassword"
-                                        name="oldPassword"
+                                        minLength={6}
                                         required
+                                        name="oldPassword"
+                                        value={password.oldPass}
+                                        onChange={(e) => {
+                                            setPassword((prev) => ({
+                                                ...prev,
+                                                oldPass: e.target.value,
+                                            }));
+                                        }}
                                     />
                                     {oldpasswordType ? (
                                         <i
@@ -99,8 +147,17 @@ function ChangePassword() {
                                                 ? 'password'
                                                 : 'text'
                                         }
+                                        minLength={6}
+                                        required
                                         id="newPassword"
                                         name="newPassword"
+                                        value={password.newPass}
+                                        onChange={(e) => {
+                                            setPassword((prev) => ({
+                                                ...prev,
+                                                newPass: e.target.value,
+                                            }));
+                                        }}
                                     />
                                     {newpasswordType ? (
                                         <i
@@ -137,7 +194,16 @@ function ChangePassword() {
                                                 : 'text'
                                         }
                                         id="confirmPassword"
+                                        minLength={6}
+                                        required
                                         name="confirmPassword"
+                                        value={password.confirmPass}
+                                        onChange={(e) => {
+                                            setPassword((prev) => ({
+                                                ...prev,
+                                                confirmPass: e.target.value,
+                                            }));
+                                        }}
                                     />
                                     {confirmpasswordType ? (
                                         <i

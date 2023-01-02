@@ -1,9 +1,9 @@
-table {
+.reportTable {
     border-collapse: collapse;
     width: 100%;
 }
 
-td, th {
+.data, .head {
     border: 2px solid;
     text-align: center;
     padding: 10px 20px;

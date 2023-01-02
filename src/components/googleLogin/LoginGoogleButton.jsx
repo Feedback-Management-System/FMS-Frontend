@@ -3,11 +3,14 @@ import { GoogleLogin } from 'react-google-login';
 
 const LoginGoogleButton = ({ checkLoginAndCreateForm }) => {
     const onSuccess = (res) => {
-        console.log('Login Success currentUser:', res.profileObj);
+        localStorage.setItem(
+            'userImage',
+            JSON.stringify(res.profileObj.imageUrl),
+        );
         document.querySelector('.__imgBx > img').src = res.profileObj.imageUrl;
-        document.querySelector(
-            '.__user > h3',
-        ).innerText = `Welcome, ${res.profileObj.givenName}`;
+        // document.querySelector(
+        //     '.__user > h3',
+        // ).innerText = `Welcome, ${res.profileObj.givenName}`;
         checkLoginAndCreateForm();
     };
 
