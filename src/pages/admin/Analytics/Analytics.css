@@ -118,25 +118,28 @@
 }
 
 @media (max-width: 1171px) {
-    .tab thead {
+    .AnalyticsFormContainer {
+        margin: 0%;
+    }
+    .tab .tabthead {
         display: none;
     }
     .tab,
-    .tab tbody,
-    .tab tr,
-    .tab td {
+    .tab .tabtbody,
+    .tab .tabtr,
+    .tab .tabtd {
         display: block;
         width: 100%;
     }
-    .tab tr {
+    .tab .tabtr {
         margin-bottom: 15px;
     }
-    .tab tbody tr td {
+    .tab .tabtbody .tabtr .tabtd {
         text-align: right;
         padding-left: 50%;
         position: relative;
     }
-    .tab td:before {
+    .tab .tabtd:before {
         content: attr(data-label);
         position: absolute;
         left: 0%;

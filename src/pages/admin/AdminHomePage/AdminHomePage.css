@@ -134,6 +134,7 @@
     }
     .hero__section {
         flex-direction: column;
+        align-items: center;
     }
 }
 
