@@ -20,27 +20,69 @@ function FormCard({ sNO, title, formId, createdAt }) {
         // eslint-disable-next-line no-restricted-syntax
         for (const [value1, key, ...values] of data) {
             if (key in obj) {
-                obj[key].push([value1, ...values]);
+                obj[key].push([key, ...values]);
             } else {
-                obj[key] = [[value1, ...values]];
+                obj[key] = [[key, ...values]];
             }
         }
 
+        const indexArray = [];
+        let i = 0;
+        const mainObj = {};
         // eslint-disable-next-line no-restricted-syntax
-        // for (const key in object) {
-        //     if (Object.hasOwnProperty.call(object, key)) {
-        //         const element = object[key];
+        for (const key in obj) {
+            if (i < 1) {
+                const questionsArr = obj[key][0];
+                console.log(questionsArr);
+                questionsArr.forEach((element, index) => {
+                    if(element.includes('Name of the')) {
+                        indexArray.push(index);
+                    }
+                });
+                console.log(indexArray);
+                i++;
+            } else {
+                i++;
+                mainObj[key] = {};
+                console.log(obj[key]);
+                const reponsesArray = obj[key];
+                reponsesArray.forEach(element => {
+                    console.log(element)
+                    for (let index = 0; index < indexArray.length; index++) {
+                        const mainIdx = indexArray[index];
 
-        //     }
-        // }
+                        const teachId = element[mainIdx] + data[0][mainIdx+1].split("the")[1];
+                        console.log(teachId);
 
+                        if(teachId in mainObj[key]) {
+                            const tempArr = [];
+                            for (let n = mainIdx+1; n < mainIdx+7; n++) {
+                                tempArr.push(element[n]);  
+                            }
+                            mainObj[key][teachId].push(tempArr);
+                        } else {
+                            const tempArr = [];
+                            for (let n = mainIdx+1; n < mainIdx+7; n++) {
+                                tempArr.push(element[n]);  
+                            }
+                            mainObj[key][teachId] = [tempArr];
+                        }
+                        
+                    }
+                });
+            }
+
+           
+            
+        }
         console.log(obj);
-    };
+        console.log(mainObj);
+    };  
 
     async function getSheetResponses(spreadsheetId, accessToken) {
         const accessTokenn = sessionStorage.getItem('googleAccessToken');
         fetch(
-            `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/A1:Z10000`,
+            `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/A1:AZ10000`,
             {
                 method: 'GET',
                 headers: new Headers({
@@ -331,3 +373,9 @@ function FormCard({ sNO, title, formId, createdAt }) {
 }
 
 export default FormCard;
+
+// {
+//     form : {
+//         teacher+sub : [[6 attribute], ...[6 attribute]];
+//     }
+// }
