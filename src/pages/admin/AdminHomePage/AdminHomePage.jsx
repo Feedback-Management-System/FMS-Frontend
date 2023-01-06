@@ -44,11 +44,19 @@ const AdminHomePage = () => {
 
     useEffect(() => {
         gapi.load('client:auth2', () => {
-            gapi.client.init({
-                apiKey: API_KEY,
-                clientId: CLIENT_ID,
-                scope: SCOPES,
-            });
+            gapi.client
+                .init({
+                    apiKey: API_KEY,
+                    clientId: CLIENT_ID,
+                    scope: SCOPES,
+                })
+                .then(() => {
+                    // console.log(gapi.auth?.getToken()?.access_token);
+                    sessionStorage.setItem(
+                        'googleAccessToken',
+                        gapi.auth?.getToken()?.access_token,
+                    );
+                });
         });
     }, []);
 
@@ -90,6 +98,28 @@ const AdminHomePage = () => {
             });
     }
 
+    async function createFormTemplate(formId, accessToken) {
+        await fetch(
+            `https://forms.googleapis.com/v1/forms/${formId}:batchUpdate`,
+            {
+                method: 'POST',
+                headers: new Headers({
+                    Authorization: `Bearer ${accessToken}`,
+                }),
+                body: {
+                    includeFormInResponse: true,
+                    requests: [
+                        {
+                            item: {
+                                id: 'Boom',
+                            },
+                        },
+                    ],
+                },
+            },
+        );
+    }
+
     async function createForm(formName) {
         const accessToken = gapi.auth.getToken().access_token;
 
@@ -107,7 +137,7 @@ const AdminHomePage = () => {
             .then((response) => {
                 return response.json();
             })
-            .then((data) => {
+            .then(async (data) => {
                 console.log(data);
                 setFormData({
                     responderUri: data.responderUri,
@@ -120,9 +150,39 @@ const AdminHomePage = () => {
                     data.formId,
                 );
                 document.getElementById('modal-btn').checked = false;
+
+                // await createFormTemplate(data.formId, accessToken);
+
                 window.open(
                     `https://docs.google.com/forms/d/${data.formId}/edit`,
                 );
+            });
+    }
+
+    function getFormResponses(reportFormId) {
+        const accessToken = gapi.auth.getToken().access_token;
+
+        fetch(
+            `https://forms.googleapis.com/v1/forms/16rfaQ5qjJpvdOyzv13lmXLjmqCjAGQ6lLH2tVmQEUqc/responses`,
+            {
+                method: 'GET',
+                headers: new Headers({
+                    Authorization: `Bearer ${accessToken}`,
+                }),
+            },
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                console.log(data.responses[0].answers[0]);
+                Object.values(data.responses[0].answers).forEach((item) => {
+                    console.log(item.textAnswers.answers[0].value);
+                });
+            })
+            .catch((error) => {
+                console.log(error);
             });
     }
 
@@ -316,7 +376,7 @@ const AdminHomePage = () => {
                             createForm={createForm}
                         />
                     </div>
-                    {/* <button
+                    <button
                         style={{
                             border: '2px solid red',
                         }}
@@ -324,7 +384,7 @@ const AdminHomePage = () => {
                         onClick={getFormResponses}
                     >
                         get responses
-                    </button> */}
+                    </button>
 
                     {/* charts */}
                     <div className="graphBox">

@@ -130,22 +130,21 @@ function Analytics() {
                         </h2>
                     </div>
                     <table className="tab">
-                        <thead>
-                            <tr>
-                                <th>S No.</th>
-                                <th>Form Name</th>
-                                <th>Created On</th>
-                                <th>Edit Form</th>
-                                <th>Responses/Report</th>
+                        <thead className="tabthead">
+                            <tr className="tabtr">
+                                <th className="tabth">S No.</th>
+                                <th className="tabth">Form Name</th>
+                                <th className="tabth">Created On</th>
+                                <th className="tabth">Edit Form</th>
+                                <th className="tabth">Responses/Report</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="tabtbody">
                             {AllFormsData.length > 0 &&
                                 AllFormsData.map((item, index) => (
                                     <FormCard
                                         key={item.formId}
                                         sNO={index + 1}
-                                        // generateReport={generateReport}
                                         {...item}
                                     />
                                 ))}

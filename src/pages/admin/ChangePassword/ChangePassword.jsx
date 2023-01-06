@@ -5,12 +5,18 @@ import { Sidebar, Navbar } from 'components';
 import './ChangePassword.css';
 import { toast } from 'react-toastify';
 
+import { useNavigate } from 'react-router-dom';
+import LoaderButton from 'components/loaderButton/LoaderButton';
+
 function ChangePassword() {
+    const navigate = useNavigate();
+
     const [navToggle, setNavToggle] = useState(false);
     const [mainToggle, setMainToggle] = useState(false);
     const [oldpasswordType, setOldPasswordType] = useState(true);
     const [newpasswordType, setNewPasswordType] = useState(true);
     const [confirmpasswordType, setConfirmPasswordType] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [password, setPassword] = useState({
         oldPass: '',
         newPass: '',
@@ -31,6 +37,7 @@ function ChangePassword() {
 
     function resetPassword(e) {
         e.preventDefault();
+        setIsLoading(true);
 
         if (password.newPass !== password.confirmPass) {
             toast.error('Password does not match', {
@@ -55,9 +62,13 @@ function ChangePassword() {
                 toast.success('Change Password Successfull', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
+                localStorage.removeItem('token');
+                navigate('/login', { replace: true });
+                setIsLoading(false);
             })
             .catch((err) => {
                 console.log(err.response.data);
+                setIsLoading(false);
             });
     }
 
@@ -226,15 +237,22 @@ function ChangePassword() {
                                     )}
                                 </div>
 
-                                <div className="buttonContinue">
-                                    <button
-                                        type="submit"
-                                        id="submitButton"
-                                        className="submitButton"
-                                    >
-                                        <span>Save</span>
-                                    </button>
-                                </div>
+                                <LoaderButton
+                                    display="Save"
+                                    id="submitButton"
+                                    className="submitButton"
+                                    style={
+                                        isLoading
+                                            ? {
+                                                  backgroundColor:
+                                                      'rgb(0, 145, 0, 0.5)',
+                                                  cursor: 'not-allowed',
+                                              }
+                                            : {}
+                                    }
+                                    isLoading={isLoading}
+                                    type="submit"
+                                />
                             </form>
                         </div>
                     </div>

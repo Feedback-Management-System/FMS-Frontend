@@ -7,7 +7,8 @@ import './Navbar.css';
 const Navbar = ({setMainToggle,setNavToggle}) => {
 
     const userName = (JSON.parse(localStorage.getItem('user')))?.userName;
-    const userImage = (JSON.parse(localStorage.getItem('userImage')));
+    const userImage = JSON.parse(localStorage.getItem('userImage'));
+    // console.log(userImage);
 
     function adminSidebarToggle() {
         setNavToggle((prev) => !prev);

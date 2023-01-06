@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Sidebar, Navbar } from 'components';
+import { toast } from 'react-toastify';
 import './ReportBug.css';
 
 function ReportBug() {
@@ -23,6 +24,10 @@ function ReportBug() {
         })
             .then((response) => {
                 console.log(response);
+                toast.success('Bug report send successfully', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+                setBugReport('');
             })
             .catch((err) => {
                 console.log(err.response.data);
