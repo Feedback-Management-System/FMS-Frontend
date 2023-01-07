@@ -15,7 +15,7 @@ const ResponseTableRow = ({ responseData, faculty, SNo }) => {
                 <td className="data" rowSpan="6">
                     {SNo}
                 </td>
-                <td className="data" rowSpan="6" colSpan="2">
+                <td className="data" rowSpan="6">
                     {faculty.split(' + ')[0]}
                 </td>
                 <td className="data" rowSpan="6">
@@ -23,10 +23,8 @@ const ResponseTableRow = ({ responseData, faculty, SNo }) => {
                 </td>
                 <td className="data">Subject Knowledge(A)</td>
                 <td className="data">{result[0]}</td>
-                <td className="data" colSpan="2">
-                    {maxMarks}
-                </td>
-                <td className="data" colSpan="2">
+                <td className="data">{maxMarks}</td>
+                <td className="data">
                     {`${((result[0] / maxMarks) * 100).toFixed(2)}%`}
                 </td>
                 <td className="data" rowSpan="6">
@@ -45,10 +43,8 @@ const ResponseTableRow = ({ responseData, faculty, SNo }) => {
             <tr>
                 <td className="data">Communication Skills(B)</td>
                 <td className="data">{result[1]}</td>
-                <td className="data" colSpan="2">
-                    {maxMarks}
-                </td>
-                <td className="data" colSpan="2">
+                <td className="data">{maxMarks}</td>
+                <td className="data">
                     {`${((result[1] / maxMarks) * 100).toFixed(2)}%`}
                 </td>
             </tr>
@@ -57,40 +53,32 @@ const ResponseTableRow = ({ responseData, faculty, SNo }) => {
                     Interactive approach and clear doubts(C)
                 </td>
                 <td className="data">{result[2]}</td>
-                <td className="data" colSpan="2">
-                    {maxMarks}
-                </td>
-                <td className="data" colSpan="2">
+                <td className="data">{maxMarks}</td>
+                <td className="data">
                     {`${((result[2] / maxMarks) * 100).toFixed(2)}%`}
                 </td>
             </tr>
             <tr>
                 <td className="data">Cover all topics(D)</td>
                 <td className="data">{result[3]}</td>
-                <td className="data" colSpan="2">
-                    {maxMarks}
-                </td>
-                <td className="data" colSpan="2">
+                <td className="data">{maxMarks}</td>
+                <td className="data">
                     {`${((result[3] / maxMarks) * 100).toFixed(2)}%`}
                 </td>
             </tr>
             <tr>
                 <td className="data">Punctuality in taking classes(E)</td>
                 <td className="data">{result[4]}</td>
-                <td className="data" colSpan="2">
-                    {maxMarks}
-                </td>
-                <td className="data" colSpan="2">
+                <td className="data">{maxMarks}</td>
+                <td className="data">
                     {`${((result[4] / maxMarks) * 100).toFixed(2)}%`}
                 </td>
             </tr>
             <tr>
                 <td className="data">Control over the class(F)</td>
                 <td className="data">{result[5]}</td>
-                <td className="data" colSpan="2">
-                    {maxMarks}
-                </td>
-                <td className="data" colSpan="2">
+                <td className="data">{maxMarks}</td>
+                <td className="data">
                     {`${((result[5] / maxMarks) * 100).toFixed(2)}%`}
                 </td>
             </tr>

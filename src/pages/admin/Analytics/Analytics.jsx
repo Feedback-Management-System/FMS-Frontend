@@ -48,51 +48,6 @@ function Analytics() {
         getAllFormData();
     }, []);
 
-    // const formdata = [
-    //     {
-    //         sNO: 1,
-    //         email: 'BCA-5B-2021-22',
-    //         viewId: '12348346',
-    //         editId: 'dkmc21mvf231vfvsc',
-    //         createdAt: '01-07-2021',
-    //     },
-    //     {
-    //         sNO: 2,
-    //         email: 'BCA-3A-2021-22',
-    //         viewId: '12344353',
-    //         editId: 'jkm1mvf231vfvsc',
-    //         createdAt: '23-07-2021',
-    //     },
-    //     {
-    //         sNO: 3,
-    //         email: 'BCA-5B-2021-22',
-    //         viewId: '12345356',
-    //         editId: 'aaac21mvf231vfvsc',
-    //         createdAt: '01-07-2021',
-    //     },
-    //     {
-    //         sNO: 4,
-    //         email: 'BCA-5B-2021-22',
-    //         viewId: '123406556',
-    //         editId: 'qwmd21mvf231vfvsc',
-    //         createdAt: '01-07-2021',
-    //     },
-    //     {
-    //         sNO: 5,
-    //         email: 'BCA-5B-2021-22',
-    //         viewId: '123543556',
-    //         editId: 'plmc21mvf231vfvsm',
-    //         createdAt: '01-07-2021',
-    //     },
-    //     {
-    //         sNO: 6,
-    //         email: 'BCA-5B-2021-22',
-    //         viewId: '123345356',
-    //         editId: 'kmhu21mvf931vfvsc',
-    //         createdAt: '01-07-2021',
-    //     },
-    // ];
-
     return (
         <>
             {/* sidebar */}
@@ -146,6 +101,8 @@ function Analytics() {
                                         key={item.formId}
                                         sNO={index + 1}
                                         {...item}
+                                        // eslint-disable-next-line react/jsx-no-bind
+                                        getAllFormData={getAllFormData}
                                     />
                                 ))}
                         </tbody>
