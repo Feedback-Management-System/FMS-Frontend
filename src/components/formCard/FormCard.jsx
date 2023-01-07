@@ -1,14 +1,18 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 // import { toast } from 'react-toastify';
 import SlidingPanel from 'react-sliding-side-panel';
 
 import './FormCard.css';
+import LoaderButton from 'components/loaderButton/LoaderButton';
+import ResponseTable from './ResponseTable';
 
 function FormCard({ sNO, title, formId, createdAt }) {
     // const [isLoading, setIsLoading] = useState(false);
     const [openPanel, setOpenPanel] = useState(false);
+    const [responseObject, setResponseObject] = useState({});
     // const [googleResponses, setgoogleResponses] = useState('');
 
     const generateReport = (data) => {
@@ -18,7 +22,7 @@ function FormCard({ sNO, title, formId, createdAt }) {
         const obj = {};
         // const dataobj = {};
         // eslint-disable-next-line no-restricted-syntax
-        for (const [value1, key, ...values] of data) {
+        for (const [, key, ...values] of data) {
             if (key in obj) {
                 obj[key].push([key, ...values]);
             } else {
@@ -26,6 +30,7 @@ function FormCard({ sNO, title, formId, createdAt }) {
             }
         }
 
+        console.log(obj);
         const indexArray = [];
         let i = 0;
         const mainObj = {};
@@ -35,7 +40,7 @@ function FormCard({ sNO, title, formId, createdAt }) {
                 const questionsArr = obj[key][0];
                 console.log(questionsArr);
                 questionsArr.forEach((element, index) => {
-                    if(element.includes('Name of the')) {
+                    if (element.includes('Name of the')) {
                         indexArray.push(index);
                     }
                 });
@@ -46,38 +51,40 @@ function FormCard({ sNO, title, formId, createdAt }) {
                 mainObj[key] = {};
                 console.log(obj[key]);
                 const reponsesArray = obj[key];
-                reponsesArray.forEach(element => {
-                    console.log(element)
+                reponsesArray.forEach((element) => {
+                    console.log(element);
                     for (let index = 0; index < indexArray.length; index++) {
                         const mainIdx = indexArray[index];
 
-                        const teachId = element[mainIdx] + data[0][mainIdx+1].split("the")[1];
+                        const teachId = `${element[mainIdx]} + ${
+                            data[0][mainIdx + 1].split('the')[1]
+                        }`;
                         console.log(teachId);
 
-                        if(teachId in mainObj[key]) {
+                        if (teachId in mainObj[key]) {
                             const tempArr = [];
-                            for (let n = mainIdx+1; n < mainIdx+7; n++) {
-                                tempArr.push(element[n]);  
+                            for (let n = mainIdx + 1; n < mainIdx + 7; n++) {
+                                tempArr.push(element[n]);
                             }
                             mainObj[key][teachId].push(tempArr);
                         } else {
                             const tempArr = [];
-                            for (let n = mainIdx+1; n < mainIdx+7; n++) {
-                                tempArr.push(element[n]);  
+                            for (let n = mainIdx + 1; n < mainIdx + 7; n++) {
+                                tempArr.push(element[n]);
                             }
                             mainObj[key][teachId] = [tempArr];
                         }
-                        
                     }
                 });
             }
-
-           
-            
         }
         console.log(obj);
         console.log(mainObj);
-    };  
+        setResponseObject(mainObj);
+
+        console.log(responseObject);
+        console.log(Object.keys(mainObj));
+    };
 
     async function getSheetResponses(spreadsheetId, accessToken) {
         const accessTokenn = sessionStorage.getItem('googleAccessToken');
@@ -166,6 +173,10 @@ function FormCard({ sNO, title, formId, createdAt }) {
         );
     };
 
+    function exportToExcel() {
+
+    }
+
     return (
         <>
             <button
@@ -210,144 +221,38 @@ function FormCard({ sNO, title, formId, createdAt }) {
                     </button>
                 </td>
             </tr>
-            <SlidingPanel type="right" isOpen={openPanel} size={70}>
+            <SlidingPanel type="right" isOpen={openPanel} size={90}>
                 <div>
                     <div
                         style={{
                             padding: '70px 20px 20px 20px',
                         }}
                     >
-                        My Panel Content
-                        <table className="reportTable">
-                            <thead>
-                                <tr>
-                                    <th className="head" rowSpan="2">
-                                        S. No.{' '}
-                                    </th>
-                                    <th
-                                        className="head"
-                                        rowSpan="2"
-                                        colSpan="2"
-                                    >
-                                        {' '}
-                                        Faculty{' '}
-                                    </th>
-                                    <th className="head">Subject </th>
-                                    <th className="head"> Attributes </th>
-                                    <th className="head" colSpan="1">
-                                        {' '}
-                                        Total Marks{' '}
-                                    </th>
-                                    <th className="head" colSpan="2">
-                                        {' '}
-                                        Maximum Marks{' '}
-                                    </th>
-                                    <th className="head" colSpan="2">
-                                        {' '}
-                                        Marks Scored in %{' '}
-                                    </th>
-                                    <th
-                                        className="head"
-                                        rowSpan="2"
-                                        colSpan="2"
-                                    >
-                                        {' '}
-                                        Average Percentage %{' '}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className="data" rowSpan="6">
-                                        {' '}
-                                        1{' '}
-                                    </td>
-                                    <td
-                                        className="data"
-                                        rowSpan="6"
-                                        colSpan="2"
-                                    >
-                                        Name1
-                                    </td>
-                                    <td className="data" rowSpan="6">
-                                        Subject1
-                                    </td>
-                                    <td className="data">
-                                        Subject Knowledge(A)
-                                    </td>
-                                    <td className="data">60</td>
-                                    <td className="data" colSpan="2">
-                                        60
-                                    </td>
-                                    <td className="data" colSpan="2">
-                                        100%
-                                    </td>
-                                    <td className="data" rowSpan="6">
-                                        100%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="data">
-                                        Communication Skills(B)
-                                    </td>
-                                    <td className="data">60</td>
-                                    <td className="data" colSpan="2">
-                                        60
-                                    </td>
-                                    <td className="data" colSpan="2">
-                                        100%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="data">
-                                        Interactive approach and clear doubts(C)
-                                    </td>
-                                    <td className="data">60</td>
-                                    <td className="data" colSpan="2">
-                                        60
-                                    </td>
-                                    <td className="data" colSpan="2">
-                                        100%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="data">
-                                        Cover all topics(D)
-                                    </td>
-                                    <td className="data">60</td>
-                                    <td className="data" colSpan="2">
-                                        60
-                                    </td>
-                                    <td className="data" colSpan="2">
-                                        100%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="data">
-                                        Punctuality in taking classes(E)
-                                    </td>
-                                    <td className="data">60</td>
-                                    <td className="data" colSpan="2">
-                                        60
-                                    </td>
-                                    <td className="data" colSpan="2">
-                                        100%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="data">
-                                        Control over the class(F)
-                                    </td>
-                                    <td className="data">60</td>
-                                    <td className="data" colSpan="2">
-                                        60
-                                    </td>
-                                    <td className="data" colSpan="2">
-                                        100%
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        {Object.keys(responseObject).map((key) => (
+                            <LoaderButton
+                                onClick={() => {exportToExcel()}}
+                                display={`Export ${key} to excel`}
+                                // style={
+                                //     isLoading
+                                //         ? {
+                                //               backgroundColor:
+                                //                   'rgb(0, 145, 0, 0.5)',
+                                //               cursor: 'not-allowed',
+                                //           }
+                                //         : {}
+                                // }
+                                // isLoading={isLoading}
+                                type="submit"
+                            />
+                        ))}
+
+                        {Object.keys(responseObject).map((key, i) => (
+                            <ResponseTable
+                                responseData={responseObject[key]}
+                                key={i}
+                                title={key}
+                            />
+                        ))}
                     </div>
                     <button
                         type="button"
