@@ -1,15 +1,15 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 // import { toast } from 'react-toastify';
 import SlidingPanel from 'react-sliding-side-panel';
 
 import './FormCard.css';
-import LoaderButton from 'components/loaderButton/LoaderButton';
+// import LoaderButton from 'components/loaderButton/LoaderButton';
 import ResponseTable from './ResponseTable';
 
-function FormCard({ sNO, title, formId, createdAt }) {
+function FormCard({ sNO, title, formId, createdAt, getAllFormData }) {
     // const [isLoading, setIsLoading] = useState(false);
     const [openPanel, setOpenPanel] = useState(false);
     const [responseObject, setResponseObject] = useState({});
@@ -173,21 +173,30 @@ function FormCard({ sNO, title, formId, createdAt }) {
         );
     };
 
-    function exportToExcel() {
-
-    }
+    const deleteForm = (deleteFormId) => {
+        const token = localStorage.getItem('token');
+        console.log(typeof deleteFormId);
+        axios({
+            method: 'DELETE',
+            // url: `http://fms-backend-production-ce11.up.railway.app/forms/${deleteFormId}`,
+            url: `http://localhost:5000/forms/${deleteFormId}`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    getAllFormData();
+                }
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            });
+    };
 
     return (
         <>
-            <button
-                type="button"
-                style={{
-                    border: '2px solid red',
-                }}
-                // onClick={() => generateReport()}
-            >
-                not available
-            </button>
             <tr className="tabtr">
                 <td className="tabtd" data-label="S No.">
                     {sNO}
@@ -207,6 +216,15 @@ function FormCard({ sNO, title, formId, createdAt }) {
                         }}
                     >
                         Edit Form
+                    </button>
+                    <button
+                        type="button"
+                        className="deleteBtn"
+                        onClick={() => {
+                            deleteForm(formId);
+                        }}
+                    >
+                        Delete
                     </button>
                 </td>
                 <td className="tabtd" data-label="Responses">
@@ -228,24 +246,6 @@ function FormCard({ sNO, title, formId, createdAt }) {
                             padding: '70px 20px 20px 20px',
                         }}
                     >
-                        {Object.keys(responseObject).map((key) => (
-                            <LoaderButton
-                                onClick={() => {exportToExcel()}}
-                                display={`Export ${key} to excel`}
-                                // style={
-                                //     isLoading
-                                //         ? {
-                                //               backgroundColor:
-                                //                   'rgb(0, 145, 0, 0.5)',
-                                //               cursor: 'not-allowed',
-                                //           }
-                                //         : {}
-                                // }
-                                // isLoading={isLoading}
-                                type="submit"
-                            />
-                        ))}
-
                         {Object.keys(responseObject).map((key, i) => (
                             <ResponseTable
                                 responseData={responseObject[key]}

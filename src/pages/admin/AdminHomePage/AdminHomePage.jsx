@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import {
     Chart as ChartJS,
@@ -12,7 +13,7 @@ import {
     ArcElement,
     RadialLinearScale,
 } from 'chart.js';
-import { Bar, PolarArea } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 
 import {
     Sidebar,
@@ -40,7 +41,83 @@ const AdminHomePage = () => {
     const [navToggle, setNavToggle] = useState(false);
     const [mainToggle, setMainToggle] = useState(false);
 
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        BarElement,
+        Title,
+        Tooltip,
+        Legend,
+        ArcElement,
+        RadialLinearScale,
+    );
+
+    const [chartData, setChartData] = useState({
+        datasets: [],
+    });
+
+    const [chartOptions, setChartOptions] = useState({});
+    const [totalFormsCount, settotalFormsCount] = useState(0);
+    const [recentResponsesCount, setrecentResponsesCount] = useState(0);
+
     const token = localStorage.getItem('token');
+
+    function getFormResponses(reportFormId) {
+        const accessToken = gapi.auth.getToken().access_token;
+
+        fetch(
+            `https://forms.googleapis.com/v1/forms/${reportFormId}/responses`,
+            {
+                method: 'GET',
+                headers: new Headers({
+                    Authorization: `Bearer ${accessToken}`,
+                }),
+            },
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setrecentResponsesCount(data.responses?.length);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    function getAllFormData() {
+        // setIsLoading(true);
+        axios({
+            method: 'GET',
+            // url: `http://fms-backend-production-ce11.up.railway.app/forms/`,
+            url: `http://localhost:5000/forms/`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(async (response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    // setIsLoading(false);
+                    getFormResponses(
+                        response.data[response.data.length - 1]?.formId,
+                    );
+                    settotalFormsCount(response.data?.length);
+                } else {
+                    toast.error('Something went wrong', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    // setIsLoading(false);
+                }
+            })
+            .catch((error) => {
+                // setIsLoading(false);
+                toast.error('Something went wrong', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+                // console.error(error);
+            });
+    }
 
     useEffect(() => {
         gapi.load('client:auth2', () => {
@@ -56,7 +133,44 @@ const AdminHomePage = () => {
                         'googleAccessToken',
                         gapi.auth?.getToken()?.access_token,
                     );
+                    getAllFormData();
                 });
+        });
+
+        setChartData({
+            labels: [
+                'Five Star',
+                'Four Star',
+                'Three Star',
+                'Two Star',
+                'One Star',
+            ],
+            datasets: [
+                {
+                    label: ['Rating'],
+                    data: [12, 30, 29, 39, 10],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                },
+            ],
+        });
+
+        setChartOptions({
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Recent Form Responses',
+                },
+            },
         });
     }, []);
 
@@ -98,7 +212,737 @@ const AdminHomePage = () => {
             });
     }
 
-    async function createFormTemplate(formId, accessToken) {
+    async function createFormTemplate(formId, title, responderUri) {
+        const accessToken = gapi.auth.getToken().access_token;
+        const update = {
+            requests: [
+                {
+                    updateFormInfo: {
+                        updateMask: 'description',
+                        info: {
+                            description: `C-4, Janakpuri, New Delhi-110058
+(Affiliated to Guru Govind Singh Indraprastha University, Delhi)
+                            
+(You can fill out this form only once)  
+                            
+*Course,Semester,Shift eg.BBA (B & I) IInd Semester (M & E)* Faculty Feedback from Students (*Date eg.Jan-June 2023*)              
+                            
+The purpose of this feedback is to further improve the performance of the faculty with your cooperation. Kindly play the role of a counselor rather than that of a judge. 
+Your assessment should be unbiased and objective.`,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'A) Course, Semester, Section, Shift',
+                            questionItem: {
+                                question: {
+                                    choiceQuestion: {
+                                        type: 'DROP_DOWN',
+                                        options: [
+                                            {
+                                                value: '*Enter Options*',
+                                            },
+                                        ],
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 0,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'B) Choose your Class Coordinator',
+                            questionItem: {
+                                question: {
+                                    choiceQuestion: {
+                                        type: 'DROP_DOWN',
+                                        options: [
+                                            {
+                                                value: '*Enter Options*',
+                                            },
+                                        ],
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 1,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'C) Quality of Interaction with Class Coordinator',
+                            questionItem: {
+                                question: {
+                                    choiceQuestion: {
+                                        type: 'RADIO',
+                                        options: [
+                                            {
+                                                value: 'Mentor & Motivator',
+                                            },
+                                            {
+                                                value: 'Supportive',
+                                            },
+                                            {
+                                                value: 'Indifferent to you',
+                                            },
+                                        ],
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 2,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'D) Name of the *Subject* Faculty',
+                            questionItem: {
+                                question: {
+                                    choiceQuestion: {
+                                        type: 'DROP_DOWN',
+                                        options: [
+                                            {
+                                                value: '*Enter Options*',
+                                            },
+                                        ],
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 3,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            textItem: {},
+                            title: 'How satisfied were you with *Subject* Faculty ?',
+                            description:
+                                '1= Poor, 2= Fair, 3= Good, 4= Very Good, 5= Outstanding',
+                        },
+                        location: {
+                            index: 4,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            questionGroupItem: {
+                                grid: {
+                                    columns: {
+                                        type: 'RADIO',
+                                        options: [
+                                            {
+                                                value: '5',
+                                            },
+                                            {
+                                                value: '4',
+                                            },
+                                            {
+                                                value: '3',
+                                            },
+                                            {
+                                                value: '2',
+                                            },
+                                            {
+                                                value: '1',
+                                            },
+                                        ],
+                                    },
+                                },
+                                questions: [
+                                    {
+                                        rowQuestion: {
+                                            title: 'Subject knowledge',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Communication Skills',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Interactive Approach & Clear doubts',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Covers all the topic of the Syllabus',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Punctuality in taking classes',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Control over the class',
+                                        },
+                                        required: true,
+                                    },
+                                ],
+                            },
+                        },
+                        location: {
+                            index: 5,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'E) Name of the *Subject* Faculty',
+                            questionItem: {
+                                question: {
+                                    choiceQuestion: {
+                                        type: 'DROP_DOWN',
+                                        options: [
+                                            {
+                                                value: '*Enter Options*',
+                                            },
+                                        ],
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 6,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            textItem: {},
+                            title: 'How satisfied were you with *Subject* Faculty ?',
+                            description:
+                                '1= Poor, 2= Fair, 3= Good, 4= Very Good, 5= Outstanding',
+                        },
+                        location: {
+                            index: 7,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            questionGroupItem: {
+                                grid: {
+                                    columns: {
+                                        type: 'RADIO',
+                                        options: [
+                                            {
+                                                value: '5',
+                                            },
+                                            {
+                                                value: '4',
+                                            },
+                                            {
+                                                value: '3',
+                                            },
+                                            {
+                                                value: '2',
+                                            },
+                                            {
+                                                value: '1',
+                                            },
+                                        ],
+                                    },
+                                },
+                                questions: [
+                                    {
+                                        rowQuestion: {
+                                            title: 'Subject knowledge',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Communication Skills',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Interactive Approach & Clear doubts',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Covers all the topic of the Syllabus',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Punctuality in taking classes',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Control over the class',
+                                        },
+                                        required: true,
+                                    },
+                                ],
+                            },
+                        },
+                        location: {
+                            index: 8,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'F) Name of the *Subject* Faculty',
+                            questionItem: {
+                                question: {
+                                    choiceQuestion: {
+                                        type: 'DROP_DOWN',
+                                        options: [
+                                            {
+                                                value: '*Enter Options*',
+                                            },
+                                        ],
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 9,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            textItem: {},
+                            title: 'How satisfied were you with *Subject* Faculty ?',
+                            description:
+                                '1= Poor, 2= Fair, 3= Good, 4= Very Good, 5= Outstanding',
+                        },
+                        location: {
+                            index: 10,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            questionGroupItem: {
+                                grid: {
+                                    columns: {
+                                        type: 'RADIO',
+                                        options: [
+                                            {
+                                                value: '5',
+                                            },
+                                            {
+                                                value: '4',
+                                            },
+                                            {
+                                                value: '3',
+                                            },
+                                            {
+                                                value: '2',
+                                            },
+                                            {
+                                                value: '1',
+                                            },
+                                        ],
+                                    },
+                                },
+                                questions: [
+                                    {
+                                        rowQuestion: {
+                                            title: 'Subject knowledge',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Communication Skills',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Interactive Approach & Clear doubts',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Covers all the topic of the Syllabus',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Punctuality in taking classes',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Control over the class',
+                                        },
+                                        required: true,
+                                    },
+                                ],
+                            },
+                        },
+                        location: {
+                            index: 11,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'G) Name of the *Subject* Faculty',
+                            questionItem: {
+                                question: {
+                                    choiceQuestion: {
+                                        type: 'DROP_DOWN',
+                                        options: [
+                                            {
+                                                value: '*Enter Options*',
+                                            },
+                                        ],
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 12,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            textItem: {},
+                            title: 'How satisfied were you with *Subject* Faculty ?',
+                            description:
+                                '1= Poor, 2= Fair, 3= Good, 4= Very Good, 5= Outstanding',
+                        },
+                        location: {
+                            index: 13,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            questionGroupItem: {
+                                grid: {
+                                    columns: {
+                                        type: 'RADIO',
+                                        options: [
+                                            {
+                                                value: '5',
+                                            },
+                                            {
+                                                value: '4',
+                                            },
+                                            {
+                                                value: '3',
+                                            },
+                                            {
+                                                value: '2',
+                                            },
+                                            {
+                                                value: '1',
+                                            },
+                                        ],
+                                    },
+                                },
+                                questions: [
+                                    {
+                                        rowQuestion: {
+                                            title: 'Subject knowledge',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Communication Skills',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Interactive Approach & Clear doubts',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Covers all the topic of the Syllabus',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Punctuality in taking classes',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Control over the class',
+                                        },
+                                        required: true,
+                                    },
+                                ],
+                            },
+                        },
+                        location: {
+                            index: 14,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'H) Name of the *Subject* Faculty',
+                            questionItem: {
+                                question: {
+                                    choiceQuestion: {
+                                        type: 'DROP_DOWN',
+                                        options: [
+                                            {
+                                                value: '*Enter Options*',
+                                            },
+                                        ],
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 15,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            textItem: {},
+                            title: 'How satisfied were you with *Subject* Faculty ?',
+                            description:
+                                '1= Poor, 2= Fair, 3= Good, 4= Very Good, 5= Outstanding',
+                        },
+                        location: {
+                            index: 16,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            questionGroupItem: {
+                                grid: {
+                                    columns: {
+                                        type: 'RADIO',
+                                        options: [
+                                            {
+                                                value: '5',
+                                            },
+                                            {
+                                                value: '4',
+                                            },
+                                            {
+                                                value: '3',
+                                            },
+                                            {
+                                                value: '2',
+                                            },
+                                            {
+                                                value: '1',
+                                            },
+                                        ],
+                                    },
+                                },
+                                questions: [
+                                    {
+                                        rowQuestion: {
+                                            title: 'Subject knowledge',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Communication Skills',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Interactive Approach & Clear doubts',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Covers all the topic of the Syllabus',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Punctuality in taking classes',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Control over the class',
+                                        },
+                                        required: true,
+                                    },
+                                ],
+                            },
+                        },
+                        location: {
+                            index: 17,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'I) Library Facilities',
+                            questionGroupItem: {
+                                grid: {
+                                    columns: {
+                                        type: 'RADIO',
+                                        options: [
+                                            {
+                                                value: 'Sufficient',
+                                            },
+                                            {
+                                                value: 'Average',
+                                            },
+                                            {
+                                                value: 'Insufficient',
+                                            },
+                                        ],
+                                    },
+                                },
+                                questions: [
+                                    {
+                                        rowQuestion: {
+                                            title: 'Subject & books availability',
+                                        },
+                                        required: true,
+                                    },
+                                    {
+                                        rowQuestion: {
+                                            title: 'Reference books availabilty',
+                                        },
+                                        required: true,
+                                    },
+                                ],
+                            },
+                        },
+                        location: {
+                            index: 18,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'J) How satisfied were you with MS Teams App ?',
+                            questionItem: {
+                                question: {
+                                    textQuestion: {
+                                        paragraph: false,
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 19,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'K) How satisfied were you with Online Classes?',
+                            questionItem: {
+                                question: {
+                                    scaleQuestion: {
+                                        high: 5,
+                                        low: 1,
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 20,
+                        },
+                    },
+                },
+                {
+                    createItem: {
+                        item: {
+                            title: 'L) Any Suggestion for improvement on Labs, Library, Canteen and Infrastructure',
+                            questionItem: {
+                                question: {
+                                    textQuestion: {
+                                        paragraph: true,
+                                    },
+                                    required: true,
+                                },
+                            },
+                        },
+                        location: {
+                            index: 21,
+                        },
+                    },
+                },
+            ],
+            includeFormInResponse: false,
+        };
+
         await fetch(
             `https://forms.googleapis.com/v1/forms/${formId}:batchUpdate`,
             {
@@ -106,18 +950,21 @@ const AdminHomePage = () => {
                 headers: new Headers({
                     Authorization: `Bearer ${accessToken}`,
                 }),
-                body: {
-                    includeFormInResponse: true,
-                    requests: [
-                        {
-                            item: {
-                                id: 'Boom',
-                            },
-                        },
-                    ],
-                },
+                body: JSON.stringify(update),
             },
-        );
+        )
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                saveFormDataToBackend(responderUri, title, formId);
+                window.open(`https://docs.google.com/forms/d/${formId}/edit`);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     async function createForm(formName) {
@@ -126,6 +973,7 @@ const AdminHomePage = () => {
         const newForm = {
             info: {
                 title: formName,
+                document_title: formName,
             },
         };
 
@@ -144,156 +992,63 @@ const AdminHomePage = () => {
                     formId: data.formId,
                     title: data.info.title,
                 });
-                saveFormDataToBackend(
-                    data.responderUri,
-                    data.info.title,
+
+                await createFormTemplate(
                     data.formId,
+                    data.info.title,
+                    data.responderUri,
                 );
+                getAllFormData();
                 document.getElementById('modal-btn').checked = false;
-
-                // await createFormTemplate(data.formId, accessToken);
-
-                window.open(
-                    `https://docs.google.com/forms/d/${data.formId}/edit`,
-                );
             });
     }
-
-    function getFormResponses(reportFormId) {
-        const accessToken = gapi.auth.getToken().access_token;
-
-        fetch(
-            `https://forms.googleapis.com/v1/forms/16rfaQ5qjJpvdOyzv13lmXLjmqCjAGQ6lLH2tVmQEUqc/responses`,
-            {
-                method: 'GET',
-                headers: new Headers({
-                    Authorization: `Bearer ${accessToken}`,
-                }),
-            },
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
-                console.log(data.responses[0].answers[0]);
-                Object.values(data.responses[0].answers).forEach((item) => {
-                    console.log(item.textAnswers.answers[0].value);
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
-    // MenuToggle
-
-    // let toggle = document.querySelector('.toggle');
-    // let navigation = document.querySelector('.navigation');
-    // let main = document.querySelector('.main');
-
-    // function adminSidebarToggleMain() {
-    //     setMainToggle((prev) => !prev);
-    // navigation.classList.toggle('active');
-    // main.classList.toggle('active');
-    // }
-
-    // add hovered class in selected list item
-
-    // const list = document.querySelectorAll('navigation li');
-    // function activeLink() {
-    //     list.forEach((item)=>
-    //         item.classList.remove('hovered')
-    //     )
-    //     this.classList.add('hovered');
-    // }
-
-    // list.forEach((item) => item.addEventListener('mouseover', activeLink));
-
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        BarElement,
-        Title,
-        Tooltip,
-        Legend,
-        ArcElement,
-        RadialLinearScale,
-    );
-
-    const [chartData, setChartData] = useState({
-        datasets: [],
-    });
-
-    const [chartOptions, setChartOptions] = useState({});
-
-    useEffect(() => {
-        setChartData({
-            labels: [
-                'Five Star',
-                'Four Star',
-                'Three Star',
-                'Two Star',
-                'One Star',
-            ],
-            datasets: [
-                {
-                    label: ['Rating'],
-                    data: [12, 30, 29, 39, 10],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                    ],
-                },
-            ],
-        });
-
-        setChartOptions({
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Recent Form Responses',
-                },
-            },
-        });
-    }, []);
 
     const pieData = {
         labels: [
-            'Five Star',
-            'Four Star',
-            'Three Star',
-            'Two Star',
-            'One Star',
+            'Communication Skills',
+            'Interactive Approach',
+            'Subject knowledge',
+            'Covers all topics',
+            'Punctuality',
+            'Control over class',
         ],
         datasets: [
             {
-                label: '# of Votes',
-                data: [12, 6, 23, 21, 10],
+                // label: 'Parameters',
+                data: [60, 60, 60, 60, 60, 60],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 0.9)',
                     'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132,  1)',
+                    'rgba(75, 192, 192,  1)',
                     'rgba(153, 102, 255, 1)',
+                    'rgba(255, 120, 21, 1)',
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
+                    'rgba(54, 162, 235,  1)',
+                    'rgba(255, 206, 86,  1)',
+                    'rgba(255, 99, 132,  1)',
+                    'rgba(75, 192, 192,  1)',
+                    'rgba(153, 102, 255,  1)',
+                    'rgba(255, 120, 21, 1)',
                 ],
                 borderWidth: 1,
             },
         ],
+    };
+
+    const pieOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Parameters',
+            },
+        },
     };
 
     return (
@@ -350,7 +1105,9 @@ const AdminHomePage = () => {
                         <div className="__cardBox">
                             <div className="__card">
                                 <div>
-                                    <div className="__numbers">3</div>
+                                    <div className="__numbers">
+                                        {totalFormsCount || '0'}
+                                    </div>
                                     <div className="__cardName">
                                         Total forms
                                     </div>
@@ -361,7 +1118,9 @@ const AdminHomePage = () => {
                             </div>
                             <div className="__card">
                                 <div>
-                                    <div className="__numbers">26</div>
+                                    <div className="__numbers">
+                                        {recentResponsesCount || '0'}
+                                    </div>
                                     <div className="__cardName">
                                         Recent Responses
                                     </div>
@@ -376,7 +1135,7 @@ const AdminHomePage = () => {
                             createForm={createForm}
                         />
                     </div>
-                    <button
+                    {/* <button
                         style={{
                             border: '2px solid red',
                         }}
@@ -384,13 +1143,13 @@ const AdminHomePage = () => {
                         onClick={getFormResponses}
                     >
                         get responses
-                    </button>
+                    </button> */}
 
                     {/* charts */}
                     <div className="graphBox">
                         <div className="__box">
-                            {/* <Pie data={pieData} /> */}
-                            <PolarArea data={pieData} />
+                            <Pie options={pieOptions} data={pieData} />
+                            {/* <PolarArea data={pieData} /> */}
                         </div>
                         <div className="__box">
                             <Bar options={chartOptions} data={chartData} />

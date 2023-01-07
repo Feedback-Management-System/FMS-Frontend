@@ -4,8 +4,13 @@
     margin-bottom: 5rem;
 }
 
-.data, .head {
+.data,
+.head {
     border: 2px solid;
     text-align: center;
     padding: 10px 20px;
+}
+
+.deleteBtn {
+    background-color: rgb(255, 77, 77);
 }
