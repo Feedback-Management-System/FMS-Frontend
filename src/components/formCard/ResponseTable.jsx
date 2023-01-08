@@ -21,19 +21,20 @@ const ResponseTable = ({ responseData, title }) => {
                 type="button"
                 onClick={onDownload}
                 style={{
+                    display: 'block',
                     border: 'none',
                     color: '#fff',
                     padding: '5px 10px',
                     fontSize: '16px',
-                    margin: '4px',
+                    marginBottom: '6px',
                     borderRadius: '5px',
                     transition: 'all 0.3s ease-in-out',
-                    backgroundColor: '#00ff55',
-                    marginRight: 'auto',
+                    backgroundColor: 'rgb(0, 145, 0)',
+                    marginLeft: 'auto',
                 }}
             >
                 {' '}
-                {`Export report to excel`}{' '}
+                {`Export ${title}`}{' '}
             </button>
             <table className="reportTable" ref={tableRef}>
                 <thead>

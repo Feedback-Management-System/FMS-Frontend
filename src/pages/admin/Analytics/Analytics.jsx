@@ -27,6 +27,7 @@ function Analytics() {
                 console.log(response);
                 if (response.status === 200) {
                     // setIsLoading(false);
+                    console.log(response.data);
                     setAllFormsData(response.data);
                 } else {
                     toast.error('Something went wrong', {
@@ -68,45 +69,58 @@ function Analytics() {
                     <div className="AnalyticscardHeader">
                         <h2
                             style={{
-                                fontSize: '2em',
+                                fontSize: '2.5em',
                                 fontWeight: '600',
-                                color: 'var(--white)',
+                                color: '#000000c7',
                                 textAlign: 'center',
-                                background: 'var(--blue)',
-                                borderRadius: '20px',
+                                borderRadius: '10px',
                                 padding: '1rem 2rem',
                                 width: 'fit-content',
                                 margin: 'auto',
                                 marginBottom: '4rem',
-                                boxShadow: '0 7px 25px rgb(0 0 0 / 8%)',
                             }}
                         >
                             Analytics
                         </h2>
                     </div>
-                    <table className="tab">
-                        <thead className="tabthead">
-                            <tr className="tabtr">
-                                <th className="tabth">S No.</th>
-                                <th className="tabth">Form Name</th>
-                                <th className="tabth">Created On</th>
-                                <th className="tabth">Edit Form</th>
-                                <th className="tabth">Responses/Report</th>
-                            </tr>
-                        </thead>
-                        <tbody className="tabtbody">
-                            {AllFormsData.length > 0 &&
-                                AllFormsData.map((item, index) => (
-                                    <FormCard
-                                        key={item.formId}
-                                        sNO={index + 1}
-                                        {...item}
-                                        // eslint-disable-next-line react/jsx-no-bind
-                                        getAllFormData={getAllFormData}
-                                    />
-                                ))}
-                        </tbody>
-                    </table>
+                    {
+                        AllFormsData.length > 0 ? 
+                            <table className="tab">
+                            <thead className="tabthead">
+                                <tr className="tabtr">
+                                    <th className="tabth">S No.</th>
+                                    <th className="tabth">Form Name</th>
+                                    <th className="tabth">Created On</th>
+                                    <th className="tabth">Edit/Delete</th>
+                                    <th className="tabth">Responses/Report</th>
+                                    <th className="tabth">Share On Whatsapp</th>
+                                </tr>
+                            </thead>
+                            <tbody className="tabtbody">
+                                {
+                                    AllFormsData.length > 0 ? AllFormsData.map((item, index) => (
+                                        <FormCard
+                                            key={item.formId}
+                                            sNO={index + 1}
+                                            {...item}
+                                            // eslint-disable-next-line react/jsx-no-bind
+                                            getAllFormData={getAllFormData}
+                                        />
+                                    )) : <h1 
+                                        style={{
+                                            margin: '50px 50px',
+                                            fontSize: '20px',
+                                        }}
+                                    >Please create a form first.</h1>
+                                }
+                            </tbody>
+                        </table> : <h1 
+                            style={{
+                                margin: '50px 50px',
+                                fontSize: '20px'
+                            }}
+                        >Please create a form first.</h1>
+                    } 
                 </div>
             </div>
         </>

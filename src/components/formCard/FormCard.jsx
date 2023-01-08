@@ -4,12 +4,13 @@ import { useState } from 'react';
 import axios from 'axios';
 // import { toast } from 'react-toastify';
 import SlidingPanel from 'react-sliding-side-panel';
+import { Link } from 'react-router-dom';
 
 import './FormCard.css';
 // import LoaderButton from 'components/loaderButton/LoaderButton';
 import ResponseTable from './ResponseTable';
 
-function FormCard({ sNO, title, formId, createdAt, getAllFormData }) {
+function FormCard({ sNO, title, formId, responderUri, createdAt, _id, getAllFormData }) {
     // const [isLoading, setIsLoading] = useState(false);
     const [openPanel, setOpenPanel] = useState(false);
     const [responseObject, setResponseObject] = useState({});
@@ -175,7 +176,7 @@ function FormCard({ sNO, title, formId, createdAt, getAllFormData }) {
 
     const deleteForm = (deleteFormId) => {
         const token = localStorage.getItem('token');
-        console.log(typeof deleteFormId);
+        console.log(deleteFormId);
         axios({
             method: 'DELETE',
             // url: `http://fms-backend-production-ce11.up.railway.app/forms/${deleteFormId}`,
@@ -186,7 +187,7 @@ function FormCard({ sNO, title, formId, createdAt, getAllFormData }) {
         })
             .then((response) => {
                 console.log(response);
-                if (response.status === 200) {
+                if (response.status !== 500 || response.status !== 400) {
                     getAllFormData();
                 }
             })
@@ -194,6 +195,11 @@ function FormCard({ sNO, title, formId, createdAt, getAllFormData }) {
                 console.log(err.response.data);
             });
     };
+
+    function shareForm() {
+        const encodedMessage = encodeURIComponent(responderUri);
+        window.open(`https://api.whatsapp.com/send?text=${encodedMessage}`);
+    }
 
     return (
         <>
@@ -221,10 +227,10 @@ function FormCard({ sNO, title, formId, createdAt, getAllFormData }) {
                         type="button"
                         className="deleteBtn"
                         onClick={() => {
-                            deleteForm(formId);
+                            deleteForm(_id);
                         }}
                     >
-                        Delete
+                        <i className="fa-solid fa-trash" />
                     </button>
                 </td>
                 <td className="tabtd" data-label="Responses">
@@ -238,9 +244,39 @@ function FormCard({ sNO, title, formId, createdAt, getAllFormData }) {
                         Generate Report
                     </button>
                 </td>
+
+                <td className="tabtd" data-label="Share">
+                    {/* <Link to="/https://api.whatsapp.com/send?text=www.google.com" target="_blank" data-action="share/whatsapp/share"> */}
+                    <button
+                        type="button"
+                        className="shareFormBtn"
+                        onClick={() => {
+                            shareForm();
+                        }}
+                    >
+                        Share
+                    </button>
+                    {/* </Link> */}
+                </td>
             </tr>
             <SlidingPanel type="right" isOpen={openPanel} size={90}>
                 <div>
+                    {/* <div
+                        style={{
+                            display: 'flex',
+                            position: 'absolute',
+                            top: '70px',
+                            left: '20px',
+                            width: '100%',
+                            height: "fit-content",
+                            fontSize: '1.6rem',
+                            background: 'transparent',
+                            boxShadow: 'rgb(136 136 136) 0px 0px 2px 0px',
+                            padding: '5px 15px',
+                        }}
+                    >
+                        <p>test</p>
+                    </div> */}
                     <div
                         style={{
                             padding: '70px 20px 20px 20px',
@@ -259,7 +295,7 @@ function FormCard({ sNO, title, formId, createdAt, getAllFormData }) {
                         style={{
                             position: 'absolute',
                             top: '20px',
-                            left: '25px',
+                            left: '20px',
                             fontSize: '1.6rem',
                             background: 'transparent',
                             boxShadow: 'rgb(136 136 136) 0px 0px 2px 0px',
