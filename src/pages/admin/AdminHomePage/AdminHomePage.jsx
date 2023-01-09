@@ -59,8 +59,17 @@ const AdminHomePage = () => {
     const [chartOptions, setChartOptions] = useState({});
     const [totalFormsCount, settotalFormsCount] = useState(0);
     const [recentResponsesCount, setrecentResponsesCount] = useState(0);
+    const [recentFormResponse, setRecentFormResponse] = useState({});
 
     const token = localStorage.getItem('token');
+
+    const formResponseObject = {
+        five: '',
+        four: '',
+        three: '',
+        two: '',
+        one: '',
+    };
 
     function getFormResponses(reportFormId) {
         const accessToken = gapi.auth.getToken().access_token;
@@ -78,10 +87,43 @@ const AdminHomePage = () => {
                 return response.json();
             })
             .then((data) => {
+                data.responses.forEach((element) => {
+                    console.log(element.answers);
+                    // eslint-disable-next-line no-restricted-syntax
+                    for (const key in element.answers) {
+                        if (element.answers) {
+                            const val =
+                                element.answers[key].textAnswers.answers[0]
+                                    .value;
+                            switch (val) {
+                                case '5':
+                                    formResponseObject.five++;
+                                    break;
+                                case '4':
+                                    formResponseObject.four++;
+                                    break;
+                                case '3':
+                                    formResponseObject.three++;
+                                    break;
+                                case '2':
+                                    formResponseObject.two++;
+                                    break;
+                                case '1':
+                                    formResponseObject.one++;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    console.log(formResponseObject);
+                    setRecentFormResponse(formResponseObject);
+                });
                 setrecentResponsesCount(data.responses?.length);
                 if (data.responses) {
                     console.log(data.responses);
                 }
+
             })
             .catch((error) => {
                 console.log(error);
@@ -102,6 +144,7 @@ const AdminHomePage = () => {
                 console.log(response);
                 if (response.status === 200) {
                     // setIsLoading(false);
+                    console.log(response.data[response.data.length - 1]);
                     getFormResponses(
                         response.data[response.data.length - 1]?.formId,
                     );
@@ -140,6 +183,8 @@ const AdminHomePage = () => {
                 });
         });
 
+    }, []);
+    useEffect(() => {
         setChartData({
             labels: [
                 'Five Star',
@@ -151,7 +196,13 @@ const AdminHomePage = () => {
             datasets: [
                 {
                     label: ['Rating'],
-                    data: [12, 30, 29, 39, 10],
+                    data: [
+                        +recentFormResponse.five,
+                        +recentFormResponse.four,
+                        +recentFormResponse.three,
+                        +recentFormResponse.two,
+                        +recentFormResponse.one,
+                    ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
@@ -175,7 +226,12 @@ const AdminHomePage = () => {
                 },
             },
         });
-    }, []);
+
+    }, [recentFormResponse]);
+
+
+
+    
 
     // const myPromise = new Promise(function (myResolve, myReject) {
     //     const token = gapi.auth?.getToken()?.access_token;

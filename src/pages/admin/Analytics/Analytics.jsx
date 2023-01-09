@@ -24,10 +24,10 @@ function Analytics() {
             },
         })
             .then(async (response) => {
-                console.log(response);
+                // console.log(response);
                 if (response.status === 200) {
                     // setIsLoading(false);
-                    console.log(response.data);
+                    // console.log(response.data);
                     setAllFormsData(response.data);
                 } else {
                     toast.error('Something went wrong', {
@@ -41,7 +41,7 @@ function Analytics() {
                 toast.error('Something went wrong', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
-                console.error(error);
+                // console.error(error);
             });
     }
 
