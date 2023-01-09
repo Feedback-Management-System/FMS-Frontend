@@ -79,6 +79,9 @@ const AdminHomePage = () => {
             })
             .then((data) => {
                 setrecentResponsesCount(data.responses?.length);
+                if (data.responses) {
+                    console.log(data.responses);
+                }
             })
             .catch((error) => {
                 console.log(error);

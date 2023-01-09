@@ -5,7 +5,7 @@ import axios from 'axios';
 // eslint-disable-next-line import/extensions
 import LoaderButton from '../../components/loaderButton/LoaderButton.jsx';
 import loginIllustration from '../../assets/images/loginIllustration.webp';
-import msiLogo from '../../assets/images/msi_logo.png';
+import fcamLogo from '../../assets/images/fcamLogo.png';
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -70,7 +70,7 @@ const LoginPage = () => {
             <main className="Main_login">
                 <nav>
                     <div className="logo">
-                        <img src={msiLogo} alt="logo" />
+                        <img src={fcamLogo} alt="logo" />
                     </div>
                     <div className="nav-links" id="navLinks">
                         <ul>

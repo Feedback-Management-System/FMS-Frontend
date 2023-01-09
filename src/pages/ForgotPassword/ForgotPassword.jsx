@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 // eslint-disable-next-line import/extensions
 import LoaderButton from '../../components/loaderButton/LoaderButton.jsx';
-import msiLogo from '../../assets/images/msi_logo.png';
+import fcamLogo from '../../assets/images/fcamLogo.png';
 import forgotImg from '../../assets/images/undraw_Authentication_re_svpt.png';
 import '../LoginPage/LoginPage.css';
 import './ForgotPassword.css';
@@ -31,7 +31,7 @@ function ForgotPassword() {
             <main className="Main_login">
                 <nav>
                     <div className="logo">
-                        <img src={msiLogo} alt="logo" />
+                        <img src={fcamLogo} alt="logo" />
                     </div>
                     <div className="nav-links" id="navLinks">
                         <ul>
