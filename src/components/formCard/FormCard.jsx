@@ -3,19 +3,26 @@
 import { useState } from 'react';
 import axios from 'axios';
 import SlidingPanel from 'react-sliding-side-panel';
-import { Link } from 'react-router-dom';
+import Loader from 'components/loader/Loader';
 
 import './FormCard.css';
 // import LoaderButton from 'components/loaderButton/LoaderButton';
 import ResponseTable from './ResponseTable';
 
-function FormCard({ sNO, title, formId, responderUri, createdAt, _id, getAllFormData }) {
+function FormCard({
+    sNO,
+    title,
+    formId,
+    responderUri,
+    createdAt,
+    _id,
+    getAllFormData,
+}) {
     // const [isLoading, setIsLoading] = useState(false);
     const [openPanel, setOpenPanel] = useState(false);
     const [responseObject, setResponseObject] = useState({});
 
     const generateReport = (data) => {
-        setOpenPanel(true);
         // console.log(data);
 
         const obj = {};
@@ -87,7 +94,7 @@ function FormCard({ sNO, title, formId, responderUri, createdAt, _id, getAllForm
     async function getSheetResponses(spreadsheetId) {
         const accessTokenn = sessionStorage.getItem('googleAccessToken');
         fetch(
-            `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/A1:AZ10000`,
+            `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/A1:ZZ1000`,
             {
                 method: 'GET',
                 headers: new Headers({
@@ -104,34 +111,31 @@ function FormCard({ sNO, title, formId, responderUri, createdAt, _id, getAllForm
                 generateReport(data.values);
             })
             .catch((error) => {
-                // console.log(error);
+                console.log(error);
             });
-
     }
 
     function getFormResponses(reportFormId) {
+        setOpenPanel(true);
         const accessToken = sessionStorage.getItem('googleAccessToken');
-        fetch(
-            `https://forms.googleapis.com/v1/forms/${reportFormId}`,
-            {
-                method: 'GET',
-                headers: new Headers({
-                    Authorization: `Bearer ${accessToken}`,
-                }),
-                // body: JSON.stringify(update),
-            },
-        )
+        fetch(`https://forms.googleapis.com/v1/forms/${reportFormId}`, {
+            method: 'GET',
+            headers: new Headers({
+                Authorization: `Bearer ${accessToken}`,
+            }),
+            // body: JSON.stringify(update),
+        })
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
-                if(data.linkedSheetId) {
+                // console.log(data);
+                if (data.linkedSheetId) {
                     getSheetResponses(data.linkedSheetId);
                 }
             })
             .catch((error) => {
-                // console.log(error);
+                console.log(error);
             });
     }
 
@@ -144,6 +148,7 @@ function FormCard({ sNO, title, formId, responderUri, createdAt, _id, getAllForm
 
     const deleteForm = (deleteFormId) => {
         const token = localStorage.getItem('token');
+
         // console.log(deleteFormId);
         axios({
             method: 'DELETE',
@@ -160,7 +165,7 @@ function FormCard({ sNO, title, formId, responderUri, createdAt, _id, getAllForm
                 }
             })
             .catch((err) => {
-                // console.log(err.response.data);
+                console.log(err?.response?.data);
             });
     };
 
@@ -232,13 +237,17 @@ function FormCard({ sNO, title, formId, responderUri, createdAt, _id, getAllForm
                             padding: '70px 20px 20px 20px',
                         }}
                     >
-                        {Object.keys(responseObject).map((key, i) => (
-                            <ResponseTable
-                                responseData={responseObject[key]}
-                                key={i}
-                                title={key}
-                            />
-                        ))}
+                        {Object.keys(responseObject).length > 0 ? (
+                            Object.keys(responseObject).map((key, i) => (
+                                <ResponseTable
+                                    responseData={responseObject[key]}
+                                    key={i}
+                                    title={key}
+                                />
+                            ))
+                        ) : (
+                            <Loader />
+                        )}
                     </div>
                     <button
                         type="button"

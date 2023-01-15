@@ -19,17 +19,10 @@ const LoginPage = () => {
         e.preventDefault();
         setIsLoading(true);
 
-        // setTimeout(() => {
-        //     localStorage.setItem('token', 'supersecrettoken');
-        //     navigate('/admin/dashboard', { replace: true });
-        //     toast.success('Logged In Successfully');
-        //     setIsLoading(false);
-        // }, 3000);
-
         axios({
             method: 'post',
             url: `http://localhost:5000/users/signin`,
-            // url: `http://fms-backend-production-ce11.up.railway.app/users/signin`,
+            // url: `http://ec2-13-112-113-114.ap-northeast-1.compute.amazonaws.com:5000/users/signin`,
             data: {
                 email,
                 password,
@@ -37,6 +30,8 @@ const LoginPage = () => {
         })
             .then((response) => {
                 if (response.status === 200) {
+                    console.log(response.data);
+
                     localStorage.setItem('token', response.data.token);
                     localStorage.setItem(
                         'user',

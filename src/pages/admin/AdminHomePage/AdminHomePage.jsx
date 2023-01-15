@@ -19,12 +19,13 @@ import {
     Sidebar,
     Navbar,
     GoogleLoginModal,
-    LoginGoogleButton,
-    LogoutGoogleButton,
+    // LoginGoogleButton,
+    // LogoutGoogleButton,
 } from 'components';
 
 import './AdminHomePage.css';
 import { gapi } from 'gapi-script';
+import Loader from 'components/loader/Loader';
 
 const CLIENT_ID =
     '282391974322-87evpe1qamta10q0uuskfqesibdvrtb0.apps.googleusercontent.com';
@@ -32,12 +33,6 @@ const API_KEY = 'AIzaSyAcut5XGS5iWvrcAljUIQ2D72KEIb67xVQ';
 const SCOPES = 'https://www.googleapis.com/auth/drive';
 
 const AdminHomePage = () => {
-    const [formData, setFormData] = useState({
-        responderUri: '',
-        title: '',
-        formId: '',
-    });
-
     const [navToggle, setNavToggle] = useState(false);
     const [mainToggle, setMainToggle] = useState(false);
 
@@ -60,6 +55,7 @@ const AdminHomePage = () => {
     const [totalFormsCount, settotalFormsCount] = useState(0);
     const [recentResponsesCount, setrecentResponsesCount] = useState(0);
     const [recentFormResponse, setRecentFormResponse] = useState({});
+    const [pageLoaded, setpageLoaded] = useState(false);
 
     const token = localStorage.getItem('token');
 
@@ -123,15 +119,18 @@ const AdminHomePage = () => {
                 if (data.responses) {
                     console.log(data.responses);
                 }
-
             })
             .catch((error) => {
                 console.log(error);
+            })
+            .finally(() => {
+                setpageLoaded(true);
             });
     }
 
     function getAllFormData() {
         // setIsLoading(true);
+
         axios({
             method: 'GET',
             // url: `http://fms-backend-production-ce11.up.railway.app/forms/`,
@@ -161,7 +160,7 @@ const AdminHomePage = () => {
                 toast.error('Something went wrong', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
-                // console.error(error);
+                console.error(error);
             });
     }
 
@@ -182,7 +181,6 @@ const AdminHomePage = () => {
                     getAllFormData();
                 });
         });
-
     }, []);
     useEffect(() => {
         setChartData({
@@ -226,12 +224,7 @@ const AdminHomePage = () => {
                 },
             },
         });
-
     }, [recentFormResponse]);
-
-
-
-    
 
     // const myPromise = new Promise(function (myResolve, myReject) {
     //     const token = gapi.auth?.getToken()?.access_token;
@@ -1045,12 +1038,7 @@ Your assessment should be unbiased and objective.`,
                 return response.json();
             })
             .then(async (data) => {
-                console.log(data);
-                setFormData({
-                    responderUri: data.responderUri,
-                    formId: data.formId,
-                    title: data.info.title,
-                });
+                // console.log(data);
 
                 await createFormTemplate(
                     data.formId,
@@ -1149,71 +1137,73 @@ Your assessment should be unbiased and objective.`,
             </section>
 
             <div className="__container">
-                {/* sidebar */}
                 <Sidebar navToggle={navToggle} />
-                {/* main */}
                 <div className={mainToggle ? '__main active' : '__main'}>
-                    {/* navbar */}
                     <Navbar
                         setNavToggle={setNavToggle}
                         setMainToggle={setMainToggle}
                     />
 
-                    {/* card */}
-                    <div className="hero__section">
-                        <div className="__cardBox">
-                            <div className="__card">
-                                <div>
-                                    <div className="__numbers">
-                                        {totalFormsCount || '0'}
+                    {pageLoaded ? (
+                        <>
+                            <div className="hero__section">
+                                <div className="__cardBox">
+                                    <div className="__card">
+                                        <div>
+                                            <div className="__numbers">
+                                                {totalFormsCount || '0'}
+                                            </div>
+                                            <div className="__cardName">
+                                                Total forms
+                                            </div>
+                                        </div>
+                                        <div className="__iconBx">
+                                            <i className="fa-solid fa-layer-group" />
+                                        </div>
                                     </div>
-                                    <div className="__cardName">
-                                        Total forms
+                                    <div className="__card">
+                                        <div>
+                                            <div className="__numbers">
+                                                {recentResponsesCount || '0'}
+                                            </div>
+                                            <div className="__cardName">
+                                                Recent Responses
+                                            </div>
+                                        </div>
+                                        <div className="__iconBx">
+                                            <i className="fa-solid fa-user-clock" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="__iconBx">
-                                    <i className="fa-solid fa-layer-group" />
+                                <GoogleLoginModal
+                                    getAccessToken={getAccessToken}
+                                    createForm={createForm}
+                                />
+                            </div>
+                            {/* <button
+                //     style={{
+                //         border: '2px solid red',
+                //     }}
+                //     type="button"
+                //     onClick={getFormResponses}
+                // >
+                //     get responses
+                // </button> */}
+                            <div className="graphBox">
+                                <div className="__box">
+                                    <Pie options={pieOptions} data={pieData} />
+                                </div>
+                                <div className="__box">
+                                    <Bar
+                                        options={chartOptions}
+                                        data={chartData}
+                                    />
                                 </div>
                             </div>
-                            <div className="__card">
-                                <div>
-                                    <div className="__numbers">
-                                        {recentResponsesCount || '0'}
-                                    </div>
-                                    <div className="__cardName">
-                                        Recent Responses
-                                    </div>
-                                </div>
-                                <div className="__iconBx">
-                                    <i className="fa-solid fa-user-clock" />
-                                </div>
-                            </div>
-                        </div>
-                        <GoogleLoginModal
-                            getAccessToken={getAccessToken}
-                            createForm={createForm}
-                        />
-                    </div>
-                    {/* <button
-                        style={{
-                            border: '2px solid red',
-                        }}
-                        type="button"
-                        onClick={getFormResponses}
-                    >
-                        get responses
-                    </button> */}
-
-                    {/* charts */}
-                    <div className="graphBox">
-                        <div className="__box">
-                            <Pie options={pieOptions} data={pieData} />
-                            {/* <PolarArea data={pieData} /> */}
-                        </div>
-                        <div className="__box">
-                            <Bar options={chartOptions} data={chartData} />
-                        </div>
-                    </div>
+                        </>
+                    ) : (
+                        <Loader />
+                    )}
                 </div>
             </div>
         </div>
