@@ -7,6 +7,7 @@ import LoaderButton from '../../components/loaderButton/LoaderButton.jsx';
 import loginIllustration from '../../assets/images/loginIllustration.webp';
 import fcamLogo from '../../assets/images/fcamLogo.png';
 import './LoginPage.css';
+import {restUrl} from '../../endpoints';
 
 const LoginPage = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +22,7 @@ const LoginPage = () => {
 
         axios({
             method: 'post',
-            url: `http://localhost:5000/users/signin`,
+            url: `${restUrl}/users/signin`,
             // url: `http://ec2-13-112-113-114.ap-northeast-1.compute.amazonaws.com:5000/users/signin`,
             data: {
                 email,
@@ -44,8 +45,9 @@ const LoginPage = () => {
                     toast.success('Logged In Successfully', {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
-                } else {
-                    toast.error('Invalid Credentials', {
+                }
+                 else {
+                    toast.error('Something went wrong', {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
                     setIsLoading(false);
@@ -53,9 +55,17 @@ const LoginPage = () => {
             })
             .catch((error) => {
                 console.log(error);
-                toast.error('Something went wrong', {
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                });
+                if (error.response?.status === 400) {
+                    toast.error(error.response.data.message, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    setIsLoading(false);
+                }
+                else{
+                    toast.error('Something went wrong', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                }
                 setIsLoading(false);
             });
     };

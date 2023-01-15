@@ -276,7 +276,7 @@
   
   .sliding-panel-container.active {
     position: fixed;
-    z-index: 15000;
+    z-index: 1000;
     background-color: rgba(0, 0, 0, 0.196);
     will-change: transform;
   }

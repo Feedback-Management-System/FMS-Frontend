@@ -16,7 +16,7 @@ const LoaderButton = ({ isLoading, display, ...otherButtonProps }) => {
                         'font-family': 'Poppins',
                     }}
                 >
-                    loading
+                    Loading
                     <img
                         className="loader"
                         style={{
@@ -24,7 +24,7 @@ const LoaderButton = ({ isLoading, display, ...otherButtonProps }) => {
                             'margin-left': '10px',
                         }}
                         src={LoadingCircle}
-                        alt=""
+                        alt="loading circle"
                     />
                 </span>
             ) : (

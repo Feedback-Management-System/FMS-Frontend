@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 import { useNavigate } from 'react-router-dom';
 import LoaderButton from 'components/loaderButton/LoaderButton';
+import { restUrl } from '../../../endpoints';
 
 function ChangePassword() {
     const navigate = useNavigate();
@@ -40,15 +41,16 @@ function ChangePassword() {
         setIsLoading(true);
 
         if (password.newPass !== password.confirmPass) {
-            toast.error('Password does not match', {
+            toast.error('New Password and Confirm Password does not match', {
                 position: toast.POSITION.BOTTOM_RIGHT,
             });
+            setIsLoading(false);
             return;
         }
 
         axios({
             method: 'PATCH',
-            url: `http://localhost:5000/users/resetPassword`,
+            url: `${restUrl}/users/resetPassword`,
             data: {
                 password: password.oldPass,
                 newPassword: password.newPass,
@@ -67,7 +69,16 @@ function ChangePassword() {
                 setIsLoading(false);
             })
             .catch((err) => {
-                console.log(err.response.data);
+                // console.log(err.response.data.message);
+                if (err.response?.data?.message) {
+                    toast.error(err.response?.data?.message, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                } else {
+                    toast.error('Something went wrong', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                }
                 setIsLoading(false);
             });
     }
@@ -244,8 +255,7 @@ function ChangePassword() {
                                     style={
                                         isLoading
                                             ? {
-                                                  backgroundColor:
-                                                      'rgb(0, 145, 0, 0.5)',
+                                                  backgroundColor: '#1e90ff75',
                                                   cursor: 'not-allowed',
                                               }
                                             : {}

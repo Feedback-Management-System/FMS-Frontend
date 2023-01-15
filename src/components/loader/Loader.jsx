@@ -1,10 +1,11 @@
 import React from 'react';
 import './Loader.css';
 
-function Loader() {
+function Loader({Style}) {
+    console.log(Style)
     return (
         <div>
-            <section className="tloadingContainer">
+            <section className="tloadingContainer" style={Style}>
                 <span className="tloader" />
             </section>
         </div>

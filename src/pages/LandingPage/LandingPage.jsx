@@ -246,10 +246,13 @@ const LandingPage = () => {
                                         <h3 class="h2 item-title">Ayush Pun</h3>
 
                                         <p class="item-text">
-                                            Inspiration comes in many ways and
-                                            you like to save everything from.
-                                            sed do eiusmod tempor incididunt ut
-                                            labore et dolore magna aliqua.
+                                            {/* I may be a lazy frontend developer,
+                                            but I&apos;m a master of the
+                                            &apos;Ctrl+C, Ctrl+V&apos; workflow.
+                                            And when it comes to backend, I
+                                            prefer to delegate the heavy lifting
+                                            to my trusty Google search bar. */}
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias cum inventore id maxime facilis iusto iure repellendus fugiat accusamus deleniti, rerum ducimus vitae vel, minima voluptates, perferendis quia reiciendis odio.
                                         </p>
                                     </div>
                                 </li>
@@ -264,10 +267,7 @@ const LandingPage = () => {
                                         </h3>
 
                                         <p class="item-text">
-                                            Inspiration comes in many ways and
-                                            you like to save everything from.
-                                            sed do eiusmod tempor incididunt ut
-                                            labore et dolore magna aliqua.
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero ea consectetur est nihil aperiam, officiis molestias rem aliquam obcaecati, vel at assumenda odio accusantium ducimus! Voluptates, corporis nemo. Vero, officiis.
                                         </p>
                                     </div>
                                 </li>
@@ -285,10 +285,7 @@ const LandingPage = () => {
                                         </h3>
 
                                         <p class="item-text">
-                                            Inspiration comes in many ways and
-                                            you like to save everything from.
-                                            sed do eiusmod tempor incididunt ut
-                                            labore et dolore magna aliqua.
+                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur illum, modi placeat maiores laudantium officiis. Nemo ex quia earum mollitia sint voluptatum distinctio assumenda, nulla, consectetur inventore fugit temporibus suscipit!
                                         </p>
                                     </div>
                                 </li>
@@ -304,10 +301,7 @@ const LandingPage = () => {
                                         </h3>
 
                                         <p class="item-text">
-                                            Inspiration comes in many ways and
-                                            you like to save everything from.
-                                            sed do eiusmod tempor incididunt ut
-                                            labore et dolore magna aliqua.
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae numquam facere non tenetur vero ducimus voluptatibus voluptate commodi! Voluptatem rerum quisquam id vero nemo! Animi nisi quis ea mollitia enim.
                                         </p>
                                     </div>
                                 </li>

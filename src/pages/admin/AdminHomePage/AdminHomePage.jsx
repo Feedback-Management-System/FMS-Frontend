@@ -26,10 +26,10 @@ import {
 import './AdminHomePage.css';
 import { gapi } from 'gapi-script';
 import Loader from 'components/loader/Loader';
+import {restUrl} from '../../../endpoints';
 
-const CLIENT_ID =
-    '282391974322-87evpe1qamta10q0uuskfqesibdvrtb0.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyAcut5XGS5iWvrcAljUIQ2D72KEIb67xVQ';
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+const API_KEY = process.env.REACT_APP_API_KEY;
 const SCOPES = 'https://www.googleapis.com/auth/drive';
 
 const AdminHomePage = () => {
@@ -134,7 +134,7 @@ const AdminHomePage = () => {
         axios({
             method: 'GET',
             // url: `http://fms-backend-production-ce11.up.railway.app/forms/`,
-            url: `http://localhost:5000/forms/`,
+            url: `${restUrl}/forms/`,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -246,7 +246,7 @@ const AdminHomePage = () => {
         axios({
             method: 'POST',
             // url: `http://fms-backend-production-ce11.up.railway.app/forms`,
-            url: `http://localhost:5000/forms`,
+            url: `${restUrl}/forms`,
             data: {
                 responderUri,
                 title,
@@ -1045,8 +1045,8 @@ Your assessment should be unbiased and objective.`,
                     data.info.title,
                     data.responderUri,
                 );
-                getAllFormData();
                 document.getElementById('modal-btn').checked = false;
+                getAllFormData();
             });
     }
 
@@ -1096,6 +1096,17 @@ Your assessment should be unbiased and objective.`,
                 text: 'Parameters',
             },
         },
+    };
+
+    const loaderStyle = {
+        width: '100%',
+        height: `calc(100vh - 90px)`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        verticalAlign: 'top',
+        background: '#ffffff',
     };
 
     return (
@@ -1202,7 +1213,7 @@ Your assessment should be unbiased and objective.`,
                             </div>
                         </>
                     ) : (
-                        <Loader />
+                        <Loader Style={loaderStyle} />
                     )}
                 </div>
             </div>

@@ -1,16 +1,4 @@
-
-    .tloadingContainer {
-        width: 100%;
-        height: calc(100vh - 90px) !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        /* border: 2px solid red; */
-        vertical-align: top;
-        background: #ffffff;
-    }
-    .tloader {
+   .tloader {
         width: 48px;
         height: 48px;
         border-radius: 50%;

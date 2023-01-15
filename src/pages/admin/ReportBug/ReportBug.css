@@ -82,7 +82,7 @@
 .reportABugContainer .submitBtn {
     width: 110px;
     height: 40px;
-    margin: auto;
+    margin: 15px auto 5px auto;
     display: block;
     color: #fff;
     background-color: var(--blue);

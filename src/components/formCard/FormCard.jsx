@@ -1,10 +1,12 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import axios from 'axios';
 import SlidingPanel from 'react-sliding-side-panel';
 import Loader from 'components/loader/Loader';
-
+import { toast } from 'react-toastify';
+import {restUrl} from '../../endpoints';
+import noDataPng from '../../assets/images/noData.png';
 import './FormCard.css';
 // import LoaderButton from 'components/loaderButton/LoaderButton';
 import ResponseTable from './ResponseTable';
@@ -19,8 +21,10 @@ function FormCard({
     getAllFormData,
 }) {
     // const [isLoading, setIsLoading] = useState(false);
+    const [pageLoading, setpageLoading] = useState(true);
     const [openPanel, setOpenPanel] = useState(false);
     const [responseObject, setResponseObject] = useState({});
+    const elementRef = useRef();
 
     const generateReport = (data) => {
         // console.log(data);
@@ -84,8 +88,9 @@ function FormCard({
             }
         }
         // console.log(obj);
-        // console.log(mainObj);
+        console.log(mainObj);
         setResponseObject(mainObj);
+        setpageLoading(false);
 
         // console.log(responseObject);
         // console.log(Object.keys(mainObj));
@@ -112,6 +117,9 @@ function FormCard({
             })
             .catch((error) => {
                 console.log(error);
+                toast.error('Something went wrong', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
             });
     }
 
@@ -132,9 +140,18 @@ function FormCard({
                 // console.log(data);
                 if (data.linkedSheetId) {
                     getSheetResponses(data.linkedSheetId);
+                }else{
+                    toast.error('Google Sheet corresponding to this form not found', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    console.log(data);
                 }
+
             })
             .catch((error) => {
+                toast.error('Something went wrong', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
                 console.log(error);
             });
     }
@@ -148,15 +165,19 @@ function FormCard({
 
     const deleteForm = (deleteFormId) => {
         const token = localStorage.getItem('token');
-
+        // elementRef.current.classList.add("deleting");
+        
         if (!window.confirm('Are you sure you want to delete the form?'))
             return;
+
+        elementRef.current.style.opacity = '0.5';
+        elementRef.current.style.pointerEvents = 'none';
 
         // console.log(deleteFormId);
         axios({
             method: 'DELETE',
             // url: `http://fms-backend-production-ce11.up.railway.app/forms/${deleteFormId}`,
-            url: `http://localhost:5000/forms/${deleteFormId}`,
+            url: `${restUrl}/forms/${deleteFormId}`,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -174,12 +195,25 @@ function FormCard({
 
     function shareForm() {
         const encodedMessage = encodeURIComponent(responderUri);
-        window.open(`https://api.whatsapp.com/send?text=${encodedMessage}`);
+        window.open(`mailto:?subject=${title}&body=${encodedMessage}`);
+        // window.open(`https://api.whatsapp.com/send?text=${encodedMessage}`);
     }
+
+    const loaderStyle = {
+        width: '100%',
+        height: `calc(100vh - 90px)`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        verticalAlign: 'top',
+        flexDirection: 'column',
+        background: '#ffffff',
+    };
 
     return (
         <>
-            <tr className="tabtr">
+            <tr className="tabtr" ref={elementRef}>
                 <td className="tabtd" data-label="S No.">
                     {sNO}
                 </td>
@@ -205,6 +239,7 @@ function FormCard({
                         onClick={() => {
                             deleteForm(_id);
                         }}
+                        // ref={elementRef}
                     >
                         <i className="fa-solid fa-trash" />
                     </button>
@@ -240,7 +275,8 @@ function FormCard({
                             padding: '70px 20px 20px 20px',
                         }}
                     >
-                        {Object.keys(responseObject).length > 0 ? (
+                        {/* eslint-disable-next-line no-nested-ternary */}
+                        {pageLoading ? <Loader Style={loaderStyle}/> : (Object.keys(responseObject).length > 0 ? (
                             Object.keys(responseObject).map((key, i) => (
                                 <ResponseTable
                                     responseData={responseObject[key]}
@@ -249,8 +285,12 @@ function FormCard({
                                 />
                             ))
                         ) : (
-                            <Loader />
-                        )}
+                            <div style={loaderStyle}>
+                                <img src={noDataPng} width="250px" alt="no data" />
+                                <h1 style={{marginTop:"10px",fontSize:"18px"}}>No Responses received yet!</h1>
+                            </div>
+
+                        ))}
                     </div>
                     <button
                         type="button"

@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Sidebar, Navbar, FormCard } from 'components';
 import { toast } from 'react-toastify';
+import Loader from 'components/loader/Loader';
 import axios from 'axios';
-
+import noDataPng from '../../../assets/images/noData.png';
 import './Analytics.css';
+import {restUrl} from '../../../endpoints';
 
 function Analytics() {
     const [navToggle, setNavToggle] = useState(false);
     const [mainToggle, setMainToggle] = useState(false);
 
     const [AllFormsData, setAllFormsData] = useState([]);
-    const [pageLoaded, setpageLoaded] = useState(false);
+    const [pageLoading, setpageLoading] = useState(true);
 
     function getAllFormData() {
         // setIsLoading(true);
@@ -19,7 +21,7 @@ function Analytics() {
         axios({
             method: 'GET',
             // url: `http://fms-backend-production-ce11.up.railway.app/forms/`,
-            url: `http://localhost:5000/forms/`,
+            url: `${restUrl}/forms/`,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -29,7 +31,7 @@ function Analytics() {
                 if (response.status === 200) {
                     // setIsLoading(false);
                     // console.log(response.data);
-                    setpageLoaded(true);
+                    setpageLoading(false);
                     setAllFormsData(response.data);
                 } else {
                     toast.error('Something went wrong', {
@@ -50,6 +52,17 @@ function Analytics() {
     useEffect(() => {
         getAllFormData();
     }, []);
+
+    const loaderStyle = {
+        width: '100%',
+        height: `calc(100vh - 300px)`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        verticalAlign: 'top',
+        background: '#ffffff',
+    };
 
     return (
         <>
@@ -85,7 +98,10 @@ function Analytics() {
                             Analytics
                         </h2>
                     </div>
-                    {AllFormsData.length > 0 ? (
+                    {/* eslint-disable-next-line no-nested-ternary */}
+                    {pageLoading ? (
+                        <Loader Style={loaderStyle} />
+                    ) : AllFormsData.length > 0 ? (
                         <table className="tab">
                             <thead className="tabthead">
                                 <tr className="tabtr">
@@ -94,44 +110,59 @@ function Analytics() {
                                     <th className="tabth">Created On</th>
                                     <th className="tabth">Edit/Delete</th>
                                     <th className="tabth">Responses/Report</th>
-                                    <th className="tabth">Share On Whatsapp</th>
+                                    <th className="tabth">Share using email</th>
                                 </tr>
                             </thead>
                             <tbody className="tabtbody">
                                 {
                                     // eslint-disable-next-line no-nested-ternary
-                                    pageLoaded ? null : (AllFormsData.length > 0 ? (
-                                        AllFormsData.map((item, index) => (
-                                            <FormCard
-                                                key={item.formId}
-                                                sNO={index + 1}
-                                                {...item}
-                                                // eslint-disable-next-line react/jsx-no-bind
-                                                getAllFormData={getAllFormData}
-                                            />
-                                        ))
-                                    ) : (
-                                        <h1
-                                            style={{
-                                                margin: '50px 50px',
-                                                fontSize: '20px',
-                                            }}
-                                        >
-                                            Please create a form first.
-                                        </h1>
-                                    )
-                                )}
+
+                                    AllFormsData?.map((item, index) => (
+                                        <FormCard
+                                            key={item.formId}
+                                            sNO={index + 1}
+                                            {...item}
+                                            // eslint-disable-next-line react/jsx-no-bind
+                                            getAllFormData={getAllFormData}
+                                        />
+                                    ))
+                                }
                             </tbody>
                         </table>
                     ) : (
-                        <h1
+                        <div
                             style={{
-                                margin: '50px 50px',
-                                fontSize: '20px',
+                                // border: '2px solid red',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontFamily: 'Poppins, sans-serif',
+
                             }}
                         >
-                            Please create a form first.
-                        </h1>
+                            <img src={noDataPng} width="400px" alt="no data" />
+                            <div
+                                style={{
+                                    marginTop:"20px",
+                                    textAlign: 'center',
+                                    
+                                }}
+                            >
+                                <h1
+                                    style={{
+                                        // fontSize: '20px',
+                                        fontFamily: 'Poppins, sans-serif',
+                                    }}
+                                >
+                                    OOPs! Its Empty
+                                </h1>
+                                <h2 style={{fontFamily: 'Poppins, sans-serif'}}>
+                                    Looks like you haven&apos;t created any form
+                                    yet..!!
+                                </h2>
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>
