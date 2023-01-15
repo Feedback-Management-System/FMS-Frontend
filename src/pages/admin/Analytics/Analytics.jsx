@@ -10,6 +10,7 @@ function Analytics() {
     const [mainToggle, setMainToggle] = useState(false);
 
     const [AllFormsData, setAllFormsData] = useState([]);
+    const [pageLoaded, setpageLoaded] = useState(false);
 
     function getAllFormData() {
         // setIsLoading(true);
@@ -28,6 +29,7 @@ function Analytics() {
                 if (response.status === 200) {
                     // setIsLoading(false);
                     // console.log(response.data);
+                    setpageLoaded(true);
                     setAllFormsData(response.data);
                 } else {
                     toast.error('Something went wrong', {
@@ -83,9 +85,8 @@ function Analytics() {
                             Analytics
                         </h2>
                     </div>
-                    {
-                        AllFormsData.length > 0 ? 
-                            <table className="tab">
+                    {AllFormsData.length > 0 ? (
+                        <table className="tab">
                             <thead className="tabthead">
                                 <tr className="tabtr">
                                     <th className="tabth">S No.</th>
@@ -98,29 +99,40 @@ function Analytics() {
                             </thead>
                             <tbody className="tabtbody">
                                 {
-                                    AllFormsData.length > 0 ? AllFormsData.map((item, index) => (
-                                        <FormCard
-                                            key={item.formId}
-                                            sNO={index + 1}
-                                            {...item}
-                                            // eslint-disable-next-line react/jsx-no-bind
-                                            getAllFormData={getAllFormData}
-                                        />
-                                    )) : <h1 
-                                        style={{
-                                            margin: '50px 50px',
-                                            fontSize: '20px',
-                                        }}
-                                    >Please create a form first.</h1>
-                                }
+                                    // eslint-disable-next-line no-nested-ternary
+                                    pageLoaded ? null : (AllFormsData.length > 0 ? (
+                                        AllFormsData.map((item, index) => (
+                                            <FormCard
+                                                key={item.formId}
+                                                sNO={index + 1}
+                                                {...item}
+                                                // eslint-disable-next-line react/jsx-no-bind
+                                                getAllFormData={getAllFormData}
+                                            />
+                                        ))
+                                    ) : (
+                                        <h1
+                                            style={{
+                                                margin: '50px 50px',
+                                                fontSize: '20px',
+                                            }}
+                                        >
+                                            Please create a form first.
+                                        </h1>
+                                    )
+                                )}
                             </tbody>
-                        </table> : <h1 
+                        </table>
+                    ) : (
+                        <h1
                             style={{
                                 margin: '50px 50px',
-                                fontSize: '20px'
+                                fontSize: '20px',
                             }}
-                        >Please create a form first.</h1>
-                    } 
+                        >
+                            Please create a form first.
+                        </h1>
+                    )}
                 </div>
             </div>
         </>

@@ -149,6 +149,9 @@ function FormCard({
     const deleteForm = (deleteFormId) => {
         const token = localStorage.getItem('token');
 
+        if (!window.confirm('Are you sure you want to delete the form?'))
+            return;
+
         // console.log(deleteFormId);
         axios({
             method: 'DELETE',
