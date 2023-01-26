@@ -23,6 +23,7 @@ const LoginPage = () => {
         axios({
             method: 'post',
             url: `${restUrl}/users/signin`,
+            contentType: 'application/json',
             // url: `http://ec2-13-112-113-114.ap-northeast-1.compute.amazonaws.com:5000/users/signin`,
             data: {
                 email,

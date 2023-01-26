@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 // eslint-disable-next-line import/extensions
 import LoaderButton from '../../components/loaderButton/LoaderButton.jsx';
 import fcamLogo from '../../assets/images/fcamLogo.png';
 import forgotImg from '../../assets/images/undraw_Authentication_re_svpt.png';
+import { restUrl } from '../../endpoints';
 import '../LoginPage/LoginPage.css';
 import './ForgotPassword.css';
 
@@ -18,12 +20,55 @@ function ForgotPassword() {
         e.preventDefault();
         setIsLoading(true);
 
-        setTimeout(() => {
-            // localStorage.setItem('token', 'supersecrettoken');
-            navigate('/login', { replace: true });
-            toast.success('New Password Sent to your Email');
-            setIsLoading(false);
-        }, 3000);
+        axios({
+            method: 'post',
+            url: `${restUrl}/forgot-password`,
+            // url: `http://ec2-13-112-113-114.ap-northeast-1.compute.amazonaws.com:5000/forgot-password`,
+            data: {
+                email,
+            },
+        })
+            .then((response) => {
+                console.log(response);
+
+                if (response.status === 200) {
+                    if(response.data.message===`User doesn't exists!`){
+                        toast.error(`User doesn't exists!`, {
+                            position: toast.POSITION.BOTTOM_RIGHT,
+                        });
+                        setIsLoading(false);
+                    }
+                    else{
+                        console.log(response.data);
+                        navigate('/login', { replace: true });
+    
+                        toast.success('Password changed Successfully', {
+                            position: toast.POSITION.BOTTOM_RIGHT,
+                        });
+                        setIsLoading(false);
+                    }
+                    
+                } else {
+                    toast.error('Something went wrong', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    setIsLoading(false);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                if (error.response?.status === 400) {
+                    toast.error(error.response.data.message, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    setIsLoading(false);
+                } else {
+                    toast.error('Something went wrong', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                }
+                setIsLoading(false);
+            });
     };
 
     return (

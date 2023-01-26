@@ -1,18 +1,69 @@
 /* eslint-disable react/no-unknown-property */
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import './LandingPage.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import logo from '../../assets/images/fcamLogo.png';
 import contactImg from '../../assets/images/contact.png';
 import harshImg from '../../assets/images/Harsh.png';
 import morrisImg from '../../assets/images/Morrisjpg.jpg';
 import tanishukeImg from '../../assets/images/Tanishukejfif.jfif';
 import abhiImg from '../../assets/images/Abhijpg.jpg';
+import { restUrl } from '../../endpoints';
 
 const LandingPage = () => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const [navtoggle, setnavtoggle] = useState(false);
+    const [email, setEmail] = useState('');
+    const [description, setDescription] = useState('');
+
+    const onContactUs = (e) => {
+        e.preventDefault();
+        // setIsLoading(true);
+
+        axios({
+            method: 'post',
+            url: `${restUrl}/users/feedback`,
+            // url: `http://ec2-13-112-113-114.ap-northeast-1.compute.amazonaws.com:5000//users/feedback`,
+            data: {
+                email,
+                description,
+            },
+        })
+            .then((response) => {
+                console.log(response);
+
+                if (response.status === 200) {
+                    console.log(response.data);
+
+                    toast.success('message sent successfully', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    // setIsLoading(false);
+                } else {
+                    toast.error('Something went wrong', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    // setIsLoading(false);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                if (error.response?.status === 400) {
+                    toast.error(error.response.data.message, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    // setIsLoading(false);
+                } else {
+                    toast.error('Something went wrong', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                }
+                // setIsLoading(false);
+            });
+    };
 
     return (
         <div className="landingpage">
@@ -247,7 +298,7 @@ const LandingPage = () => {
                                             Ayush Pun
                                         </h3>
 
-                                        <p className="item-text">
+                                        {/* <p className="item-text">
                                             <div className="social-buttons">
                                                 <a
                                                     href="#"
@@ -271,8 +322,8 @@ const LandingPage = () => {
                                                     <i className="fab fa-instagram"/>
                                                 </a>
                                             </div>
-                                        </p>
-                                        <p className="item-text">
+                                        </p> */}
+                                        {/* <p className="item-text">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit. Libero
                                             ea consectetur est nihil aperiam,
@@ -280,7 +331,7 @@ const LandingPage = () => {
                                             obcaecati, vel at assumenda odio
                                             accusantium ducimus! Voluptates,
                                             corporis nemo. Vero, officiis.
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </li>
                                 <li className="features-item">
@@ -293,7 +344,7 @@ const LandingPage = () => {
                                             Harsh Verma
                                         </h3>
 
-                                        <p className="item-text">
+                                        {/* <p className="item-text">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit. Libero
                                             ea consectetur est nihil aperiam,
@@ -301,7 +352,7 @@ const LandingPage = () => {
                                             obcaecati, vel at assumenda odio
                                             accusantium ducimus! Voluptates,
                                             corporis nemo. Vero, officiis.
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </li>
                                 <li className="features-item">
@@ -317,7 +368,7 @@ const LandingPage = () => {
                                             Tanishcq Mehta
                                         </h3>
 
-                                        <p className="item-text">
+                                        {/* <p className="item-text">
                                             Lorem ipsum dolor sit, amet
                                             consectetur adipisicing elit.
                                             Tenetur illum, modi placeat maiores
@@ -326,7 +377,7 @@ const LandingPage = () => {
                                             distinctio assumenda, nulla,
                                             consectetur inventore fugit
                                             temporibus suscipit!
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </li>
 
@@ -340,7 +391,7 @@ const LandingPage = () => {
                                             Abhishek Sachdeva
                                         </h3>
 
-                                        <p className="item-text">
+                                        {/* <p className="item-text">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit.
                                             Repudiandae numquam facere non
@@ -348,7 +399,7 @@ const LandingPage = () => {
                                             voluptate commodi! Voluptatem rerum
                                             quisquam id vero nemo! Animi nisi
                                             quis ea mollitia enim.
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </li>
                             </ul>
@@ -374,7 +425,10 @@ const LandingPage = () => {
                                 </figure>
                             </div>
 
-                            <form action="" className="contact-form">
+                            <form
+                                className="contact-form"
+                                onSubmit={onContactUs}
+                            >
                                 <div className="input-wrapper">
                                     <label for="name" className="input-label">
                                         Name *
@@ -413,9 +467,13 @@ const LandingPage = () => {
                                         type="email"
                                         name="email"
                                         id="email"
-                                        required
+                                        value={email}
                                         placeholder="Type Email Address"
                                         className="input-field"
+                                        onChange={(e) => {
+                                            setEmail(e.target.value);
+                                        }}
+                                        required
                                     />
                                 </div>
 
@@ -432,7 +490,11 @@ const LandingPage = () => {
                                         id="message"
                                         placeholder="Type Description"
                                         required
+                                        value={description}
                                         className="input-field"
+                                        onChange={(e) => {
+                                            setDescription(e.target.value);
+                                        }}
                                     />
                                 </div>
 
