@@ -1,2 +1,2 @@
 export const restUrl =
-    process.env.REACT_APP_DEV_SERVER_URL || 'http://localhost:5000';
+    'http://localhost:5000' || process.env.REACT_APP_DEV_SERVER_URL;

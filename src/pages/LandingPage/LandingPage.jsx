@@ -17,15 +17,15 @@ const LandingPage = () => {
     return (
         <div className="landingpage">
             <header>
-                <div class="landingContainer">
-                    <a href="#" class="logo">
+                <div className="landingContainer">
+                    <a href="#" className="logo">
                         <img src={logo} width="70px" alt="logo" />
                     </a>
 
-                    <div class="landingNavbar-wrapper">
+                    <div className="landingNavbar-wrapper">
                         <button
                             type="submit"
-                            class="landingNavbar-menu-btn homepageBtn"
+                            className="landingNavbar-menu-btn homepageBtn"
                             data-navbar-toggle-btn
                             onClick={() => {
                                 setnavtoggle((prev) => !prev);
@@ -35,34 +35,34 @@ const LandingPage = () => {
                         </button>
 
                         <nav
-                            class={
+                            className={
                                 navtoggle
                                     ? 'landingNavbar active'
                                     : 'landingNavbar'
                             }
                             data-navbar
                         >
-                            <ul class="landingNavbar-list">
-                                <li class="nav-item">
-                                    <a href="#home" class="nav-link">
+                            <ul className="landingNavbar-list">
+                                <li className="nav-item">
+                                    <a href="#home" className="nav-link">
                                         Home
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a href="#about" class="nav-link">
+                                <li className="nav-item">
+                                    <a href="#about" className="nav-link">
                                         Features
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a href="#features" class="nav-link">
+                                <li className="nav-item">
+                                    <a href="#features" className="nav-link">
                                         Our Team
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a href="#contact" class="nav-link">
+                                <li className="nav-item">
+                                    <a href="#contact" className="nav-link">
                                         Contact
                                     </a>
                                 </li>
@@ -70,7 +70,7 @@ const LandingPage = () => {
 
                             <button
                                 type="button"
-                                class="btn btn-primary homepageBtn"
+                                className="btn btn-primary homepageBtn"
                                 onClick={() => {
                                     navigate('/login');
                                 }}
@@ -87,14 +87,14 @@ const LandingPage = () => {
                     {/* <!-- 
         - #superHero
       --> */}
-                    <section class="superHero" id="home">
-                        <div class="landingContainer">
-                            <div class="superHero-content">
-                                <h1 class="h1 superHero-title">
+                    <section className="superHero" id="home">
+                        <div className="landingContainer">
+                            <div className="superHero-content">
+                                <h1 className="h1 superHero-title">
                                     Maintain your Feedbacks like never before.
                                 </h1>
 
-                                <p class="superHero-text">
+                                <p className="superHero-text">
                                     A way for college faculties to organise and
                                     maintain their feedbacks digitally with
                                     minimal efforts. All your progress under one
@@ -102,7 +102,7 @@ const LandingPage = () => {
                                 </p>
                             </div>
 
-                            <div class="superHero-banner" />
+                            <div className="superHero-banner" />
                         </div>
                     </section>
 
@@ -110,8 +110,8 @@ const LandingPage = () => {
         - #ABOUT
       --> */}
 
-                    <section class="about" id="about">
-                        <div class="custom-shape-divider-top-1673187737">
+                    <section className="about" id="about">
+                        <div className="custom-shape-divider-top-1673187737">
                             <svg
                                 data-name="Layer 1"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -120,17 +120,17 @@ const LandingPage = () => {
                             >
                                 <path
                                     d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z"
-                                    class="shape-fill"
+                                    className="shape-fill"
                                 />
                             </svg>
                         </div>
-                        <div class="landingContainer">
-                            <div class="about-top">
-                                <h2 class="h2 section-title">
+                        <div className="landingContainer">
+                            <div className="about-top">
+                                <h2 className="h2 section-title">
                                     Features to Help your feedbacks thrive
                                 </h2>
 
-                                <p class="section-text">
+                                <p className="section-text">
                                     Our feedback management app is designed to
                                     help admins collect, organize, and act on
                                     Students feedback. Our app includes a range
@@ -138,18 +138,18 @@ const LandingPage = () => {
                                     as :
                                 </p>
 
-                                <ul class="about-list">
+                                <ul className="about-list">
                                     <li>
-                                        <div class="about-card">
-                                            <div class="card-icon">
+                                        <div className="about-card">
+                                            <div className="card-icon">
                                                 {/* <ion-icon name="briefcase-outline"></ion-icon> */}
                                             </div>
 
-                                            <h3 class="h3 card-title">
+                                            <h3 className="h3 card-title">
                                                 Collection of feedback
                                             </h3>
 
-                                            <p class="card-text">
+                                            <p className="card-text">
                                                 It allows you to gather feedback
                                                 from students about faculty on
                                                 various parameters through
@@ -160,16 +160,16 @@ const LandingPage = () => {
                                     </li>
 
                                     <li>
-                                        <div class="about-card">
-                                            <div class="card-icon">
+                                        <div className="about-card">
+                                            <div className="card-icon">
                                                 {/* <ion-icon name="chatbubbles-outline"></ion-icon> */}
                                             </div>
 
-                                            <h3 class="h3 card-title">
+                                            <h3 className="h3 card-title">
                                                 Organized Data
                                             </h3>
 
-                                            <p class="card-text">
+                                            <p className="card-text">
                                                 Transforms feedback into action
                                                 by helping you organize the data
                                                 in a way that makes it easy to
@@ -179,16 +179,16 @@ const LandingPage = () => {
                                     </li>
 
                                     <li>
-                                        <div class="about-card">
-                                            <div class="card-icon">
+                                        <div className="about-card">
+                                            <div className="card-icon">
                                                 {/* <ion-icon name="rocket-outline"></ion-icon> */}
                                             </div>
 
-                                            <h3 class="h3 card-title">
+                                            <h3 className="h3 card-title">
                                                 Analysis of feedback
                                             </h3>
 
-                                            <p class="card-text">
+                                            <p className="card-text">
                                                 Generating a report is as easy
                                                 as clicking a button. It helps
                                                 you identify trends and patterns
@@ -200,7 +200,7 @@ const LandingPage = () => {
                                 </ul>
                             </div>
 
-                            <div class="custom-shape-divider-bottom-1673189152">
+                            <div className="custom-shape-divider-bottom-1673189152">
                                 <svg
                                     data-name="Layer 1"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +209,7 @@ const LandingPage = () => {
                                 >
                                     <path
                                         d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z"
-                                        class="shape-fill"
+                                        className="shape-fill"
                                     />
                                 </svg>
                             </div>
@@ -220,14 +220,14 @@ const LandingPage = () => {
         - #Team
       --> */}
 
-                    <section class="features" id="features">
-                        <div class="landingContainer">
-                            <h2 class="h2 section-title">
+                    <section className="features" id="features">
+                        <div className="landingContainer">
+                            <h2 className="h2 section-title">
                                 Meet the talented and dedicated individuals who
                                 make up our team
                             </h2>
 
-                            <p class="section-text">
+                            <p className="section-text">
                                 We believe that collaboration and open
                                 communication are key to our success, and our
                                 team members are encouraged to share their ideas
@@ -236,72 +236,118 @@ const LandingPage = () => {
                                 creativity and continuous improvement.
                             </p>
 
-                            <ul class="features-list">
-                                <li class="features-item">
-                                    <figure class="features-item-banner">
+                            <ul className="features-list">
+                                <li className="features-item">
+                                    <figure className="features-item-banner">
                                         <img src={morrisImg} alt="Ayush" />
                                     </figure>
 
-                                    <div class="feature-item-content">
-                                        <h3 class="h2 item-title">Ayush Pun</h3>
+                                    <div className="feature-item-content">
+                                        <h3 className="h2 item-title">
+                                            Ayush Pun
+                                        </h3>
 
-                                        <p class="item-text">
-                                            {/* I may be a lazy frontend developer,
-                                            but I&apos;m a master of the
-                                            &apos;Ctrl+C, Ctrl+V&apos; workflow.
-                                            And when it comes to backend, I
-                                            prefer to delegate the heavy lifting
-                                            to my trusty Google search bar. */}
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias cum inventore id maxime facilis iusto iure repellendus fugiat accusamus deleniti, rerum ducimus vitae vel, minima voluptates, perferendis quia reiciendis odio.
+                                        <p className="item-text">
+                                            <div className="social-buttons">
+                                                <a
+                                                    href="#"
+                                                    className="social-button social-button--linkedin"
+                                                    aria-label="LinkedIn"
+                                                >
+                                                    <i className="fab fa-linkedin-in"/>
+                                                </a>
+                                                <a
+                                                    href="#"
+                                                    className="social-button social-button--github"
+                                                    aria-label="GitHub"
+                                                >
+                                                    <i className="fab fa-github"/>
+                                                </a>
+                                                <a
+                                                    href="#"
+                                                    className="social-button social-button--instagram"
+                                                    aria-label="CodePen"
+                                                >
+                                                    <i className="fab fa-instagram"/>
+                                                </a>
+                                            </div>
+                                        </p>
+                                        <p className="item-text">
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit. Libero
+                                            ea consectetur est nihil aperiam,
+                                            officiis molestias rem aliquam
+                                            obcaecati, vel at assumenda odio
+                                            accusantium ducimus! Voluptates,
+                                            corporis nemo. Vero, officiis.
                                         </p>
                                     </div>
                                 </li>
-                                <li class="features-item">
-                                    <figure class="features-item-banner">
+                                <li className="features-item">
+                                    <figure className="features-item-banner">
                                         <img src={harshImg} alt="Harsh" />
                                     </figure>
 
-                                    <div class="feature-item-content">
-                                        <h3 class="h2 item-title">
+                                    <div className="feature-item-content">
+                                        <h3 className="h2 item-title">
                                             Harsh Verma
                                         </h3>
 
-                                        <p class="item-text">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero ea consectetur est nihil aperiam, officiis molestias rem aliquam obcaecati, vel at assumenda odio accusantium ducimus! Voluptates, corporis nemo. Vero, officiis.
+                                        <p className="item-text">
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit. Libero
+                                            ea consectetur est nihil aperiam,
+                                            officiis molestias rem aliquam
+                                            obcaecati, vel at assumenda odio
+                                            accusantium ducimus! Voluptates,
+                                            corporis nemo. Vero, officiis.
                                         </p>
                                     </div>
                                 </li>
-                                <li class="features-item">
-                                    <figure class="features-item-banner">
+                                <li className="features-item">
+                                    <figure className="features-item-banner">
                                         <img
                                             src={tanishukeImg}
                                             alt="Tanishcq"
                                         />
                                     </figure>
 
-                                    <div class="feature-item-content">
-                                        <h3 class="h2 item-title">
-                                            Tanishcq Meheta
+                                    <div className="feature-item-content">
+                                        <h3 className="h2 item-title">
+                                            Tanishcq Mehta
                                         </h3>
 
-                                        <p class="item-text">
-                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur illum, modi placeat maiores laudantium officiis. Nemo ex quia earum mollitia sint voluptatum distinctio assumenda, nulla, consectetur inventore fugit temporibus suscipit!
+                                        <p className="item-text">
+                                            Lorem ipsum dolor sit, amet
+                                            consectetur adipisicing elit.
+                                            Tenetur illum, modi placeat maiores
+                                            laudantium officiis. Nemo ex quia
+                                            earum mollitia sint voluptatum
+                                            distinctio assumenda, nulla,
+                                            consectetur inventore fugit
+                                            temporibus suscipit!
                                         </p>
                                     </div>
                                 </li>
 
-                                <li class="features-item">
-                                    <figure class="features-item-banner">
+                                <li className="features-item">
+                                    <figure className="features-item-banner">
                                         <img src={abhiImg} alt="Abhishek" />
                                     </figure>
 
-                                    <div class="feature-item-content">
-                                        <h3 class="h2 item-title">
+                                    <div className="feature-item-content">
+                                        <h3 className="h2 item-title">
                                             Abhishek Sachdeva
                                         </h3>
 
-                                        <p class="item-text">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae numquam facere non tenetur vero ducimus voluptatibus voluptate commodi! Voluptatem rerum quisquam id vero nemo! Animi nisi quis ea mollitia enim.
+                                        <p className="item-text">
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit.
+                                            Repudiandae numquam facere non
+                                            tenetur vero ducimus voluptatibus
+                                            voluptate commodi! Voluptatem rerum
+                                            quisquam id vero nemo! Animi nisi
+                                            quis ea mollitia enim.
                                         </p>
                                     </div>
                                 </li>
@@ -313,14 +359,14 @@ const LandingPage = () => {
         - #CONTACT
       --> */}
 
-                    <section class="contact" id="contact">
-                        <div class="landingContainer">
-                            <div class="contact-content">
-                                <h2 class="h2 contact-title">
+                    <section className="contact" id="contact">
+                        <div className="landingContainer">
+                            <div className="contact-content">
+                                <h2 className="h2 contact-title">
                                     Get in touch with our team
                                 </h2>
 
-                                <figure class="contact-banner">
+                                <figure className="contact-banner">
                                     <img
                                         src={contactImg}
                                         alt="contact banner"
@@ -328,9 +374,9 @@ const LandingPage = () => {
                                 </figure>
                             </div>
 
-                            <form action="" class="contact-form">
-                                <div class="input-wrapper">
-                                    <label for="name" class="input-label">
+                            <form action="" className="contact-form">
+                                <div className="input-wrapper">
+                                    <label for="name" className="input-label">
                                         Name *
                                     </label>
 
@@ -340,12 +386,12 @@ const LandingPage = () => {
                                         id="name"
                                         required
                                         placeholder="Type Name"
-                                        class="input-field"
+                                        className="input-field"
                                     />
                                 </div>
 
-                                <div class="input-wrapper">
-                                    <label for="phone" class="input-label">
+                                <div className="input-wrapper">
+                                    <label for="phone" className="input-label">
                                         Phone
                                     </label>
 
@@ -354,12 +400,12 @@ const LandingPage = () => {
                                         name="phone"
                                         id="phone"
                                         placeholder="Type Phone Number"
-                                        class="input-field"
+                                        className="input-field"
                                     />
                                 </div>
 
-                                <div class="input-wrapper">
-                                    <label for="email" class="input-label">
+                                <div className="input-wrapper">
+                                    <label for="email" className="input-label">
                                         Email Address *
                                     </label>
 
@@ -369,12 +415,15 @@ const LandingPage = () => {
                                         id="email"
                                         required
                                         placeholder="Type Email Address"
-                                        class="input-field"
+                                        className="input-field"
                                     />
                                 </div>
 
-                                <div class="input-wrapper">
-                                    <label for="message" class="input-label">
+                                <div className="input-wrapper">
+                                    <label
+                                        for="message"
+                                        className="input-label"
+                                    >
                                         How can we help? *
                                     </label>
 
@@ -383,13 +432,13 @@ const LandingPage = () => {
                                         id="message"
                                         placeholder="Type Description"
                                         required
-                                        class="input-field"
+                                        className="input-field"
                                     />
                                 </div>
 
                                 <button
                                     type="submit"
-                                    class="btn btn-primary homepageBtn"
+                                    className="btn btn-primary homepageBtn"
                                 >
                                     Send Message
                                 </button>
@@ -404,39 +453,39 @@ const LandingPage = () => {
   --> */}
 
             <footer>
-                {/* <!-- <div class="footer-top"> -->
-      <!-- <div class="landingContainer">
+                {/* <!-- <div className="footer-top"> -->
+      <!-- <div className="landingContainer">
 
-        <div class="footer-brand">
+        <div className="footer-brand">
 
-          <a href="#" class="logo">
+          <a href="#" className="logo">
             <img src="" alt="FMS logo">
           </a>
 
-          <p class="footer-text">Follow us on</p>
+          <p className="footer-text">Follow us on</p>
 
-          <ul class="social-list">
+          <ul className="social-list">
 
             <li>
-              <a href="https://github.com/codewithsadee" class="social-link">
+              <a href="https://github.com/codewithsadee" className="social-link">
                 <ion-icon name="logo-github"></ion-icon>
               </a>
             </li>
 
             <li>
-              <a href="https://instagram.com/codewithsadee" class="social-link">
+              <a href="https://instagram.com/codewithsadee" className="social-link">
                 <ion-icon name="logo-instagram"></ion-icon>
               </a>
             </li>
 
             <li>
-              <a href="https://youtube.com/c/codewithsadee" class="social-link">
+              <a href="https://youtube.com/c/codewithsadee" className="social-link">
                 <ion-icon name="logo-youtube"></ion-icon>
               </a>
             </li>
 
             <li>
-              <a href="#" class="social-link">
+              <a href="#" className="social-link">
                 <ion-icon name="logo-facebook"></ion-icon>
               </a>
             </li>
@@ -445,84 +494,84 @@ const LandingPage = () => {
 
         </div>
 
-        <div class="footer-link-box"> -->
+        <div className="footer-link-box"> -->
 
-          <!-- <ul class="footer-link-list">
+          <!-- <ul className="footer-link-list">
 
             <li>
-              <h3 class="h4 link-title">Company</h3>
+              <h3 className="h4 link-title">Company</h3>
             </li>
 
             <li>
-              <a href="#" class="footer-link">About Us</a>
+              <a href="#" className="footer-link">About Us</a>
             </li>
 
             <li>
-              <a href="#" class="footer-link">Features</a>
+              <a href="#" className="footer-link">Features</a>
             </li>
 
             <li>
-              <a href="#" class="footer-link">Contact Us</a>
-            </li>
-
-          </ul> -->
-
-          <!-- <ul class="footer-link-list">
-
-            <li>
-              <h3 class="h4 link-title">Products</h3>
-            </li>
-
-            <li>
-              <a href="#" class="footer-link">Blog</a>
-            </li>
-
-            <li>
-              <a href="#" class="footer-link">Help Center</a>
-            </li>
-
-            <li>
-              <a href="#" class="footer-link">Contact</a>
+              <a href="#" className="footer-link">Contact Us</a>
             </li>
 
           </ul> -->
 
-          <!-- <ul class="footer-link-list">
+          <!-- <ul className="footer-link-list">
 
             <li>
-              <h3 class="h4 link-title">Resources</h3>
+              <h3 className="h4 link-title">Products</h3>
             </li>
 
             <li>
-              <a href="#" class="footer-link">FAQ’S</a>
+              <a href="#" className="footer-link">Blog</a>
             </li>
 
             <li>
-              <a href="#" class="footer-link">Testimonial</a>
+              <a href="#" className="footer-link">Help Center</a>
             </li>
 
             <li>
-              <a href="#" class="footer-link">Terms & Conditions</a>
+              <a href="#" className="footer-link">Contact</a>
             </li>
 
           </ul> -->
 
-          <!-- <ul class="footer-link-list">
+          <!-- <ul className="footer-link-list">
 
             <li>
-              <h3 class="h4 link-title">Relevent</h3>
+              <h3 className="h4 link-title">Resources</h3>
             </li>
 
             <li>
-              <a href="#" class="footer-link">Why</a>
+              <a href="#" className="footer-link">FAQ’S</a>
             </li>
 
             <li>
-              <a href="#" class="footer-link">Products</a>
+              <a href="#" className="footer-link">Testimonial</a>
             </li>
 
             <li>
-              <a href="#" class="footer-link">Customers</a>
+              <a href="#" className="footer-link">Terms & Conditions</a>
+            </li>
+
+          </ul> -->
+
+          <!-- <ul className="footer-link-list">
+
+            <li>
+              <h3 className="h4 link-title">Relevent</h3>
+            </li>
+
+            <li>
+              <a href="#" className="footer-link">Why</a>
+            </li>
+
+            <li>
+              <a href="#" className="footer-link">Products</a>
+            </li>
+
+            <li>
+              <a href="#" className="footer-link">Customers</a>
             </li>
 
           </ul> -->
@@ -532,8 +581,8 @@ const LandingPage = () => {
       </div>
     </div> --> */}
 
-                <div class="footer-bottom">
-                    <p class="copyright">
+                <div className="footer-bottom">
+                    <p className="copyright">
                         &copy; 2023 FCAM System All right reserved
                     </p>
                 </div>
