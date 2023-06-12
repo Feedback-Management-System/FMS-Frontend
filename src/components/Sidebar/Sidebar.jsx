@@ -13,7 +13,7 @@ const Sidebar = ({ navToggle }) => {
     const SideBarPathIndex = {
         '/admin/dashboard': 0,
         '/admin/analytics': 1,
-        '/admin/change-password': 2,
+        '/admin/import-sheet': 2,
         '/admin/report-bug': 3,
     };
     // eslint-disable-next-line
@@ -63,12 +63,20 @@ const Sidebar = ({ navToggle }) => {
                             <span className="title">Analytics</span>
                         </Link>
                     </li>
-                    <li className={selectedOption==2?'activePage': null}>
+                    {/* <li className={selectedOption==2?'activePage': null}>
                         <Link to="/admin/change-password">
                             <span className="icon">
                                 <i className="fa-solid fa-lock" />
                             </span>
                             <span className="title">Change Password</span>
+                        </Link>
+                    </li> */}
+                    <li className={selectedOption==2?'activePage': null}>
+                        <Link to="/admin/import-sheet">
+                            <span className="icon">
+                                <i className="fa-solid fa-lock" />
+                            </span>
+                            <span className="title">Import file</span>
                         </Link>
                     </li>
                     <li className={selectedOption==3?'activePage': null}>

@@ -7,9 +7,10 @@ import './index.css';
 import {
     AdminHomePage,
     Analytics,
-    ChangePassword,
     ReportBug,
 } from 'pages/admin';
+
+import ImportSheetPage from 'pages/admin/ImportSheetPage/ImportSheetPage';
 
 // import { Sidebar } from 'components';
 
@@ -104,8 +105,8 @@ const router = createBrowserRouter([
                 element: <Protected component={Analytics} />,
             },
             {
-                path: '/admin/change-password',
-                element: <Protected component={ChangePassword} />,
+                path: '/admin/import-sheet',
+                element: <Protected component={ImportSheetPage} />,
             },
             {
                 path: '/admin/report-bug',

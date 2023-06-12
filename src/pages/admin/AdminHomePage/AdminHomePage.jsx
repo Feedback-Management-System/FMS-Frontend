@@ -19,8 +19,8 @@ import {
     Sidebar,
     Navbar,
     GoogleLoginModal,
-    // LoginGoogleButton,
-    // LogoutGoogleButton,
+    LoginGoogleButton,
+    LogoutGoogleButton,
 } from 'components';
 
 import './AdminHomePage.css';
@@ -1127,8 +1127,8 @@ Your assessment should be unbiased and objective.`,
                         display: 'none',
                     }}
                 >
-                    {/* <LoginGoogleButton />
-                    <LogoutGoogleButton /> */}
+                    <LoginGoogleButton />
+                    <LogoutGoogleButton />
                     <button
                         type="button"
                         style={{ border: '2px solid red' }}

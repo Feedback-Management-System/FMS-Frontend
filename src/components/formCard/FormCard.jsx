@@ -5,7 +5,7 @@ import axios from 'axios';
 import SlidingPanel from 'react-sliding-side-panel';
 import Loader from 'components/loader/Loader';
 import { toast } from 'react-toastify';
-import {restUrl} from '../../endpoints';
+import { restUrl } from '../../endpoints';
 import noDataPng from '../../assets/images/noData.png';
 import './FormCard.css';
 // import LoaderButton from 'components/loaderButton/LoaderButton';
@@ -27,7 +27,7 @@ function FormCard({
     const elementRef = useRef();
 
     const generateReport = (data) => {
-        // console.log(data);
+        console.log(data);
 
         const obj = {};
         // eslint-disable-next-line no-restricted-syntax
@@ -140,13 +140,15 @@ function FormCard({
                 // console.log(data);
                 if (data.linkedSheetId) {
                     getSheetResponses(data.linkedSheetId);
-                }else{
-                    toast.error('Google Sheet corresponding to this form not found', {
-                        position: toast.POSITION.BOTTOM_RIGHT,
-                    });
+                } else {
+                    toast.error(
+                        'Google Sheet corresponding to this form not found',
+                        {
+                            position: toast.POSITION.BOTTOM_RIGHT,
+                        },
+                    );
                     console.log(data);
                 }
-
             })
             .catch((error) => {
                 toast.error('Something went wrong', {
@@ -166,7 +168,7 @@ function FormCard({
     const deleteForm = (deleteFormId) => {
         const token = localStorage.getItem('token');
         // elementRef.current.classList.add("deleting");
-        
+
         if (!window.confirm('Are you sure you want to delete the form?'))
             return;
 
@@ -276,7 +278,9 @@ function FormCard({
                         }}
                     >
                         {/* eslint-disable-next-line no-nested-ternary */}
-                        {pageLoading ? <Loader Style={loaderStyle}/> : (Object.keys(responseObject).length > 0 ? (
+                        {pageLoading ? (
+                            <Loader Style={loaderStyle} />
+                        ) : Object.keys(responseObject).length > 0 ? (
                             Object.keys(responseObject).map((key, i) => (
                                 <ResponseTable
                                     responseData={responseObject[key]}
@@ -286,11 +290,21 @@ function FormCard({
                             ))
                         ) : (
                             <div style={loaderStyle}>
-                                <img src={noDataPng} width="250px" alt="no data" />
-                                <h1 style={{marginTop:"10px",fontSize:"18px"}}>No Responses received yet!</h1>
+                                <img
+                                    src={noDataPng}
+                                    width="250px"
+                                    alt="no data"
+                                />
+                                <h1
+                                    style={{
+                                        marginTop: '10px',
+                                        fontSize: '18px',
+                                    }}
+                                >
+                                    No Responses received yet!
+                                </h1>
                             </div>
-
-                        ))}
+                        )}
                     </div>
                     <button
                         type="button"

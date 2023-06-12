@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { LoginGoogleButton } from 'components';
+import { gapi } from 'gapi-script';
 // eslint-disable-next-line import/extensions
 import LoaderButton from '../../components/loaderButton/LoaderButton.jsx';
 import loginIllustration from '../../assets/images/loginIllustration.webp';
 import fcamLogo from '../../assets/images/fcamLogo.png';
 import './LoginPage.css';
-import {restUrl} from '../../endpoints';
+import { restUrl } from '../../endpoints';
 
 const LoginPage = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -16,8 +18,30 @@ const LoginPage = () => {
 
     const navigate = useNavigate();
 
-    const onLogin = (e) => {
-        e.preventDefault();
+    const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    const SCOPES = 'https://www.googleapis.com/auth/drive';
+
+    useEffect(() => {
+        gapi.load('client:auth2', () => {
+            gapi.client.init({
+                apiKey: API_KEY,
+                clientId: CLIENT_ID,
+                scope: SCOPES,
+            });
+            // .then(() => {
+            //     // console.log(gapi.auth?.getToken()?.access_token);
+            //     sessionStorage.setItem(
+            //         'googleAccessToken',
+            //         gapi.auth?.getToken()?.access_token,
+            //     );
+            //     getAllFormData();
+            // });
+        });
+    }, []);
+
+    const onLogin = () => {
+        // e.preventDefault();
         setIsLoading(true);
 
         axios({
@@ -26,8 +50,9 @@ const LoginPage = () => {
             contentType: 'application/json',
             // url: `http://ec2-13-112-113-114.ap-northeast-1.compute.amazonaws.com:5000/users/signin`,
             data: {
-                email,
-                password,
+                // email,
+                email: 'fcam@msijanakpuri.com',
+                password: '123456',
             },
         })
             .then((response) => {
@@ -46,8 +71,7 @@ const LoginPage = () => {
                     toast.success('Logged In Successfully', {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
-                }
-                 else {
+                } else {
                     toast.error('Something went wrong', {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
@@ -61,8 +85,7 @@ const LoginPage = () => {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
                     setIsLoading(false);
-                }
-                else{
+                } else {
                     toast.error('Something went wrong', {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
@@ -96,7 +119,12 @@ const LoginPage = () => {
                     </div>
                     <div className="form-container">
                         <h1>Welcome Back!</h1>
-                        <form onSubmit={onLogin}>
+                        <LoginGoogleButton onLogin={onLogin} />
+                        {/* <p className="loginNote">
+                            Note : Please log in with google to use google forms
+                            services
+                        </p> */}
+                        {/* <form onSubmit={onLogin}>
                             <div className="input-container">
                                 <i className="fa-solid fa-user" />
                                 <input
@@ -157,7 +185,7 @@ const LoginPage = () => {
                                 isLoading={isLoading}
                                 type="submit"
                             />
-                        </form>
+                        </form> */}
                     </div>
                 </section>
             </main>

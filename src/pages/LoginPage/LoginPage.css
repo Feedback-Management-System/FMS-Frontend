@@ -18,6 +18,13 @@
     height: 100vh;
 }
 
+.loginNote{
+    margin-top: 40px;
+    display: block;
+    font-size: 1.2rem;
+    font-family:'poppins'
+}
+
 /* Main box */
 
 .Main_login {
@@ -115,10 +122,10 @@
 }
 
 .Main_login .main-container .form-container h1 {
-    font-size: 2.5rem;
+    font-size: 2.6rem;
     font-family: 'Poppins', serif;
     color: rgb(81, 81, 81);
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-weight: 500;
     letter-spacing: 2px;
     /* border: 2px solid red; */

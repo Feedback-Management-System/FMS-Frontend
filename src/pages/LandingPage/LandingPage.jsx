@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../../assets/images/fcamLogo.png';
 import contactImg from '../../assets/images/contact.png';
-import harshImg from '../../assets/images/Harsh.png';
-import morrisImg from '../../assets/images/Morrisjpg.jpg';
-import tanishukeImg from '../../assets/images/Tanishukejfif.jfif';
-import abhiImg from '../../assets/images/Abhijpg.jpg';
+// import harshImg from '../../assets/images/Harsh.png';
+// import morrisImg from '../../assets/images/Morrisjpg.jpg';
+// import tanishukeImg from '../../assets/images/Tanishukejfif.jfif';
+// import abhiImg from '../../assets/images/Abhijpg.jpg';
 import { restUrl } from '../../endpoints';
 
 const LandingPage = () => {
@@ -106,11 +106,11 @@ const LandingPage = () => {
                                     </a>
                                 </li>
 
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <a href="#features" className="nav-link">
                                         Our Team
                                     </a>
-                                </li>
+                                </li> */}
 
                                 <li className="nav-item">
                                     <a href="#contact" className="nav-link">
@@ -146,10 +146,10 @@ const LandingPage = () => {
                                 </h1>
 
                                 <p className="superHero-text">
-                                    A way for college faculties to organise and
-                                    maintain their feedbacks digitally with
-                                    minimal efforts. All your progress under one
-                                    roof.
+                                    A way for schools and college faculties to
+                                    organise and maintain their feedbacks
+                                    digitally with minimal efforts. All your
+                                    progress under one roof.
                                 </p>
                             </div>
 
@@ -271,7 +271,7 @@ const LandingPage = () => {
         - #Team
       --> */}
 
-                    <section className="features" id="features">
+                    {/* <section className="features" id="features">
                         <div className="landingContainer">
                             <h2 className="h2 section-title">
                                 Meet the talented and dedicated individuals who
@@ -297,33 +297,7 @@ const LandingPage = () => {
                                         <h3 className="h2 item-title">
                                             Ayush Pun
                                         </h3>
-
-                                        {/* <p className="item-text">
-                                            <div className="social-buttons">
-                                                <a
-                                                    href="#"
-                                                    className="social-button social-button--linkedin"
-                                                    aria-label="LinkedIn"
-                                                >
-                                                    <i className="fab fa-linkedin-in"/>
-                                                </a>
-                                                <a
-                                                    href="#"
-                                                    className="social-button social-button--github"
-                                                    aria-label="GitHub"
-                                                >
-                                                    <i className="fab fa-github"/>
-                                                </a>
-                                                <a
-                                                    href="#"
-                                                    className="social-button social-button--instagram"
-                                                    aria-label="CodePen"
-                                                >
-                                                    <i className="fab fa-instagram"/>
-                                                </a>
-                                            </div>
-                                        </p> */}
-                                        {/* <p className="item-text">
+                                        <p className="item-text">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit. Libero
                                             ea consectetur est nihil aperiam,
@@ -331,7 +305,7 @@ const LandingPage = () => {
                                             obcaecati, vel at assumenda odio
                                             accusantium ducimus! Voluptates,
                                             corporis nemo. Vero, officiis.
-                                        </p> */}
+                                        </p>
                                     </div>
                                 </li>
                                 <li className="features-item">
@@ -344,7 +318,7 @@ const LandingPage = () => {
                                             Harsh Verma
                                         </h3>
 
-                                        {/* <p className="item-text">
+                                        <p className="item-text">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit. Libero
                                             ea consectetur est nihil aperiam,
@@ -352,7 +326,7 @@ const LandingPage = () => {
                                             obcaecati, vel at assumenda odio
                                             accusantium ducimus! Voluptates,
                                             corporis nemo. Vero, officiis.
-                                        </p> */}
+                                        </p>
                                     </div>
                                 </li>
                                 <li className="features-item">
@@ -368,7 +342,7 @@ const LandingPage = () => {
                                             Tanishcq Mehta
                                         </h3>
 
-                                        {/* <p className="item-text">
+                                        <p className="item-text">
                                             Lorem ipsum dolor sit, amet
                                             consectetur adipisicing elit.
                                             Tenetur illum, modi placeat maiores
@@ -377,7 +351,7 @@ const LandingPage = () => {
                                             distinctio assumenda, nulla,
                                             consectetur inventore fugit
                                             temporibus suscipit!
-                                        </p> */}
+                                        </p>
                                     </div>
                                 </li>
 
@@ -391,7 +365,7 @@ const LandingPage = () => {
                                             Abhishek Sachdeva
                                         </h3>
 
-                                        {/* <p className="item-text">
+                                        <p className="item-text">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit.
                                             Repudiandae numquam facere non
@@ -399,12 +373,12 @@ const LandingPage = () => {
                                             voluptate commodi! Voluptatem rerum
                                             quisquam id vero nemo! Animi nisi
                                             quis ea mollitia enim.
-                                        </p> */}
+                                        </p>
                                     </div>
                                 </li>
                             </ul>
                         </div>
-                    </section>
+                    </section> */}
 
                     {/* <!-- 
         - #CONTACT
@@ -504,6 +478,21 @@ const LandingPage = () => {
                                 >
                                     Send Message
                                 </button>
+
+                                {/* <LoaderButton
+                                    display="Log In"
+                                    style={
+                                        isLoading
+                                            ? {
+                                                  backgroundColor:
+                                                      'rgb(0, 145, 0, 0.5)',
+                                                  cursor: 'not-allowed',
+                                              }
+                                            : {}
+                                    }
+                                    isLoading={isLoading}
+                                    type="submit"
+                                /> */}
                             </form>
                         </div>
                     </section>

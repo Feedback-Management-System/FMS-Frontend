@@ -54,9 +54,9 @@ const ResponseTable = ({ responseData, title }) => {
                         <th className="head"> Faculty </th>
                         <th className="head">Subject </th>
                         <th className="head"> Attributes </th>
-                        <th className="head"> Total Marks </th>
-                        <th className="head"> Maximum Marks </th>
-                        <th className="head"> Marks Scored in % </th>
+                        <th className="head"> Total Points </th>
+                        <th className="head"> Maximum Points </th>
+                        <th className="head"> Points Scored in % </th>
                         <th className="head"> Average Percentage % </th>
                     </tr>
                 </thead>

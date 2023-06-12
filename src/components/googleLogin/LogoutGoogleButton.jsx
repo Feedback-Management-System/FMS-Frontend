@@ -7,7 +7,7 @@ const LogoutGoogleButton = () => {
     };
 
     return (
-        <div>
+        <div className='aa'>
             <GoogleLogout
                 clientId=" 282391974322-87evpe1qamta10q0uuskfqesibdvrtb0.apps.googleusercontent.com"
                 buttonText="Logout"
