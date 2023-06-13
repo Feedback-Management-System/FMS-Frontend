@@ -50,9 +50,7 @@ const LoginPage = () => {
             contentType: 'application/json',
             // url: `http://ec2-13-112-113-114.ap-northeast-1.compute.amazonaws.com:5000/users/signin`,
             data: {
-                // email,
-                email: 'fcam@msijanakpuri.com',
-                password: '123456',
+                email,
             },
         })
             .then((response) => {
