@@ -1,2 +1,2 @@
 export const restUrl =
-    'http://localhost:5000';
+    'https://real-gray-frog-kilt.cyclic.app/';

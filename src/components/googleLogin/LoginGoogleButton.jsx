@@ -23,7 +23,7 @@ const LoginGoogleButton = ({ onLogin }) => {  // checkLoginAndCreateForm ye prop
     return (
         <div>
             <GoogleLogin
-                clientId=" 282391974322-87evpe1qamta10q0uuskfqesibdvrtb0.apps.googleusercontent.com"
+                clientId="282391974322-87evpe1qamta10q0uuskfqesibdvrtb0.apps.googleusercontent.com"
                 buttonText="Sign in with Google"
                 onSuccess={onSuccess}
                 onFailure={onFailure}
