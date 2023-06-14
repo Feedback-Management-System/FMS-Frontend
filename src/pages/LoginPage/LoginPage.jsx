@@ -13,8 +13,8 @@ import { restUrl } from '../../endpoints';
 
 const LoginPage = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ const LoginPage = () => {
         });
     }, []);
 
-    const onLogin = () => {
+    const onLogin = (email) => {
         // e.preventDefault();
         setIsLoading(true);
 
@@ -48,7 +48,6 @@ const LoginPage = () => {
             method: 'post',
             url: `${restUrl}/users/signin`,
             contentType: 'application/json',
-            // url: `http://ec2-13-112-113-114.ap-northeast-1.compute.amazonaws.com:5000/users/signin`,
             data: {
                 email,
             },

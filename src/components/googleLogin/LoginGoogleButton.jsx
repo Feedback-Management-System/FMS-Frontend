@@ -1,7 +1,8 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 
-const LoginGoogleButton = ({ onLogin }) => {  // checkLoginAndCreateForm ye prop hta diya
+const LoginGoogleButton = ({ onLogin }) => {
+    // checkLoginAndCreateForm ye prop hta diya
     const onSuccess = (res) => {
         console.log(res);
         localStorage.setItem(
@@ -13,7 +14,7 @@ const LoginGoogleButton = ({ onLogin }) => {  // checkLoginAndCreateForm ye prop
         //     '.__user > h3',
         // ).innerText = `Welcome, ${res.profileObj.givenName}`;
         // checkLoginAndCreateForm(); abhi ke liye hta diya
-        onLogin();
+        onLogin(res.profileObj.email);
     };
 
     const onFailure = (res) => {
