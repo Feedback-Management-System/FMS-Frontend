@@ -1,2 +1,1 @@
-export const restUrl =
-    'https://real-gray-frog-kilt.cyclic.app/';
+export const restUrl = 'https://naughty-mite-dirndl.cyclic.app/';
