@@ -9,6 +9,7 @@ import { restUrl } from '../../../endpoints';
 
 function Analytics() {
     const [navToggle, setNavToggle] = useState(false);
+
     const [mainToggle, setMainToggle] = useState(false);
 
     const [AllFormsData, setAllFormsData] = useState([]);

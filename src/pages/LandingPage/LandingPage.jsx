@@ -145,6 +145,16 @@ const LandingPage = () => {
                                     Maintain your Feedbacks like never before.
                                 </h1>
 
+                                <button
+                                    type="button"
+                                    className="btn btn-primary homepageBtn"
+                                    onClick={() => {
+                                        navigate('/login');
+                                    }}
+                                >
+                                    {token ? 'Dashboard' : 'Login'}
+                                </button>
+
                                 <p className="superHero-text">
                                     A way for schools and college faculties to
                                     organise and maintain their feedbacks

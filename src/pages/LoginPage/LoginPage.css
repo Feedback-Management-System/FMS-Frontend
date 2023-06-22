@@ -252,6 +252,7 @@
 @media (max-width: 910px) {
     .Main_login .main-container {
         flex-direction: column;
+        justify-content: center;
     }
     .Main_login .main-container .img-container {
         height: 138px;

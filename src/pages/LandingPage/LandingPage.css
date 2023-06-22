@@ -117,7 +117,8 @@
   }
   
   .contact-form .btn,
-  .landingNavbar .btn {
+  .landingNavbar .btn,
+  .superHero-content .btn {
     font-size: var(--fs-6);
     text-transform: uppercase;
     font-weight: var(--fw-600);
@@ -125,9 +126,15 @@
     border: 1px solid;
     border-radius: 6px;
   }
+
+  .superHero-content .btn{
+    margin-bottom: 50px;
+    display: block;
+  }
   
   .contact-form .btn-primary,
-  .landingNavbar .btn-primary {
+  .landingNavbar .btn-primary,
+  .superHero-content .btn-primary {
     background: var(--bittersweet);
     border-color: var(--bittersweet);
     color: var(--white);
@@ -137,6 +144,9 @@
   .contact-form .btn-primary:is(:hover, :focus),
   .landingNavbar .btn-primary:is(:hover, :focus) { --bittersweet: #1e73fc; }
   
+  .fa-bars:before{
+    content: '\2630';
+  }
   
   
   
@@ -876,6 +886,10 @@
       padding-top: 500px;
       background: url("../../assets/images/heroAnalyticsgif.gif") no-repeat;
       background-size: contain;
+    }
+
+    .superHero-content .btn{
+      display: none;
     }
   
   
